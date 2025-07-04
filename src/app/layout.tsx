@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Roboto } from 'next/font/google';
 import I18nProvider from '@/components/providers/I18nProvider';
 import { ThemeProvider } from '@/lib/theme/ThemeProvider';
@@ -16,13 +16,18 @@ export const metadata: Metadata = {
   title: 'Shelly Monitor',
   description: 'Monitor and control your Shelly devices',
   manifest: '/manifest.json',
-  themeColor: '#0061a4',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
     title: 'Shelly Monitor',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#0061a4',
 };
 
 export default function RootLayout({
