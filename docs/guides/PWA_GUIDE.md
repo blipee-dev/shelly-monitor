@@ -1,6 +1,6 @@
 # Progressive Web App (PWA) Guide
 
-This guide covers the PWA features of Shelly Monitor, including installation, offline functionality, and push notifications.
+This guide covers the PWA features of Shelly Monitor, including installation, offline functionality, push notifications, and AI-powered predictive notifications.
 
 ## Features
 
@@ -19,6 +19,9 @@ This guide covers the PWA features of Shelly Monitor, including installation, of
 - Automation trigger notifications
 - Energy threshold alerts
 - Customizable notification preferences
+- Natural language notification creation
+- Scheduled and recurring notifications
+- AI-powered predictive notifications
 
 ### 4. **Mobile Optimization**
 - Bottom navigation bar for easy thumb access
@@ -59,6 +62,54 @@ This guide covers the PWA features of Shelly Monitor, including installation, of
 - **Energy Alerts**: Threshold-based consumption warnings
 - **Security Alerts**: Important security notifications
 - **Maintenance Reminders**: Device update notifications
+- **Predictive Alerts**: AI-generated based on behavior patterns
+- **Anomaly Detection**: Unusual activity notifications
+- **Custom Notifications**: Created via natural language with Ask Blipee
+
+## AI-Powered Predictive Notifications
+
+### Natural Language Notification Creation
+Ask Blipee can create custom notifications using natural language:
+- "Send me a notification saying the laundry is done"
+- "Remind me to check the lights in 30 minutes"
+- "Alert me every morning at 8 AM to check devices"
+- "Schedule a notification for tomorrow at 3 PM"
+
+### Predictive Notifications
+The AI analyzes your usage patterns to suggest relevant notifications:
+
+#### Pattern Detection
+- Identifies regular device usage (e.g., lights always on at 6 PM)
+- Suggests automations based on consistent behaviors
+- Confidence scores for each prediction (0-100%)
+
+#### Anomaly Detection
+- Detects unusual activity (e.g., 3 AM device usage)
+- Identifies inactive devices (not used for 7+ days)
+- Security-focused alerts for suspicious patterns
+
+#### Energy Optimization
+- Detects devices frequently left on for extended periods
+- Suggests auto-off timers for energy savings
+- Calculates potential cost savings
+
+#### Behavioral Predictions
+- Suggests automations based on device combinations
+- Predicts maintenance needs based on device age
+- Recommends notifications based on your setup
+
+### Using Predictive Features
+1. **Analyze Patterns**: "What patterns have you noticed in my usage?"
+2. **Get Suggestions**: "What predictive notifications do you recommend?"
+3. **Focus Areas**: "Show me energy-saving opportunities"
+4. **Auto-Enable**: "Enable the top 3 suggested notifications"
+5. **Check Anomalies**: "Detect any unusual activity"
+
+### Examples of Predictive Notifications
+- "Your living room lights are always on at 6:00 PM (95% confidence). Create automation?"
+- "Kitchen motion sensor detected activity at 3:47 AM. Enable nighttime alerts?"
+- "Heater left on for 6+ hours regularly. Set 4-hour auto-off timer?"
+- "Device 'Garage Light' hasn't been used in 12 days. Still needed?"
 
 ## Offline Functionality
 

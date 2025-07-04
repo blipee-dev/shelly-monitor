@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.0] - 2025-01-07
+
+### Added - Progressive Web App & Predictive AI
+- Complete PWA support with offline functionality
+- Push notifications with natural language creation
+- AI-powered predictive notifications based on behavior patterns
+- Anomaly detection for security alerts
+- Energy optimization suggestions
+- Scheduled and recurring notifications
+- Mobile-optimized UI with bottom navigation
+- Pattern analysis with 95% confidence scoring
+- Maintenance prediction based on device age
+
+### Enhanced
+- Ask Blipee can now create custom notifications
+- AI suggests notifications based on usage patterns
+- Natural language scheduling ("remind me in 30 minutes")
+- Auto-enable top AI recommendations
+- Comprehensive AI and PWA documentation
+
 ## [2.7.0] - 2025-01-07
 
 ### Added

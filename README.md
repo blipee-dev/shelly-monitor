@@ -7,14 +7,16 @@ Enterprise-grade monitoring platform for Shelly IoT devices with real-time dashb
 - **Real-time Monitoring**: Live device status and metrics with WebSocket updates
 - **Multi-device Support**: Plus 2PM, Plus 1PM, Motion 2, Dimmer 2, BLU Motion
 - **AI Assistant "Ask Blipee"**: Natural language control and automation creation
+- **Predictive Notifications**: AI analyzes patterns to suggest smart alerts
 - **Smart Automations**: AI-powered scheduling and trigger-based device control
 - **One-tap Scenes**: Control multiple devices instantly
 - **Advanced Analytics**: Energy consumption tracking with AI insights
+- **Anomaly Detection**: Security alerts for unusual activity
 - **Cost Optimization**: DeepSeek AI integration for affordable intelligence
-- **Remote Control**: Device management from anywhere
+- **Progressive Web App**: Install as native app with offline support
+- **Push Notifications**: Real-time alerts with natural language creation
 - **Enterprise Security**: RBAC, audit logs, secure API
 - **Material Design 3**: Modern, responsive UI with dark mode
-- **Email Notifications**: Custom SMTP support (Google Workspace ready)
 
 ## Tech Stack
 
@@ -76,6 +78,8 @@ Ask Blipee is your intelligent home assistant that understands natural language:
 ## Documentation
 
 - [Getting Started Guide](docs/setup/GETTING_STARTED.md)
+- [AI Features Guide](docs/guides/AI_FEATURES.md)
+- [PWA & Notifications Guide](docs/guides/PWA_GUIDE.md)
 - [API Documentation](http://localhost:3000/api-docs)
 - [Project Structure](docs/PROJECT_STRUCTURE.md)
 - [Authentication Guide](docs/guides/AUTHENTICATION.md)
