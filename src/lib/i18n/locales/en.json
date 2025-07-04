@@ -1,0 +1,318 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "confirm": "Confirm",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "refresh": "Refresh",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "signup": "Sign Up",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "none": "None",
+    "select": "Select",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "status": "Status",
+    "actions": "Actions",
+    "created": "Created",
+    "updated": "Updated",
+    "type": "Type",
+    "value": "Value",
+    "date": "Date",
+    "time": "Time",
+    "language": "Language"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "devices": "Devices",
+    "analytics": "Analytics",
+    "alerts": "Alerts",
+    "settings": "Settings",
+    "profile": "Profile",
+    "help": "Help",
+    "documentation": "Documentation"
+  },
+  "auth": {
+    "signin": {
+      "title": "Sign In",
+      "subtitle": "Welcome back to Shelly Monitor",
+      "email": "Email Address",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up",
+      "orContinueWith": "Or continue with",
+      "errors": {
+        "invalidCredentials": "Invalid email or password",
+        "emailRequired": "Email is required",
+        "passwordRequired": "Password is required",
+        "invalidEmail": "Invalid email format"
+      }
+    },
+    "signup": {
+      "title": "Create Account",
+      "subtitle": "Start monitoring your Shelly devices",
+      "name": "Full Name",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "terms": "I agree to the Terms of Service and Privacy Policy",
+      "submit": "Create Account",
+      "hasAccount": "Already have an account?",
+      "signinLink": "Sign in",
+      "errors": {
+        "nameRequired": "Name is required",
+        "emailRequired": "Email is required",
+        "passwordRequired": "Password is required",
+        "passwordMismatch": "Passwords do not match",
+        "passwordWeak": "Password must be at least 8 characters",
+        "termsRequired": "You must accept the terms",
+        "emailExists": "Email already registered"
+      },
+      "success": {
+        "title": "Account Created",
+        "message": "Please check your email to verify your account"
+      }
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your email to receive reset instructions",
+      "email": "Email Address",
+      "submit": "Send Reset Email",
+      "backToLogin": "Back to login",
+      "success": {
+        "title": "Email Sent",
+        "message": "Check your email for password reset instructions"
+      }
+    },
+    "signout": {
+      "confirm": "Are you sure you want to sign out?",
+      "submit": "Sign Out",
+      "cancel": "Cancel"
+    }
+  },
+  "devices": {
+    "title": "Devices",
+    "subtitle": "Manage your Shelly devices",
+    "addDevice": "Add Device",
+    "noDevices": "No devices found",
+    "noDevicesDescription": "Add your first Shelly device to get started",
+    "searchPlaceholder": "Search devices...",
+    "filters": {
+      "all": "All Devices",
+      "online": "Online",
+      "offline": "Offline",
+      "type": {
+        "all": "All Types",
+        "plus_2pm": "Plus 2PM",
+        "motion_2": "Motion 2"
+      }
+    },
+    "card": {
+      "online": "Online",
+      "offline": "Offline",
+      "lastSeen": "Last seen {{time}}",
+      "firmware": "Firmware {{version}}",
+      "ipAddress": "IP: {{ip}}",
+      "macAddress": "MAC: {{mac}}",
+      "authEnabled": "Auth Enabled",
+      "channel": "Channel {{number}}",
+      "power": "{{value}}W",
+      "voltage": "{{value}}V",
+      "current": "{{value}}A",
+      "temperature": "{{value}}°C",
+      "motion": {
+        "detected": "Motion Detected",
+        "clear": "Clear",
+        "light": "Light: {{value}} lux",
+        "battery": "Battery: {{value}}%",
+        "vibration": "Vibration Detected"
+      },
+      "actions": {
+        "refresh": "Refresh",
+        "details": "Details",
+        "edit": "Edit",
+        "delete": "Delete",
+        "control": "Control"
+      }
+    },
+    "form": {
+      "addTitle": "Add New Device",
+      "editTitle": "Edit Device",
+      "name": "Device Name",
+      "type": "Device Type",
+      "ipAddress": "IP Address",
+      "macAddress": "MAC Address",
+      "authEnabled": "Authentication Enabled",
+      "username": "Username",
+      "password": "Password",
+      "submit": "Save Device",
+      "cancel": "Cancel",
+      "validation": {
+        "nameRequired": "Device name is required",
+        "typeRequired": "Device type is required",
+        "ipRequired": "IP address is required",
+        "ipInvalid": "Invalid IP address format",
+        "macRequired": "MAC address is required",
+        "macInvalid": "Invalid MAC address format"
+      }
+    },
+    "delete": {
+      "title": "Delete Device",
+      "message": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "addSuccess": "Device added successfully",
+      "updateSuccess": "Device updated successfully",
+      "deleteSuccess": "Device deleted successfully",
+      "refreshSuccess": "Device status refreshed",
+      "controlSuccess": "Device controlled successfully",
+      "addError": "Failed to add device",
+      "updateError": "Failed to update device",
+      "deleteError": "Failed to delete device",
+      "refreshError": "Failed to refresh device",
+      "controlError": "Failed to control device"
+    }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "subtitle": "Monitor your energy usage and patterns",
+    "timeRange": {
+      "today": "Today",
+      "week": "This Week",
+      "month": "This Month",
+      "year": "This Year",
+      "custom": "Custom Range"
+    },
+    "metrics": {
+      "totalPower": "Total Power",
+      "avgPower": "Average Power",
+      "peakPower": "Peak Power",
+      "totalEnergy": "Total Energy",
+      "cost": "Estimated Cost",
+      "motionEvents": "Motion Events",
+      "uptime": "Uptime"
+    },
+    "charts": {
+      "powerUsage": "Power Usage",
+      "energyConsumption": "Energy Consumption",
+      "motionActivity": "Motion Activity",
+      "deviceUptime": "Device Uptime"
+    }
+  },
+  "alerts": {
+    "title": "Alerts",
+    "subtitle": "Monitor and manage system alerts",
+    "noAlerts": "No alerts",
+    "filters": {
+      "all": "All Alerts",
+      "active": "Active",
+      "acknowledged": "Acknowledged",
+      "severity": {
+        "all": "All Severities",
+        "info": "Info",
+        "warning": "Warning",
+        "critical": "Critical"
+      }
+    },
+    "types": {
+      "device_offline": "Device Offline",
+      "power_threshold": "Power Threshold Exceeded",
+      "motion_detected": "Motion Detected",
+      "temperature_high": "High Temperature",
+      "connection_lost": "Connection Lost",
+      "firmware_update": "Firmware Update Available"
+    },
+    "actions": {
+      "acknowledge": "Acknowledge",
+      "dismiss": "Dismiss",
+      "viewDetails": "View Details"
+    },
+    "details": {
+      "device": "Device",
+      "time": "Time",
+      "severity": "Severity",
+      "message": "Message",
+      "data": "Additional Data"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Configure your preferences",
+    "tabs": {
+      "general": "General",
+      "notifications": "Notifications",
+      "security": "Security",
+      "advanced": "Advanced"
+    },
+    "general": {
+      "language": "Language",
+      "timezone": "Timezone",
+      "dateFormat": "Date Format",
+      "theme": "Theme",
+      "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
+    },
+    "notifications": {
+      "email": "Email Notifications",
+      "push": "Push Notifications",
+      "alerts": {
+        "deviceOffline": "Device goes offline",
+        "powerThreshold": "Power threshold exceeded",
+        "motionDetected": "Motion detected",
+        "systemErrors": "System errors"
+      }
+    },
+    "security": {
+      "changePassword": "Change Password",
+      "twoFactor": "Two-Factor Authentication",
+      "sessions": "Active Sessions",
+      "apiKeys": "API Keys"
+    },
+    "messages": {
+      "saveSuccess": "Settings saved successfully",
+      "saveError": "Failed to save settings"
+    }
+  },
+  "errors": {
+    "generic": "An error occurred",
+    "network": "Network error",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Access forbidden",
+    "notFound": "Not found",
+    "serverError": "Server error",
+    "timeout": "Request timeout",
+    "retry": "Retry"
+  },
+  "time": {
+    "justNow": "Just now",
+    "secondsAgo": "{{count}} seconds ago",
+    "minutesAgo": "{{count}} minutes ago",
+    "hoursAgo": "{{count}} hours ago",
+    "daysAgo": "{{count}} days ago",
+    "weeksAgo": "{{count}} weeks ago",
+    "monthsAgo": "{{count}} months ago"
+  }
+}

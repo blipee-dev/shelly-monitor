@@ -1,0 +1,1104 @@
+openapi: 3.1.0
+info:
+  title: Shelly Monitor API
+  description: |
+    Enterprise-grade API for monitoring and controlling Shelly IoT devices.
+    
+    ## Authentication
+    All endpoints except health checks require authentication via JWT bearer token.
+    
+    ## Rate Limiting
+    - Global: 1000 requests per 15 minutes
+    - Auth endpoints: 5 requests per 15 minutes
+    - API endpoints: 100 requests per minute
+    - Control endpoints: 20 requests per minute
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: api@shellymonitor.com
+    url: https://github.com/blipee-dev/shelly-monitor
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.shellymonitor.com/v1
+    description: Production server
+  - url: https://staging-api.shellymonitor.com/v1
+    description: Staging server
+  - url: http://localhost:3000/api
+    description: Development server
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Auth
+    description: Authentication endpoints
+  - name: Devices
+    description: Device management
+  - name: Data
+    description: Data retrieval and export
+  - name: Alerts
+    description: Alert configuration
+  - name: Health
+    description: Health and monitoring
+
+paths:
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Get application health status
+      operationId: getHealth
+      security: []
+      parameters:
+        - name: type
+          in: query
+          description: Type of health check
+          schema:
+            type: string
+            enum: [liveness, readiness]
+      responses:
+        '200':
+          description: Application is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+        '503':
+          description: Application is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: User login
+      description: Authenticate user and receive JWT token
+      operationId: login
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: User registration
+      description: Create new user account
+      operationId: register
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /auth/refresh:
+    post:
+      tags:
+        - Auth
+      summary: Refresh token
+      description: Get new access token using refresh token
+      operationId: refreshToken
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+                  description: Refresh token
+      responses:
+        '200':
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /devices:
+    get:
+      tags:
+        - Devices
+      summary: List devices
+      description: Get all devices for authenticated user
+      operationId: listDevices
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: type
+          in: query
+          description: Filter by device type
+          schema:
+            type: string
+            enum: [plus_2pm, motion_2]
+        - name: status
+          in: query
+          description: Filter by online status
+          schema:
+            type: string
+            enum: [online, offline]
+      responses:
+        '200':
+          description: List of devices
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  devices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Devices
+      summary: Add device
+      description: Add new device to monitoring
+      operationId: addDevice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddDeviceRequest'
+      responses:
+        '201':
+          description: Device added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /devices/{deviceId}:
+    get:
+      tags:
+        - Devices
+      summary: Get device
+      description: Get device details and current status
+      operationId: getDevice
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdParam'
+      responses:
+        '200':
+          description: Device details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  device:
+                    $ref: '#/components/schemas/Device'
+                  status:
+                    $ref: '#/components/schemas/DeviceStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Devices
+      summary: Update device
+      description: Update device configuration
+      operationId: updateDevice
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDeviceRequest'
+      responses:
+        '200':
+          description: Device updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Devices
+      summary: Delete device
+      description: Remove device from monitoring
+      operationId: deleteDevice
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdParam'
+      responses:
+        '204':
+          description: Device deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /devices/{deviceId}/control:
+    post:
+      tags:
+        - Devices
+      summary: Control device
+      description: Send control command to device (Plus 2PM only)
+      operationId: controlDevice
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ControlRequest'
+      responses:
+        '200':
+          description: Command executed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  result:
+                    type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /data/power:
+    get:
+      tags:
+        - Data
+      summary: Get power data
+      description: Retrieve power consumption data
+      operationId: getPowerData
+      parameters:
+        - name: deviceIds
+          in: query
+          description: Device IDs (comma-separated)
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          description: Start date (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          required: true
+          description: End date (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+        - name: aggregation
+          in: query
+          description: Data aggregation level
+          schema:
+            type: string
+            enum: [minute, hour, day]
+            default: hour
+      responses:
+        '200':
+          description: Power consumption data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PowerReading'
+                  summary:
+                    type: object
+                    properties:
+                      totalEnergy:
+                        type: number
+                      averagePower:
+                        type: number
+                      peakPower:
+                        type: number
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /data/motion:
+    get:
+      tags:
+        - Data
+      summary: Get motion events
+      description: Retrieve motion detection events
+      operationId: getMotionData
+      parameters:
+        - name: deviceIds
+          in: query
+          description: Device IDs (comma-separated)
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          description: Start date (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          required: true
+          description: End date (ISO 8601)
+          schema:
+            type: string
+            format: date-time
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Motion events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MotionEvent'
+                  count:
+                    type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /data/export:
+    post:
+      tags:
+        - Data
+      summary: Export data
+      description: Export historical data in various formats
+      operationId: exportData
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+      responses:
+        '200':
+          description: Export file
+          content:
+            text/csv:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: object
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /alerts:
+    get:
+      tags:
+        - Alerts
+      summary: List alerts
+      description: Get all alert configurations
+      operationId: listAlerts
+      parameters:
+        - name: deviceId
+          in: query
+          description: Filter by device ID
+          schema:
+            type: string
+            format: uuid
+        - name: enabled
+          in: query
+          description: Filter by enabled status
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of alerts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alerts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Alert'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Alerts
+      summary: Create alert
+      description: Create new alert configuration
+      operationId: createAlert
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAlertRequest'
+      responses:
+        '201':
+          description: Alert created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT authentication token
+
+  parameters:
+    DeviceIdParam:
+      name: deviceId
+      in: path
+      required: true
+      description: Device ID
+      schema:
+        type: string
+        format: uuid
+    
+    PageParam:
+      name: page
+      in: query
+      description: Page number
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    
+    LimitParam:
+      name: limit
+      in: query
+      description: Items per page
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  schemas:
+    HealthStatus:
+      type: object
+      required:
+        - status
+        - timestamp
+        - uptime
+        - version
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+        timestamp:
+          type: string
+          format: date-time
+        uptime:
+          type: number
+          description: Uptime in seconds
+        version:
+          type: string
+        checks:
+          type: object
+          properties:
+            database:
+              $ref: '#/components/schemas/HealthCheck'
+            cache:
+              $ref: '#/components/schemas/HealthCheck'
+            external:
+              $ref: '#/components/schemas/HealthCheck'
+        memory:
+          type: object
+          properties:
+            used:
+              type: integer
+            total:
+              type: integer
+            percentage:
+              type: integer
+
+    HealthCheck:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [ok, error]
+        latency:
+          type: number
+          description: Check latency in ms
+        error:
+          type: string
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+        - name
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+
+    AuthResponse:
+      type: object
+      required:
+        - user
+        - accessToken
+        - refreshToken
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresIn:
+          type: integer
+          description: Token expiry in seconds
+
+    User:
+      type: object
+      required:
+        - id
+        - email
+        - name
+        - role
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        role:
+          type: string
+          enum: [admin, user, viewer]
+        createdAt:
+          type: string
+          format: date-time
+
+    Device:
+      type: object
+      required:
+        - id
+        - name
+        - type
+        - ipAddress
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+          enum: [plus_2pm, motion_2]
+        model:
+          type: string
+        ipAddress:
+          type: string
+          format: ipv4
+        macAddress:
+          type: string
+          pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+        firmwareVersion:
+          type: string
+        authEnabled:
+          type: boolean
+        settings:
+          type: object
+        lastSeen:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    DeviceStatus:
+      type: object
+      required:
+        - online
+        - data
+      properties:
+        online:
+          type: boolean
+        data:
+          oneOf:
+            - $ref: '#/components/schemas/Plus2PMStatus'
+            - $ref: '#/components/schemas/Motion2Status'
+        updatedAt:
+          type: string
+          format: date-time
+
+    Plus2PMStatus:
+      type: object
+      properties:
+        switch:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              output:
+                type: boolean
+              apower:
+                type: number
+              voltage:
+                type: number
+              current:
+                type: number
+              pf:
+                type: number
+              temperature:
+                type: object
+                properties:
+                  tC:
+                    type: number
+                  tF:
+                    type: number
+
+    Motion2Status:
+      type: object
+      properties:
+        sensor:
+          type: object
+          properties:
+            motion:
+              type: boolean
+            lux:
+              type: number
+            temperature:
+              type: number
+            battery:
+              type: object
+              properties:
+                percent:
+                  type: integer
+                voltage:
+                  type: number
+            vibration:
+              type: boolean
+
+    AddDeviceRequest:
+      type: object
+      required:
+        - name
+        - type
+        - ipAddress
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        type:
+          type: string
+          enum: [plus_2pm, motion_2]
+        ipAddress:
+          type: string
+          format: ipv4
+        authEnabled:
+          type: boolean
+        authUsername:
+          type: string
+        authPassword:
+          type: string
+
+    UpdateDeviceRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        settings:
+          type: object
+
+    ControlRequest:
+      type: object
+      required:
+        - action
+        - channel
+        - state
+      properties:
+        action:
+          type: string
+          enum: [switch]
+        channel:
+          type: integer
+          minimum: 0
+          maximum: 1
+        state:
+          type: boolean
+
+    PowerReading:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        deviceId:
+          type: string
+          format: uuid
+        channel:
+          type: integer
+        power:
+          type: number
+        voltage:
+          type: number
+        current:
+          type: number
+        energy:
+          type: number
+        powerFactor:
+          type: number
+        temperature:
+          type: number
+
+    MotionEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        deviceId:
+          type: string
+          format: uuid
+        timestamp:
+          type: string
+          format: date-time
+        lightLevel:
+          type: number
+        temperature:
+          type: number
+        batteryPercent:
+          type: integer
+        vibration:
+          type: boolean
+
+    ExportRequest:
+      type: object
+      required:
+        - type
+        - format
+        - startDate
+        - endDate
+      properties:
+        type:
+          type: string
+          enum: [power, motion, all]
+        format:
+          type: string
+          enum: [csv, json, xlsx]
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        deviceIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+
+    Alert:
+      type: object
+      required:
+        - id
+        - deviceId
+        - type
+        - condition
+        - enabled
+      properties:
+        id:
+          type: string
+          format: uuid
+        deviceId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [offline, motion, power_threshold, battery_low]
+        condition:
+          type: object
+        actions:
+          type: array
+          items:
+            type: object
+        enabled:
+          type: boolean
+        lastTriggered:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateAlertRequest:
+      type: object
+      required:
+        - deviceId
+        - type
+        - condition
+        - actions
+      properties:
+        deviceId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [offline, motion, power_threshold, battery_low]
+        condition:
+          type: object
+        actions:
+          type: array
+          items:
+            type: object
+        enabled:
+          type: boolean
+          default: true
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer
+
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+            timestamp:
+              type: string
+              format: date-time
+            requestId:
+              type: string
+
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: INVALID_REQUEST
+              message: Invalid request parameters
+              timestamp: "2024-01-01T00:00:00.000Z"
+              requestId: "req_123456"
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Authentication required
+              timestamp: "2024-01-01T00:00:00.000Z"
+              requestId: "req_123456"
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: FORBIDDEN
+              message: Insufficient permissions
+              timestamp: "2024-01-01T00:00:00.000Z"
+              requestId: "req_123456"
+
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Resource not found
+              timestamp: "2024-01-01T00:00:00.000Z"
+              requestId: "req_123456"
+
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: CONFLICT
+              message: Resource already exists
+              timestamp: "2024-01-01T00:00:00.000Z"
+              requestId: "req_123456"
+
+    RateLimited:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: RATE_LIMITED
+              message: Rate limit exceeded
+              details:
+                retryAfter: 60
+              timestamp: "2024-01-01T00:00:00.000Z"
+              requestId: "req_123456"
+
+    ServiceUnavailable:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: SERVICE_UNAVAILABLE
+              message: Service temporarily unavailable
+              timestamp: "2024-01-01T00:00:00.000Z"
+              requestId: "req_123456"

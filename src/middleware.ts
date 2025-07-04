@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { globalRateLimit, authRateLimit, apiRateLimit, controlRateLimit } from '@/lib/api/rate-limiter';
+import { auditLog } from '@/lib/audit';
 
 // Define public routes that don't require authentication
 const publicRoutes = [
@@ -18,8 +20,41 @@ const publicRoutes = [
 // Define API routes that require special handling
 const apiRoutes = ['/api'];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Apply global rate limiting
+  const globalLimitResponse = await globalRateLimit(request);
+  if (globalLimitResponse) {
+    // Log rate limit exceeded
+    const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || request.ip;
+    await auditLog.rateLimitExceeded(undefined, pathname, ipAddress || undefined);
+    return globalLimitResponse;
+  }
+
+  // Apply specific rate limits based on path
+  if (pathname.startsWith('/api/auth')) {
+    const authLimitResponse = await authRateLimit(request);
+    if (authLimitResponse) {
+      const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || request.ip;
+      await auditLog.rateLimitExceeded(undefined, pathname, ipAddress || undefined);
+      return authLimitResponse;
+    }
+  } else if (pathname.includes('/control')) {
+    const controlLimitResponse = await controlRateLimit(request);
+    if (controlLimitResponse) {
+      const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || request.ip;
+      await auditLog.rateLimitExceeded(undefined, pathname, ipAddress || undefined);
+      return controlLimitResponse;
+    }
+  } else if (pathname.startsWith('/api')) {
+    const apiLimitResponse = await apiRateLimit(request);
+    if (apiLimitResponse) {
+      const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || request.ip;
+      await auditLog.rateLimitExceeded(undefined, pathname, ipAddress || undefined);
+      return apiLimitResponse;
+    }
+  }
 
   // Allow public routes
   if (publicRoutes.some(route => pathname.startsWith(route))) {

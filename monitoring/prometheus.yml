@@ -1,0 +1,62 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'shelly-monitor'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - 'alertmanager:9093'
+
+# Load rules once and periodically evaluate them
+rule_files:
+  - "alerts/*.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Scrape Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Scrape the Shelly Monitor application
+  - job_name: 'shelly-monitor'
+    metrics_path: '/api/metrics'
+    bearer_token: 'your-metrics-auth-token' # Replace with actual token
+    static_configs:
+      - targets: ['shelly-monitor:3000']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'shelly-monitor-prod'
+
+  # Scrape Node.js metrics
+  - job_name: 'nodejs'
+    static_configs:
+      - targets: ['shelly-monitor:3000']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'shelly-monitor-nodejs'
+
+  # Scrape PostgreSQL exporter (if using)
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'shelly-monitor-db'
+
+  # Scrape Redis exporter (if using)
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'shelly-monitor-cache'

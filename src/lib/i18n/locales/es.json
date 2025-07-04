@@ -1,0 +1,318 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "submit": "Enviar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "refresh": "Actualizar",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "yes": "Sí",
+    "no": "No",
+    "all": "Todos",
+    "none": "Ninguno",
+    "select": "Seleccionar",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "status": "Estado",
+    "actions": "Acciones",
+    "created": "Creado",
+    "updated": "Actualizado",
+    "type": "Tipo",
+    "value": "Valor",
+    "date": "Fecha",
+    "time": "Hora",
+    "language": "Idioma"
+  },
+  "navigation": {
+    "dashboard": "Panel de control",
+    "devices": "Dispositivos",
+    "analytics": "Análisis",
+    "alerts": "Alertas",
+    "settings": "Configuración",
+    "profile": "Perfil",
+    "help": "Ayuda",
+    "documentation": "Documentación"
+  },
+  "auth": {
+    "signin": {
+      "title": "Iniciar sesión",
+      "subtitle": "Bienvenido de nuevo a Shelly Monitor",
+      "email": "Dirección de correo",
+      "password": "Contraseña",
+      "rememberMe": "Recuérdame",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿No tienes una cuenta?",
+      "signupLink": "Regístrate",
+      "orContinueWith": "O continuar con",
+      "errors": {
+        "invalidCredentials": "Correo o contraseña inválidos",
+        "emailRequired": "El correo es requerido",
+        "passwordRequired": "La contraseña es requerida",
+        "invalidEmail": "Formato de correo inválido"
+      }
+    },
+    "signup": {
+      "title": "Crear cuenta",
+      "subtitle": "Comienza a monitorear tus dispositivos Shelly",
+      "name": "Nombre completo",
+      "email": "Dirección de correo",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "terms": "Acepto los Términos de servicio y la Política de privacidad",
+      "submit": "Crear cuenta",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signinLink": "Iniciar sesión",
+      "errors": {
+        "nameRequired": "El nombre es requerido",
+        "emailRequired": "El correo es requerido",
+        "passwordRequired": "La contraseña es requerida",
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "passwordWeak": "La contraseña debe tener al menos 8 caracteres",
+        "termsRequired": "Debes aceptar los términos",
+        "emailExists": "El correo ya está registrado"
+      },
+      "success": {
+        "title": "Cuenta creada",
+        "message": "Por favor revisa tu correo para verificar tu cuenta"
+      }
+    },
+    "resetPassword": {
+      "title": "Restablecer contraseña",
+      "subtitle": "Ingresa tu correo para recibir instrucciones",
+      "email": "Dirección de correo",
+      "submit": "Enviar correo de restablecimiento",
+      "backToLogin": "Volver al inicio de sesión",
+      "success": {
+        "title": "Correo enviado",
+        "message": "Revisa tu correo para las instrucciones de restablecimiento"
+      }
+    },
+    "signout": {
+      "confirm": "¿Estás seguro de que quieres cerrar sesión?",
+      "submit": "Cerrar sesión",
+      "cancel": "Cancelar"
+    }
+  },
+  "devices": {
+    "title": "Dispositivos",
+    "subtitle": "Administra tus dispositivos Shelly",
+    "addDevice": "Agregar dispositivo",
+    "noDevices": "No se encontraron dispositivos",
+    "noDevicesDescription": "Agrega tu primer dispositivo Shelly para comenzar",
+    "searchPlaceholder": "Buscar dispositivos...",
+    "filters": {
+      "all": "Todos los dispositivos",
+      "online": "En línea",
+      "offline": "Fuera de línea",
+      "type": {
+        "all": "Todos los tipos",
+        "plus_2pm": "Plus 2PM",
+        "motion_2": "Motion 2"
+      }
+    },
+    "card": {
+      "online": "En línea",
+      "offline": "Fuera de línea",
+      "lastSeen": "Visto por última vez {{time}}",
+      "firmware": "Firmware {{version}}",
+      "ipAddress": "IP: {{ip}}",
+      "macAddress": "MAC: {{mac}}",
+      "authEnabled": "Autenticación habilitada",
+      "channel": "Canal {{number}}",
+      "power": "{{value}}W",
+      "voltage": "{{value}}V",
+      "current": "{{value}}A",
+      "temperature": "{{value}}°C",
+      "motion": {
+        "detected": "Movimiento detectado",
+        "clear": "Despejado",
+        "light": "Luz: {{value}} lux",
+        "battery": "Batería: {{value}}%",
+        "vibration": "Vibración detectada"
+      },
+      "actions": {
+        "refresh": "Actualizar",
+        "details": "Detalles",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "control": "Controlar"
+      }
+    },
+    "form": {
+      "addTitle": "Agregar nuevo dispositivo",
+      "editTitle": "Editar dispositivo",
+      "name": "Nombre del dispositivo",
+      "type": "Tipo de dispositivo",
+      "ipAddress": "Dirección IP",
+      "macAddress": "Dirección MAC",
+      "authEnabled": "Autenticación habilitada",
+      "username": "Usuario",
+      "password": "Contraseña",
+      "submit": "Guardar dispositivo",
+      "cancel": "Cancelar",
+      "validation": {
+        "nameRequired": "El nombre del dispositivo es requerido",
+        "typeRequired": "El tipo de dispositivo es requerido",
+        "ipRequired": "La dirección IP es requerida",
+        "ipInvalid": "Formato de dirección IP inválido",
+        "macRequired": "La dirección MAC es requerida",
+        "macInvalid": "Formato de dirección MAC inválido"
+      }
+    },
+    "delete": {
+      "title": "Eliminar dispositivo",
+      "message": "¿Estás seguro de que quieres eliminar \"{{name}}\"? Esta acción no se puede deshacer.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "messages": {
+      "addSuccess": "Dispositivo agregado exitosamente",
+      "updateSuccess": "Dispositivo actualizado exitosamente",
+      "deleteSuccess": "Dispositivo eliminado exitosamente",
+      "refreshSuccess": "Estado del dispositivo actualizado",
+      "controlSuccess": "Dispositivo controlado exitosamente",
+      "addError": "Error al agregar dispositivo",
+      "updateError": "Error al actualizar dispositivo",
+      "deleteError": "Error al eliminar dispositivo",
+      "refreshError": "Error al actualizar dispositivo",
+      "controlError": "Error al controlar dispositivo"
+    }
+  },
+  "analytics": {
+    "title": "Análisis",
+    "subtitle": "Monitorea tu uso de energía y patrones",
+    "timeRange": {
+      "today": "Hoy",
+      "week": "Esta semana",
+      "month": "Este mes",
+      "year": "Este año",
+      "custom": "Rango personalizado"
+    },
+    "metrics": {
+      "totalPower": "Potencia total",
+      "avgPower": "Potencia promedio",
+      "peakPower": "Potencia máxima",
+      "totalEnergy": "Energía total",
+      "cost": "Costo estimado",
+      "motionEvents": "Eventos de movimiento",
+      "uptime": "Tiempo activo"
+    },
+    "charts": {
+      "powerUsage": "Uso de energía",
+      "energyConsumption": "Consumo de energía",
+      "motionActivity": "Actividad de movimiento",
+      "deviceUptime": "Tiempo activo del dispositivo"
+    }
+  },
+  "alerts": {
+    "title": "Alertas",
+    "subtitle": "Monitorea y administra las alertas del sistema",
+    "noAlerts": "Sin alertas",
+    "filters": {
+      "all": "Todas las alertas",
+      "active": "Activas",
+      "acknowledged": "Reconocidas",
+      "severity": {
+        "all": "Todas las severidades",
+        "info": "Info",
+        "warning": "Advertencia",
+        "critical": "Crítico"
+      }
+    },
+    "types": {
+      "device_offline": "Dispositivo fuera de línea",
+      "power_threshold": "Umbral de potencia excedido",
+      "motion_detected": "Movimiento detectado",
+      "temperature_high": "Temperatura alta",
+      "connection_lost": "Conexión perdida",
+      "firmware_update": "Actualización de firmware disponible"
+    },
+    "actions": {
+      "acknowledge": "Reconocer",
+      "dismiss": "Descartar",
+      "viewDetails": "Ver detalles"
+    },
+    "details": {
+      "device": "Dispositivo",
+      "time": "Hora",
+      "severity": "Severidad",
+      "message": "Mensaje",
+      "data": "Datos adicionales"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Configura tus preferencias",
+    "tabs": {
+      "general": "General",
+      "notifications": "Notificaciones",
+      "security": "Seguridad",
+      "advanced": "Avanzado"
+    },
+    "general": {
+      "language": "Idioma",
+      "timezone": "Zona horaria",
+      "dateFormat": "Formato de fecha",
+      "theme": "Tema",
+      "themes": {
+        "light": "Claro",
+        "dark": "Oscuro",
+        "system": "Sistema"
+      }
+    },
+    "notifications": {
+      "email": "Notificaciones por correo",
+      "push": "Notificaciones push",
+      "alerts": {
+        "deviceOffline": "El dispositivo se desconecta",
+        "powerThreshold": "Umbral de potencia excedido",
+        "motionDetected": "Movimiento detectado",
+        "systemErrors": "Errores del sistema"
+      }
+    },
+    "security": {
+      "changePassword": "Cambiar contraseña",
+      "twoFactor": "Autenticación de dos factores",
+      "sessions": "Sesiones activas",
+      "apiKeys": "Claves API"
+    },
+    "messages": {
+      "saveSuccess": "Configuración guardada exitosamente",
+      "saveError": "Error al guardar configuración"
+    }
+  },
+  "errors": {
+    "generic": "Ocurrió un error",
+    "network": "Error de red",
+    "unauthorized": "Acceso no autorizado",
+    "forbidden": "Acceso prohibido",
+    "notFound": "No encontrado",
+    "serverError": "Error del servidor",
+    "timeout": "Tiempo de espera agotado",
+    "retry": "Reintentar"
+  },
+  "time": {
+    "justNow": "Justo ahora",
+    "secondsAgo": "hace {{count}} segundos",
+    "minutesAgo": "hace {{count}} minutos",
+    "hoursAgo": "hace {{count}} horas",
+    "daysAgo": "hace {{count}} días",
+    "weeksAgo": "hace {{count}} semanas",
+    "monthsAgo": "hace {{count}} meses"
+  }
+}
