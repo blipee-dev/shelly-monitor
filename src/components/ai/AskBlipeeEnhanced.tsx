@@ -28,6 +28,7 @@ import { useAutomationStore } from '@/lib/stores/automationStore';
 import { AutomationParser } from '@/lib/automation/parser';
 import { pushManager } from '@/lib/notifications/push-manager';
 import { createClient } from '@/lib/supabase/client';
+import { PredictiveNotificationEngine } from '@/lib/ai/predictive-notifications';
 import { formatDistanceToNow } from 'date-fns';
 
 interface AskBlipeeEnhancedProps {
@@ -79,21 +80,37 @@ SCENES (${scenes.length} total):
 ${scenes.map(s => `- ${s.name}`).join('\n')}
 
 PWA & NOTIFICATION FEATURES:
-- Enable/disable push notifications
-- Test notification delivery
-- Check app installation status
+- Send custom notifications with natural language
+- Analyze your usage patterns for predictive notifications
+- Detect anomalies and unusual behavior
+- Suggest energy-saving notifications
+- Schedule notifications for later or recurring
+- Enable/disable notification types
 - Guide through PWA installation
-- Sync offline data
-- Monitor online/offline status
+
+PREDICTIVE CAPABILITIES:
+- Analyze device usage patterns
+- Predict when you'll need notifications
+- Detect unusual activity
+- Identify energy waste
+- Suggest automations based on behavior
+- Recommend maintenance schedules
 
 You can help with:
 - Controlling devices (turn on/off, adjust brightness)
 - Creating automations (e.g., "Turn off lights at 10 PM")
-- Managing automations (enable, disable, delete)
-- Creating and activating scenes
-- Checking device status and energy consumption
-- Analyzing energy usage patterns
+- Sending notifications (e.g., "Remind me to check the lights in 30 minutes")
+- Analyzing patterns (e.g., "What patterns have you noticed in my usage?")
+- Predicting needs (e.g., "What notifications would help me save energy?")
+- Managing scenes and device groups
 - Providing insights and recommendations
+
+Examples:
+- "Analyze my usage patterns and suggest notifications"
+- "What unusual activity have you detected?"
+- "Suggest energy-saving notifications based on my behavior"
+- "What predictive notifications do you recommend?"
+- "Enable the top 3 suggested notifications"
 
 Be friendly, concise, and helpful. Use device names when referring to specific devices.
 When creating automations, be clear about what will happen and when.`,
@@ -385,6 +402,270 @@ When creating automations, be clear about what will happen and when.`,
             
             return { success: false, message: 'Background sync not supported' };
           }
+
+          case 'send_notification': {
+            try {
+              const notificationState = await pushManager.getPermissionState();
+              
+              if (notificationState.permission !== 'granted') {
+                return { 
+                  success: false, 
+                  message: 'Push notifications are not enabled. Would you like me to enable them first?' 
+                };
+              }
+
+              // Send via service worker for push notification
+              if (args.channel === 'push' || args.channel === 'both' || !args.channel) {
+                const registration = await navigator.serviceWorker.ready;
+                await registration.showNotification(args.title, {
+                  body: args.message,
+                  icon: '/icons/icon-192x192.png',
+                  badge: '/icons/icon-72x72.png',
+                  tag: `custom-${Date.now()}`,
+                  data: {
+                    type: args.type || 'info',
+                    timestamp: new Date().toISOString(),
+                  },
+                });
+              }
+
+              // Queue email notification if requested
+              if (args.channel === 'email' || args.channel === 'both') {
+                const supabase = createClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                
+                if (user) {
+                  await supabase.from('notification_queue').insert({
+                    user_id: user.id,
+                    type: args.type || 'info',
+                    channel: 'email',
+                    title: args.title,
+                    body: args.message,
+                  });
+                }
+              }
+
+              return { 
+                success: true, 
+                message: `Notification sent${args.channel === 'both' ? ' via push and email' : ''}!` 
+              };
+            } catch (error) {
+              return { 
+                success: false, 
+                message: `Failed to send notification: ${error instanceof Error ? error.message : 'Unknown error'}` 
+              };
+            }
+          }
+
+          case 'suggest_notifications': {
+            const suggestions = [];
+            const category = args.category || 'all';
+
+            // Energy suggestions
+            if (category === 'energy' || category === 'all') {
+              suggestions.push({
+                title: 'High Energy Alert',
+                description: 'Get notified when any device exceeds 1000W power consumption',
+                type: 'energy_threshold',
+              });
+              suggestions.push({
+                title: 'Daily Energy Report',
+                description: 'Receive a summary of your energy usage every evening at 8 PM',
+                type: 'energy_report',
+              });
+            }
+
+            // Security suggestions
+            if (category === 'security' || category === 'all') {
+              suggestions.push({
+                title: 'Device Offline Alert',
+                description: 'Instant notification when any device loses connection',
+                type: 'device_offline',
+              });
+              suggestions.push({
+                title: 'Unusual Activity',
+                description: 'Alert when devices are activated at unusual times',
+                type: 'security_alert',
+              });
+            }
+
+            // Maintenance suggestions
+            if (category === 'maintenance' || category === 'all') {
+              suggestions.push({
+                title: 'Weekly Device Check',
+                description: 'Reminder to check device firmware updates every Sunday',
+                type: 'maintenance_reminder',
+              });
+              suggestions.push({
+                title: 'Low Battery Warning',
+                description: 'Alert when battery-powered devices drop below 20%',
+                type: 'battery_low',
+              });
+            }
+
+            // Automation suggestions based on current devices
+            if ((category === 'automation' || category === 'all') && devices.length > 0) {
+              const hasMotionSensor = devices.some(d => d.type === 'motion');
+              const hasLights = devices.some(d => d.type === 'plus2pm' || d.type === 'dimmer2');
+              
+              if (hasMotionSensor && hasLights) {
+                suggestions.push({
+                  title: 'Motion Alert',
+                  description: 'Notify when motion is detected while you\'re away',
+                  type: 'motion_alert',
+                });
+              }
+              
+              suggestions.push({
+                title: 'Automation Success',
+                description: 'Confirm when scheduled automations run successfully',
+                type: 'automation_triggered',
+              });
+            }
+
+            return {
+              success: true,
+              suggestions,
+              message: `Here are some notification suggestions${category !== 'all' ? ` for ${category}` : ''}. Would you like me to enable any of these?`,
+            };
+          }
+
+          case 'schedule_notification': {
+            try {
+              const supabase = createClient();
+              const { data: { user } } = await supabase.auth.getUser();
+              
+              if (!user) {
+                return { success: false, message: 'Please sign in to schedule notifications' };
+              }
+
+              // Parse schedule time
+              const now = new Date();
+              let scheduledTime: Date;
+              let cronExpression: string | null = null;
+
+              // Simple parsing - in production, use a proper NLP date parser
+              if (args.schedule_time.includes('minutes')) {
+                const minutes = parseInt(args.schedule_time.match(/\d+/)?.[0] || '30');
+                scheduledTime = new Date(now.getTime() + minutes * 60000);
+              } else if (args.schedule_time.includes('tomorrow')) {
+                scheduledTime = new Date(now);
+                scheduledTime.setDate(scheduledTime.getDate() + 1);
+                scheduledTime.setHours(9, 0, 0, 0); // Default to 9 AM
+              } else if (args.recurring && args.schedule_time.includes('every')) {
+                // Handle recurring notifications
+                if (args.schedule_time.includes('Monday')) {
+                  cronExpression = '0 9 * * 1'; // Every Monday at 9 AM
+                } else if (args.schedule_time.includes('day')) {
+                  cronExpression = '0 9 * * *'; // Every day at 9 AM
+                }
+                scheduledTime = new Date(); // Set to now, cron will handle timing
+              } else {
+                scheduledTime = new Date(now.getTime() + 3600000); // Default to 1 hour
+              }
+
+              // Store scheduled notification
+              await supabase.from('scheduled_notifications').insert({
+                user_id: user.id,
+                title: args.title,
+                message: args.message,
+                scheduled_time: scheduledTime.toISOString(),
+                cron_expression: cronExpression,
+                is_recurring: args.recurring || false,
+                status: 'pending',
+              });
+
+              return {
+                success: true,
+                message: `Notification scheduled for ${scheduledTime.toLocaleString()}${args.recurring ? ' (recurring)' : ''}`,
+              };
+            } catch (error) {
+              return {
+                success: false,
+                message: `Failed to schedule notification: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              };
+            }
+          }
+
+          case 'analyze_predictive_notifications': {
+            try {
+              const supabase = createClient();
+              const { data: { user } } = await supabase.auth.getUser();
+              
+              if (!user) {
+                return { success: false, message: 'Please sign in to analyze patterns' };
+              }
+
+              // Analyze patterns using the predictive engine
+              const predictions = await PredictiveNotificationEngine.analyzePatternsAndSuggest(
+                devices,
+                automations,
+                user.id
+              );
+
+              // Filter by focus area if specified
+              let filteredPredictions = predictions;
+              if (args.focus && args.focus !== 'all') {
+                filteredPredictions = predictions.filter(p => {
+                  switch (args.focus) {
+                    case 'patterns': return p.type === 'pattern';
+                    case 'anomalies': return p.type === 'anomaly';
+                    case 'energy': return p.type === 'optimization';
+                    case 'maintenance': return p.trigger.type === 'time' && p.title.includes('Maintenance');
+                    case 'behavior': return p.type === 'prediction';
+                    default: return true;
+                  }
+                });
+              }
+
+              // Auto-enable top suggestions if requested
+              if (args.enable_suggested && filteredPredictions.length > 0) {
+                const topPredictions = filteredPredictions.slice(0, 3);
+                
+                for (const prediction of topPredictions) {
+                  // Create notification based on prediction
+                  if (prediction.trigger.type === 'time') {
+                    await supabase.from('scheduled_notifications').insert({
+                      user_id: user.id,
+                      title: prediction.title,
+                      message: prediction.message,
+                      scheduled_time: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
+                      is_recurring: prediction.trigger.condition.includes('daily'),
+                    });
+                  } else {
+                    // Enable the relevant notification type
+                    await supabase
+                      .from('user_preferences')
+                      .upsert({
+                        user_id: user.id,
+                        notification_preferences: {
+                          [`${prediction.type}_alerts`]: true,
+                        },
+                      });
+                  }
+                }
+              }
+
+              return {
+                success: true,
+                predictions: filteredPredictions.map(p => ({
+                  title: p.title,
+                  message: p.message,
+                  confidence: `${Math.round(p.confidence * 100)}%`,
+                  trigger: p.trigger.condition,
+                  action: p.suggestedAction?.description,
+                })),
+                message: filteredPredictions.length > 0 
+                  ? `Found ${filteredPredictions.length} predictive notification opportunities based on your usage patterns!`
+                  : 'No significant patterns detected yet. Keep using your devices and I\'ll learn your habits!',
+              };
+            } catch (error) {
+              return {
+                success: false,
+                message: `Failed to analyze patterns: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              };
+            }
+          }
         }
       } catch (error) {
         console.error(`Function ${name} failed:`, error);
@@ -415,10 +696,10 @@ When creating automations, be clear about what will happen and when.`,
   };
 
   const suggestedQuestions = [
-    "What's my current energy usage?",
-    "Turn off all lights at 10 PM",
-    "Enable push notifications",
-    "Install this app on my phone",
+    "Analyze my usage patterns",
+    "What predictive notifications do you suggest?",
+    "Detect any unusual activity",
+    "Show me energy-saving opportunities",
   ];
 
   return (

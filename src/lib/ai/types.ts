@@ -265,4 +265,92 @@ export const DEVICE_FUNCTIONS: AIFunction[] = [
       required: [],
     },
   },
+  {
+    name: 'send_notification',
+    description: 'Send a custom notification to the user',
+    parameters: {
+      type: 'object',
+      properties: {
+        title: {
+          type: 'string',
+          description: 'Notification title',
+        },
+        message: {
+          type: 'string',
+          description: 'Notification message/body',
+        },
+        type: {
+          type: 'string',
+          enum: ['info', 'success', 'warning', 'alert', 'reminder'],
+          description: 'Type of notification',
+        },
+        channel: {
+          type: 'string',
+          enum: ['push', 'email', 'both'],
+          description: 'Delivery channel (defaults to push)',
+        },
+      },
+      required: ['title', 'message'],
+    },
+  },
+  {
+    name: 'suggest_notifications',
+    description: 'Suggest relevant notifications based on user\'s devices and usage patterns',
+    parameters: {
+      type: 'object',
+      properties: {
+        category: {
+          type: 'string',
+          enum: ['energy', 'security', 'maintenance', 'automation', 'all'],
+          description: 'Category of suggestions to provide',
+        },
+      },
+      required: [],
+    },
+  },
+  {
+    name: 'schedule_notification',
+    description: 'Schedule a notification for a future time',
+    parameters: {
+      type: 'object',
+      properties: {
+        title: {
+          type: 'string',
+          description: 'Notification title',
+        },
+        message: {
+          type: 'string',
+          description: 'Notification message',
+        },
+        schedule_time: {
+          type: 'string',
+          description: 'When to send (e.g., "in 30 minutes", "tomorrow at 9am", "every Monday")',
+        },
+        recurring: {
+          type: 'boolean',
+          description: 'Whether this is a recurring notification',
+        },
+      },
+      required: ['title', 'message', 'schedule_time'],
+    },
+  },
+  {
+    name: 'analyze_predictive_notifications',
+    description: 'Analyze usage patterns and suggest predictive notifications based on behavior',
+    parameters: {
+      type: 'object',
+      properties: {
+        focus: {
+          type: 'string',
+          enum: ['all', 'patterns', 'anomalies', 'energy', 'maintenance', 'behavior'],
+          description: 'What type of predictions to focus on',
+        },
+        enable_suggested: {
+          type: 'boolean',
+          description: 'Whether to automatically enable the top suggestions',
+        },
+      },
+      required: [],
+    },
+  },
 ];
