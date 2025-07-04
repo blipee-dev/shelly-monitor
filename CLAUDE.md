@@ -16,14 +16,24 @@ Shelly Monitor is an enterprise-grade IoT device monitoring platform for Shelly 
 
 ## Key Features Implemented
 
+### Day 1 (July 3, 2025)
 1. **API Documentation**: OpenAPI 3.1 spec with Swagger UI at `/api-docs`
-2. **Database**: Partitioned tables, RLS policies, automated maintenance
+2. **Core Infrastructure**: Next.js setup, TypeScript configuration
 3. **Security**: Rate limiting, JWT auth, audit logging, RBAC
 4. **Monitoring**: Prometheus metrics at `/api/metrics`
 5. **Testing**: Comprehensive test suites with >80% coverage
 6. **i18n**: Multi-language support (EN, ES)
 7. **Feature Flags**: Runtime toggles with rollout control
 8. **Audit Logging**: Complete activity tracking with admin viewer
+
+### Day 2 (July 4, 2025) - Supabase Integration
+1. **Database**: Complete Supabase integration with migrations
+2. **Schema**: 13 tables with partitioning for time-series data
+3. **Security**: Row Level Security (RLS) on all tables
+4. **Automation**: pg_cron for maintenance, partition management
+5. **Scripts**: Comprehensive database management scripts
+6. **Testing**: Database verification and seeding tools
+7. **Documentation**: Complete setup guides and migration docs
 
 ## Important Commands
 
@@ -39,9 +49,20 @@ npm run test:unit       # Unit tests only
 npm run test:e2e        # E2E tests with Playwright
 npm run test:coverage   # Generate coverage report
 
-# Database
-npm run db:setup        # Initialize database
-npm run db:seed         # Seed sample data
+# Database - Basic
+npm run db:setup        # Initialize database with migrations
+npm run db:seed         # Seed comprehensive test data
+npm run db:migrate      # Run migrations only
+npm run db:reset        # Reset database and re-run migrations
+
+# Database - Advanced
+npm run setup:complete  # One-command complete setup
+npm run check:env       # Verify environment variables
+npm run check:schema    # Verify database schema
+npm run test:db         # Test database connection
+npm run test:complete   # Comprehensive setup verification
+npm run sync:users      # Sync Supabase auth users
+npm run seed:simple     # Minimal test data
 
 # Build & Deploy
 npm run build           # Production build
@@ -136,6 +157,42 @@ Key environment variables needed:
 - Supabase logs in dashboard
 - Metrics available at `/api/metrics`
 - Audit logs viewable by admins
+
+## Day 2 Specific Updates
+
+### Database Implementation
+- **Migrations**: Located in `supabase/migrations/`
+  - `001_initial_schema.sql` - Core tables, indexes, RLS
+  - `002_functions_and_procedures.sql` - Triggers, functions
+- **Scripts**: Located in `scripts/`
+  - Database setup and verification tools
+  - Seeding scripts for different scenarios
+  - Utility scripts for development
+
+### Key Database Features
+1. **Partitioning**: Time-series tables partitioned by month
+2. **RLS Policies**: Complete security on all tables
+3. **Automation**: pg_cron jobs for maintenance
+4. **Encryption**: Credentials encrypted at rest
+5. **Audit Trail**: Comprehensive logging of all actions
+
+### Supabase Integration Points
+- Client: `src/lib/supabase/client.ts`
+- Server: `src/lib/supabase/server.ts`
+- Middleware: `src/lib/supabase/middleware.ts`
+- Types: `src/types/database.ts`
+
+### Testing Database Setup
+```bash
+# Quick test with minimal data
+npm run test:db && npm run seed:simple
+
+# Full test with comprehensive data
+npm run setup:complete
+
+# Reset everything and start fresh
+npm run db:reset && npm run db:seed
+```
 
 ## Contact
 

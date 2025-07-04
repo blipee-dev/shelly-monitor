@@ -130,15 +130,18 @@ Shelly Monitor is an enterprise-ready IoT platform that provides comprehensive d
    NEXT_PUBLIC_APP_URL=http://localhost:3000
    NEXT_PUBLIC_APP_NAME="Shelly Monitor"
    
-   # Supabase
+   # Supabase (Required)
    NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+   SUPABASE_SERVICE_KEY=your-service-role-key
    
    # Security
    JWT_SECRET=your-jwt-secret
    SESSION_SECRET=your-session-secret
    ENCRYPTION_KEY=your-32-byte-encryption-key
+   
+   # Monitoring
+   METRICS_AUTH_TOKEN=your-metrics-token
    
    # Optional: External Services
    SENDGRID_API_KEY=your-sendgrid-key        # Email notifications
@@ -148,16 +151,29 @@ Shelly Monitor is an enterprise-ready IoT platform that provides comprehensive d
 
 5. **Set up the database**
    ```bash
+   # Verify environment configuration
+   npm run check:env
+   
    # Create tables and run migrations
    npm run db:setup
    
    # Seed with sample data (optional)
    npm run db:seed
+   
+   # Or run complete setup in one command
+   npm run setup:complete
    ```
 
-6. **Verify configuration**
+6. **Verify setup**
    ```bash
-   npm run check:env
+   # Test database connection
+   npm run test:db
+   
+   # Check schema is properly created
+   npm run check:schema
+   
+   # Run complete verification
+   npm run test:complete
    ```
 
 7. **Start development server**
@@ -167,6 +183,10 @@ Shelly Monitor is an enterprise-ready IoT platform that provides comprehensive d
 
 8. **Access the application**
    Navigate to `http://localhost:3000`
+
+   **Test Credentials** (if seeded):
+   - Admin: `admin@example.com` / `Admin123!`
+   - User: `user@example.com` / `User123!`
 
 ### Advanced Configuration
 
@@ -316,6 +336,28 @@ The complete OpenAPI 3.1 specification is available at:
 - Document API changes in OpenAPI spec
 - Update translations for UI changes
 - Add feature flags for experimental features
+
+### Database Management
+
+1. **Running Migrations**
+   ```bash
+   npm run db:migrate        # Run pending migrations
+   npm run db:reset         # Reset and re-run all migrations
+   npm run db:seed          # Seed with test data
+   ```
+
+2. **Database Scripts**
+   - `setup-db.ts` - Initial database setup
+   - `seed-data.ts` - Comprehensive test data
+   - `simple-seed.ts` - Minimal test data
+   - `reset-and-seed.ts` - Reset and seed for development
+   - `sync-users.ts` - Sync Supabase auth users
+   - `test-complete.ts` - Verify complete setup
+
+3. **Maintenance**
+   - Automated partition creation monthly
+   - Old data cleanup runs daily at 2 AM
+   - Manual maintenance available via scripts
 
 ### Git Workflow
 - Main branch: Production-ready code

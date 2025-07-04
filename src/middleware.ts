@@ -2,16 +2,18 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { globalRateLimit, authRateLimit, apiRateLimit, controlRateLimit } from '@/lib/api/rate-limiter';
 import { auditLog } from '@/lib/audit';
+import { updateSession } from '@/lib/supabase/middleware';
 
 // Define public routes that don't require authentication
 const publicRoutes = [
   '/',
-  '/login',
-  '/register',
-  '/forgot-password',
-  '/api/auth/login',
-  '/api/auth/register',
-  '/api/auth/refresh',
+  '/auth/signin',
+  '/auth/signup',
+  '/auth/reset-password',
+  '/api/auth/signin',
+  '/api/auth/signup',
+  '/api/auth/reset',
+  '/api/auth/callback',
   '/api/health',
   '/_next',
   '/favicon.ico',
@@ -56,31 +58,32 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // Update Supabase session
+  const response = await updateSession(request);
+  
   // Allow public routes
   if (publicRoutes.some(route => pathname.startsWith(route))) {
-    return NextResponse.next();
+    return response;
   }
 
-  // Check for authentication token
-  const token = request.cookies.get('auth-token');
+  // Check for Supabase session
+  const hasSession = request.cookies.has('sb-auth-token') || 
+                     request.cookies.has(`sb-${process.env.NEXT_PUBLIC_SUPABASE_URL?.split('//')[1].split('.')[0]}-auth-token`);
   
-  // Redirect to login if no token on protected routes
-  if (!token && !pathname.startsWith('/api')) {
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('from', pathname);
+  // Redirect to login if no session on protected routes
+  if (!hasSession && !pathname.startsWith('/api')) {
+    const loginUrl = new URL('/auth/signin', request.url);
+    loginUrl.searchParams.set('redirectTo', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  // For API routes, return 401 if no token
-  if (!token && pathname.startsWith('/api')) {
+  // For API routes, return 401 if no session
+  if (!hasSession && pathname.startsWith('/api')) {
     return NextResponse.json(
       { error: 'Authentication required' },
       { status: 401 }
     );
   }
-
-  // Add security headers
-  const response = NextResponse.next();
   
   // Security headers
   response.headers.set('X-Frame-Options', 'DENY');
