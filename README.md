@@ -5,11 +5,13 @@ Enterprise-grade monitoring platform for Shelly IoT devices with real-time dashb
 ## Features
 
 - **Real-time Monitoring**: Live device status and metrics
-- **Multi-device Support**: Shelly Plus 2PM and Motion 2
-- **Advanced Analytics**: Historical data and insights
+- **Multi-device Support**: Plus 2PM, Plus 1PM, Motion 2, Dimmer 2, BLU Motion
+- **AI Assistant "Ask Blipee"**: Natural language control and automation
+- **Smart Automations**: Schedule and trigger-based device control
+- **One-tap Scenes**: Control multiple devices instantly
+- **Advanced Analytics**: Energy consumption tracking and insights
 - **Remote Control**: Device management from anywhere
 - **Enterprise Security**: RBAC, audit logs, secure API
-- **Scalable Architecture**: Built for growth
 - **Material Design 3**: Modern, responsive UI
 - **Email Notifications**: SMTP integration for alerts
 
@@ -17,6 +19,7 @@ Enterprise-grade monitoring platform for Shelly IoT devices with real-time dashb
 
 - **Frontend**: Next.js 14, TypeScript, Material UI v5, Zustand
 - **Backend**: Supabase (PostgreSQL, Auth, Realtime)
+- **AI**: DeepSeek, OpenAI, Anthropic (multi-provider support)
 - **Testing**: Jest, Playwright
 - **Monitoring**: Prometheus metrics
 - **Email**: Custom SMTP support
@@ -44,6 +47,30 @@ npm run dev
 ```
 
 Visit http://localhost:3000
+
+## AI Assistant - Ask Blipee
+
+Ask Blipee is your intelligent home assistant that understands natural language:
+
+### Device Control
+- "Turn off all lights"
+- "Dim the living room to 50%"
+- "What's my current energy usage?"
+
+### Automations
+- "Turn off all lights at 10 PM every day"
+- "When motion is detected, turn on hallway lights"
+- "Create a morning routine"
+
+### Scenes
+- "Create a movie night scene"
+- "Activate bedtime mode"
+- "Set up an away mode"
+
+### Management
+- "Show me all my automations"
+- "Disable the morning routine"
+- "What scenes do I have?"
 
 ## Documentation
 

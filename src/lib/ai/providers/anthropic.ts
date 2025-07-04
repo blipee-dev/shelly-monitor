@@ -103,7 +103,7 @@ export class AnthropicProvider implements AIProvider {
       }
     } catch (error) {
       console.error('Anthropic streaming error:', error);
-      throw new Error(`AI streaming failed: ${error instanceof Error ? error.message : 'Unknown error'}`));
+      throw new Error(`AI streaming failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 

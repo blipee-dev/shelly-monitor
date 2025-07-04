@@ -369,6 +369,127 @@ http://localhost:3000/analytics
 - Try: "Show me energy saving tips"
 ```
 
+## Day 7 Specific Updates - Automation & Scheduling
+
+### Implemented Features
+1. **AI-Powered Automation System**
+   - Natural language automation creation
+   - Time-based triggers (daily, specific times)
+   - Event-based triggers (motion, device state)
+   - Sunrise/sunset triggers with offsets
+   - Multi-action support with delays
+
+2. **Enhanced Ask Blipee Integration**
+   - Full automation management via chat
+   - Create: "Turn off all lights at 10 PM"
+   - Manage: "Disable the morning routine"
+   - Query: "Show me all my automations"
+   - Scene control: "Activate movie night"
+
+3. **Scenes System**
+   - One-tap multi-device control
+   - AI-created scenes from descriptions
+   - Favorite scenes for quick access
+   - Visual scene cards with contextual icons
+
+4. **Automation UI**
+   - Visual automation management page
+   - Three tabs: Automations, Scenes, Activity Log
+   - Real-time status updates
+   - Enable/disable toggles
+   - Manual execution buttons
+
+### Natural Language Examples
+```
+// Creating Automations
+"Create an automation to turn off all lights at bedtime"
+"When motion is detected in the hallway, turn on the lights"
+"Turn on the porch light 30 minutes before sunset"
+
+// Managing Automations
+"Show me all my automations"
+"Disable the morning routine"
+"Delete the vacation mode automation"
+"Enable all lighting automations"
+
+// Creating Scenes
+"Create a movie night scene that dims the lights"
+"Make a good morning scene that turns on kitchen and living room lights"
+"Create an away mode that turns everything off"
+
+// Activating Scenes
+"Activate movie night"
+"Turn on bedtime mode"
+"Set the house to away mode"
+```
+
+### Key Files
+- `src/types/automation.ts` - Comprehensive automation types
+- `src/lib/automation/parser.ts` - Natural language parser
+- `src/lib/stores/automationStore.ts` - Automation state management
+- `src/components/ai/AskBlipeeEnhanced.tsx` - Enhanced AI chat
+- `src/app/(dashboard)/automations/page.tsx` - Automations UI
+- `src/app/api/automations/` - Automation execution endpoints
+
+### Database Migration Required
+Run the automation migration in Supabase SQL editor:
+```sql
+-- Copy contents of supabase/migrations/004_automations.sql
+```
+
+This adds:
+- `automations` table with triggers, conditions, and actions
+- `scenes` table for one-tap device control
+- `automation_logs` table for execution history
+- Validation functions and triggers
+- Next trigger time calculation
+
+### Architecture Notes
+1. **Automation Engine**
+   - JSONB storage for flexible trigger/action definitions
+   - Real-time subscriptions for status updates
+   - Execution logging for debugging
+   - Automatic next trigger calculation
+
+2. **AI Integration**
+   - Function calling for all automation operations
+   - Context-aware responses with existing automations
+   - Natural language parsing to structured rules
+   - Smart scene name generation
+
+3. **Execution Flow**
+   - API endpoints handle execution
+   - Actions processed sequentially with delays
+   - Device control integration ready
+   - Error handling with partial success states
+
+### Testing Automations
+```bash
+# Start development server
+npm run dev
+
+# Navigate to Automations page
+http://localhost:3000/automations
+
+# Test with Ask Blipee
+- "Create a daily automation to turn off lights at 11 PM"
+- "Show me all my automations"
+- "Create a movie night scene"
+- "Activate movie night"
+```
+
+## Phase 1 Progress
+- ✅ Day 1: Core Infrastructure
+- ✅ Day 2: Supabase Integration
+- ✅ Day 3: Material Design 3 Theme
+- ✅ Day 4: Authentication System
+- ✅ Day 5: Device Management UI
+- ✅ Day 6: Analytics & AI Integration
+- ✅ Day 7: Automation & Scheduling
+- 🔲 Day 8: Mobile PWA & Push Notifications
+- 🔲 Day 9: Export/Import & Backup System
+- 🔲 Day 10: Performance Optimization & Testing
+
 ## Contact
 
 Project repository: https://github.com/blipee-dev/shelly-monitor

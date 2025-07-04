@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Container,
-  Grid,
   Paper,
   Typography,
   Box,
@@ -14,6 +13,7 @@ import {
   LinearProgress,
   Tooltip,
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import {
   TrendingUp,
   TrendingDown,
@@ -108,9 +108,7 @@ function MetricCard({ title, value, unit, change, icon, color = 'primary.main' }
               justifyContent: 'center',
             }}
           >
-            {React.cloneElement(icon as React.ReactElement, {
-              sx: { color, fontSize: 24 },
-            })}
+            {icon}
           </Box>
         </Box>
       </CardContent>
@@ -126,8 +124,8 @@ export default function AnalyticsPage() {
   // Calculate metrics
   const onlineDevices = devices.filter(d => d.status === 'online').length;
   const totalPower = devices.reduce((sum, device) => {
-    if (device.status === 'online' && device.data) {
-      const power = device.data.switch0?.apower || 0;
+    if (device.status === 'online' && (device as any).data) {
+      const power = (device as any).data?.switch0?.apower || 0;
       return sum + power;
     }
     return sum;
@@ -193,11 +191,29 @@ export default function AnalyticsPage() {
   };
 
   const barOptions: ChartOptions<'bar'> = {
-    ...chartOptions,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
-      ...chartOptions.plugins,
       legend: {
         display: false,
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 12,
+        cornerRadius: 8,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        grid: {
+          color: 'rgba(0, 0, 0, 0.05)',
+        },
       },
     },
   };
