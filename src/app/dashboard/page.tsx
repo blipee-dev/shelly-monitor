@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Typography, Paper } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import { Box, Typography, Paper, Grid } from '@mui/material';
 import { Card, Surface } from '@/components/ui';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useRequireAuth } from '@/lib/auth/hooks';
@@ -27,7 +26,7 @@ export default function DashboardPage() {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Grid item xs={12} sm={6} md={3}>
             <Card variant="elevated">
               <Box sx={{ p: 3 }}>
                 <Typography variant="labelMedium" color="text.secondary" gutterBottom>
@@ -38,7 +37,7 @@ export default function DashboardPage() {
             </Card>
           </Grid>
           
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Grid item xs={12} sm={6} md={3}>
             <Card variant="elevated">
               <Box sx={{ p: 3 }}>
                 <Typography variant="labelMedium" color="text.secondary" gutterBottom>
@@ -49,7 +48,7 @@ export default function DashboardPage() {
             </Card>
           </Grid>
           
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Grid item xs={12} sm={6} md={3}>
             <Card variant="elevated">
               <Box sx={{ p: 3 }}>
                 <Typography variant="labelMedium" color="text.secondary" gutterBottom>
@@ -60,7 +59,7 @@ export default function DashboardPage() {
             </Card>
           </Grid>
           
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Grid item xs={12} sm={6} md={3}>
             <Card variant="elevated">
               <Box sx={{ p: 3 }}>
                 <Typography variant="labelMedium" color="text.secondary" gutterBottom>
