@@ -52,6 +52,24 @@ export function useAuth() {
     });
 
     if (error) throw error;
+
+    // Create user record in database
+    if (data.user) {
+      const { error: dbError } = await supabase
+        .from('users')
+        .insert({
+          id: data.user.id,
+          email: data.user.email!,
+          name: metadata?.name || data.user.email!.split('@')[0],
+          role: 'user',
+          password_hash: null,
+        });
+
+      if (dbError && dbError.code !== '23505') { // Ignore duplicate key errors
+        console.error('Failed to create user record:', dbError);
+      }
+    }
+
     return data;
   };
 

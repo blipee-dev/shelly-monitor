@@ -34,7 +34,13 @@ export const signUpSchema = z
     email: z
       .string()
       .min(1, 'Email is required')
-      .email('Invalid email address'),
+      .email('Invalid email address')
+      .refine((email) => {
+        // Prevent known invalid test domains
+        const invalidDomains = ['shellymonitor.com', 'testdomain.com', 'invalid.com'];
+        const domain = email.split('@')[1];
+        return !invalidDomains.includes(domain);
+      }, 'Please use a valid email domain'),
     password: passwordSchema,
     confirmPassword: z.string().min(1, 'Please confirm your password'),
     acceptTerms: z
