@@ -220,6 +220,38 @@ npm run dev
 npx tsx scripts/test-theme.ts
 ```
 
+## Day 4 Specific Updates
+
+### Authentication System
+- **Auth Pages**: Located in `src/app/auth/`
+  - Sign in, sign up, password reset pages
+  - Full Material UI integration
+  - Form validation with Zod
+- **Auth Hooks**: `src/lib/auth/hooks.ts`
+  - useAuth() for auth operations
+  - useRequireAuth() for protected routes
+  - useRequireNoAuth() for public routes
+- **Dashboard Layout**: `src/components/layout/DashboardLayout.tsx`
+  - Responsive navigation with NavigationRail
+  - Mobile drawer support
+  - User profile menu
+
+### Testing Authentication
+```bash
+# Create test users
+npx tsx scripts/create-test-users.ts
+
+# Test auth flows
+npx tsx scripts/test-auth.ts
+
+# Fix users table if needed
+# Run scripts/fix-users-table.sql in Supabase SQL Editor
+```
+
+### Test Accounts
+- Email: demo@shellymonitor.com / Password: Demo123!
+- Email: test@shellymonitor.com / Password: Test123!
+
 ## Contact
 
 Project repository: https://github.com/blipee-dev/shelly-monitor
