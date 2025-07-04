@@ -1,0 +1,48 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  
+  "crons": [
+    {
+      "path": "/api/polling",
+      "schedule": "*/5 * * * *"
+    }
+  ],
+  
+  "functions": {
+    "src/app/api/polling/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/data/export/route.ts": {
+      "maxDuration": 300
+    }
+  },
+  
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
+  ],
+  
+  "env": {
+    "NEXT_PUBLIC_APP_URL": "@app_url",
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key"
+  },
+  
+  "build": {
+    "env": {
+      "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
+      "CRON_SECRET": "@cron_secret"
+    }
+  }
+}
