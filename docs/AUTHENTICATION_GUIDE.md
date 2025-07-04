@@ -189,11 +189,13 @@ Provides consistent layout for auth pages:
 For development and testing:
 
 ```
-Email: demo@shellymonitor.com
-Password: Demo123!
+Admin Account:
+Email: admin@example.com
+Password: Admin123!
 
-Email: test@shellymonitor.com
-Password: Test123!
+User Account:
+Email: user@example.com
+Password: User123!
 ```
 
 ## Database Setup

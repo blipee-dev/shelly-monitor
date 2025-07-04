@@ -249,8 +249,8 @@ npx tsx scripts/test-auth.ts
 ```
 
 ### Test Accounts
-- Email: demo@shellymonitor.com / Password: Demo123!
-- Email: test@shellymonitor.com / Password: Test123!
+- Admin: admin@example.com / Password: Admin123!
+- User: user@example.com / Password: User123!
 
 ## Contact
 
