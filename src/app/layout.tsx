@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     title: 'Shelly Monitor',
   },
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
 };
 
 export const viewport: Viewport = {
