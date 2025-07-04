@@ -37,7 +37,7 @@ export const signUpSchema = z
       .email('Invalid email address')
       .refine((email) => {
         // Prevent known invalid test domains
-        const invalidDomains = ['shellymonitor.com', 'testdomain.com', 'invalid.com'];
+        const invalidDomains = ['shellymonitor.com', 'testdomain.com', 'invalid.com', 'example.com'];
         const domain = email.split('@')[1];
         return !invalidDomains.includes(domain);
       }, 'Please use a valid email domain'),

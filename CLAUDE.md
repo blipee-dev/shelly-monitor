@@ -220,7 +220,7 @@ npm run dev
 npx tsx scripts/test-theme.ts
 ```
 
-## Day 4 Specific Updates
+## Day 4 Specific Updates (July 5, 2025)
 
 ### Authentication System
 - **Auth Pages**: Located in `src/app/auth/`
@@ -236,21 +236,24 @@ npx tsx scripts/test-theme.ts
   - Mobile drawer support
   - User profile menu
 
+### Email/SMTP Configuration
+- **Provider**: Google Workspace with blipee.com domain
+- **Sender**: no-reply@blipee.com
+- **DNS**: SPF and DKIM properly configured
+- **Documentation**: See `docs/CUSTOM_SMTP_SETUP.md`
+
 ### Testing Authentication
 ```bash
-# Create test users
-npx tsx scripts/create-test-users.ts
+# Create test users (no emails sent)
+npx tsx scripts/create-valid-test-users.ts
 
-# Test auth flows
-npx tsx scripts/test-auth.ts
-
-# Fix users table if needed
-# Run scripts/fix-users-table.sql in Supabase SQL Editor
+# Test SMTP configuration
+npx tsx scripts/test-blipee-smtp.ts
 ```
 
 ### Test Accounts
-- Admin: admin@example.com / Password: Admin123!
-- User: user@example.com / Password: User123!
+- Admin: test.admin@gmail.com / Password: Admin123!
+- User: test.user@gmail.com / Password: User123!
 
 ## Contact
 
