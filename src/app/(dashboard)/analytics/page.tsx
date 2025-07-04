@@ -25,7 +25,7 @@ import {
   Schedule,
 } from '@mui/icons-material';
 import { useDeviceStore } from '@/lib/stores/deviceStore';
-import AskBlipee from '@/components/ai/AskBlipee';
+import AskBlipeeEnhanced from '@/components/ai/AskBlipeeEnhanced';
 import { format, startOfDay, endOfDay } from 'date-fns';
 import {
   Chart as ChartJS,
@@ -344,7 +344,7 @@ export default function AnalyticsPage() {
         {/* Ask Blipee Chat */}
         <Grid item xs={12} lg={6}>
           <Box sx={{ height: 500 }}>
-            <AskBlipee onDeviceControl={handleDeviceControl} />
+            <AskBlipeeEnhanced onDeviceControl={handleDeviceControl} />
           </Box>
         </Grid>
 

@@ -28,6 +28,7 @@ import {
   Person as PersonIcon,
   Logout as LogoutIcon,
   Help as HelpIcon,
+  Schedule as AutomationIcon,
 } from '@mui/icons-material';
 import { NavigationRail, NavigationItem } from '@/components/ui';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
@@ -68,6 +69,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       label: t('navigation.analytics'),
       icon: <AnalyticsIcon />,
       onClick: () => router.push('/analytics'),
+    },
+    {
+      id: 'automations',
+      label: t('navigation.automations'),
+      icon: <AutomationIcon />,
+      onClick: () => router.push('/automations'),
     },
     {
       id: 'alerts',

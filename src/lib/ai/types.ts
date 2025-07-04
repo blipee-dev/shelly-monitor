@@ -130,4 +130,86 @@ export const DEVICE_FUNCTIONS: AIFunction[] = [
       required: ['name', 'trigger', 'action'],
     },
   },
+  {
+    name: 'manage_automation',
+    description: 'Enable, disable, or delete an existing automation',
+    parameters: {
+      type: 'object',
+      properties: {
+        automation_name: {
+          type: 'string',
+          description: 'Name of the automation to manage',
+        },
+        action: {
+          type: 'string',
+          enum: ['enable', 'disable', 'delete'],
+          description: 'Action to perform on the automation',
+        },
+      },
+      required: ['automation_name', 'action'],
+    },
+  },
+  {
+    name: 'list_automations',
+    description: 'List all automations or filter by status',
+    parameters: {
+      type: 'object',
+      properties: {
+        filter: {
+          type: 'string',
+          enum: ['all', 'enabled', 'disabled'],
+          description: 'Filter automations by status',
+        },
+      },
+      required: [],
+    },
+  },
+  {
+    name: 'create_scene',
+    description: 'Create a scene with multiple device actions',
+    parameters: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+          description: 'Name of the scene (e.g., "Movie Night", "Good Morning")',
+        },
+        description: {
+          type: 'string',
+          description: 'What this scene does',
+        },
+        actions: {
+          type: 'array',
+          description: 'List of actions like "turn off living room lights, dim TV backlights to 20%"',
+          items: {
+            type: 'string',
+          },
+        },
+      },
+      required: ['name', 'actions'],
+    },
+  },
+  {
+    name: 'activate_scene',
+    description: 'Activate a saved scene',
+    parameters: {
+      type: 'object',
+      properties: {
+        scene_name: {
+          type: 'string',
+          description: 'Name of the scene to activate',
+        },
+      },
+      required: ['scene_name'],
+    },
+  },
+  {
+    name: 'list_scenes',
+    description: 'List all available scenes',
+    parameters: {
+      type: 'object',
+      properties: {},
+      required: [],
+    },
+  },
 ];
