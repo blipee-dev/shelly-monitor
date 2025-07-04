@@ -254,8 +254,9 @@ export function FeatureFlag({
 // Provider component to initialize feature flags
 export function FeatureFlagProvider({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
-    // Fetch remote flags on mount
-    fetchRemoteFlags();
+    // Initialize flags with default user context on mount
+    // The actual user context will be set when the user authenticates
+    initializeFeatureFlags();
   }, []);
   
   return <>{children}</>;

@@ -1,19 +1,20 @@
 # Shelly Monitor
 
-Enterprise-grade monitoring platform for Shelly IoT devices with real-time dashboards, analytics, and control capabilities.
+Enterprise-grade monitoring platform for Shelly IoT devices with real-time dashboards, AI-powered analytics, and natural language control.
 
-## Features
+## 🚀 Features
 
-- **Real-time Monitoring**: Live device status and metrics
+- **Real-time Monitoring**: Live device status and metrics with WebSocket updates
 - **Multi-device Support**: Plus 2PM, Plus 1PM, Motion 2, Dimmer 2, BLU Motion
-- **AI Assistant "Ask Blipee"**: Natural language control and automation
-- **Smart Automations**: Schedule and trigger-based device control
+- **AI Assistant "Ask Blipee"**: Natural language control and automation creation
+- **Smart Automations**: AI-powered scheduling and trigger-based device control
 - **One-tap Scenes**: Control multiple devices instantly
-- **Advanced Analytics**: Energy consumption tracking and insights
+- **Advanced Analytics**: Energy consumption tracking with AI insights
+- **Cost Optimization**: DeepSeek AI integration for affordable intelligence
 - **Remote Control**: Device management from anywhere
 - **Enterprise Security**: RBAC, audit logs, secure API
-- **Material Design 3**: Modern, responsive UI
-- **Email Notifications**: SMTP integration for alerts
+- **Material Design 3**: Modern, responsive UI with dark mode
+- **Email Notifications**: Custom SMTP support (Google Workspace ready)
 
 ## Tech Stack
 

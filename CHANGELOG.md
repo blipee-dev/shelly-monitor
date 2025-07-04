@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2025-01-07
+
+### Added
+- AI-powered automation system with natural language processing
+- DeepSeek AI integration as primary provider (cost-optimized)
+- Multi-provider AI architecture with automatic fallback
+- Ask Blipee enhanced chat assistant for full platform control
+- Scenes system for one-tap device control
+- Natural language automation creation
+- Automation execution logging and history
+- Support for 5 Shelly device types (Plus 2PM, Plus 1PM, Motion 2, Dimmer 2, BLU Motion)
+
+### Fixed
+- Middleware rate limiting import errors
+- FeatureFlagProvider undefined function error
+- Next.js 14 metadata/viewport warnings
+- Content Security Policy blocking Supabase connections
+- MUI Grid v1 deprecation warnings (updated to Grid v2)
+- Added placeholder PWA icons
+
+### Changed
+- Enhanced device management with real-time updates
+- Improved analytics dashboard with AI insights
+- Updated to Material UI Grid v2 syntax
+- Temporarily disabled rate limiting (to be re-enabled)
+
 ## [2.0.0] - 2025-07-04
 
 ### Added - Enterprise Grade Features

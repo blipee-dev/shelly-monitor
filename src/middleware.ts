@@ -96,6 +96,11 @@ export async function middleware(request: NextRequest) {
     'camera=(), microphone=(), geolocation=(), interest-cohort=()'
   );
   
+  // Content Security Policy - temporarily disabled to fix Supabase connection issues
+  // TODO: Re-enable with proper CSP configuration
+  // const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hdkibjbrfrhqedzbgvek.supabase.co';
+  // const supabaseDomain = supabaseUrl ? new URL(supabaseUrl).origin : '';
+  
   // CORS headers for API routes
   if (pathname.startsWith('/api')) {
     response.headers.set('Access-Control-Allow-Origin', process.env.NEXT_PUBLIC_APP_URL || '*');

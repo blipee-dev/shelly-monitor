@@ -242,7 +242,7 @@ export default function AnalyticsPage() {
 
       <Grid container spacing={3}>
         {/* Metrics Cards */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <MetricCard
             title="Total Power"
             value={totalPower.toFixed(0)}
@@ -252,7 +252,7 @@ export default function AnalyticsPage() {
             color="warning.main"
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <MetricCard
             title="Energy Today"
             value={(totalPower * 24 / 1000).toFixed(1)}
@@ -262,7 +262,7 @@ export default function AnalyticsPage() {
             color="primary.main"
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <MetricCard
             title="Est. Daily Cost"
             value={((totalPower * 24 / 1000) * 0.15).toFixed(2)}
@@ -272,7 +272,7 @@ export default function AnalyticsPage() {
             color="success.main"
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <MetricCard
             title="Active Devices"
             value={onlineDevices}
@@ -283,7 +283,7 @@ export default function AnalyticsPage() {
         </Grid>
 
         {/* Charts Row */}
-        <Grid item xs={12} lg={8}>
+        <Grid size={{ xs: 12, lg: 8 }}>
           <Paper elevation={0} sx={{ p: 3, border: 1, borderColor: 'divider', height: 400 }}>
             <Typography variant="h6" gutterBottom>
               24-Hour Power Consumption
@@ -300,7 +300,7 @@ export default function AnalyticsPage() {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} lg={4}>
+        <Grid size={{ xs: 12, lg: 4 }}>
           <Paper elevation={0} sx={{ p: 3, border: 1, borderColor: 'divider', height: 400 }}>
             <Typography variant="h6" gutterBottom>
               Device Energy Usage
@@ -318,7 +318,7 @@ export default function AnalyticsPage() {
         </Grid>
 
         {/* AI Insights */}
-        <Grid item xs={12} lg={6}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <Paper elevation={0} sx={{ p: 3, border: 1, borderColor: 'divider' }}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
               <Typography variant="h6">AI Insights</Typography>
@@ -358,7 +358,7 @@ export default function AnalyticsPage() {
         </Grid>
 
         {/* Ask Blipee Chat */}
-        <Grid item xs={12} lg={6}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <Box sx={{ height: 500 }}>
             <AskBlipeeEnhanced onDeviceControl={handleDeviceControl} />
           </Box>
