@@ -2,12 +2,20 @@
   "name": "Shelly Monitor",
   "short_name": "Shelly Monitor",
   "description": "Monitor and control your Shelly IoT devices",
-  "theme_color": "#1976d2",
+  "theme_color": "#0061a4",
   "background_color": "#ffffff",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/dashboard",
+  "id": "shelly-monitor-pwa",
+  "dir": "ltr",
+  "lang": "en",
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
   "icons": [
     {
       "src": "/icons/icon-72x72.png",

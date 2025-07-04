@@ -4,6 +4,7 @@ import I18nProvider from '@/components/providers/I18nProvider';
 import { ThemeProvider } from '@/lib/theme/ThemeProvider';
 import { FeatureFlagProvider } from '@/lib/feature-flags';
 import { SnackbarProvider } from '@/components/providers/SnackbarProvider';
+import { PWAProvider } from '@/components/providers/PWAProvider';
 import '../styles/globals.css';
 
 const roboto = Roboto({ 
@@ -45,7 +46,9 @@ export default function RootLayout({
           <ThemeProvider>
             <SnackbarProvider>
               <I18nProvider>
-                {children}
+                <PWAProvider>
+                  {children}
+                </PWAProvider>
               </I18nProvider>
             </SnackbarProvider>
           </ThemeProvider>

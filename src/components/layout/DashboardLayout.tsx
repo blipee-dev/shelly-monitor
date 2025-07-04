@@ -34,6 +34,8 @@ import { NavigationRail, NavigationItem } from '@/components/ui';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useAuth } from '@/lib/auth/hooks';
 import { useTranslation } from '@/lib/i18n';
+import { MobileNavigation } from '@/components/layout/MobileNavigation';
+import AskBlipeeEnhanced from '@/components/ai/AskBlipeeEnhanced';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -236,6 +238,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           p: 3,
           width: { md: `calc(100% - 256px)` },
           mt: { xs: 8, md: 0 }, // Account for mobile app bar
+          mb: { xs: 8, sm: 0 }, // Account for mobile bottom navigation
         }}
       >
         {/* Desktop Header */}
@@ -305,6 +308,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <ListItemText>{t('common.logout')}</ListItemText>
         </MenuItem>
       </Menu>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileNavigation />
+      
+      {/* AI Chat Assistant */}
+      <AskBlipeeEnhanced />
     </Box>
   );
 }

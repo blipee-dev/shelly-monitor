@@ -212,4 +212,57 @@ export const DEVICE_FUNCTIONS: AIFunction[] = [
       required: [],
     },
   },
+  {
+    name: 'manage_notifications',
+    description: 'Manage notification settings (enable/disable notifications)',
+    parameters: {
+      type: 'object',
+      properties: {
+        action: {
+          type: 'string',
+          enum: ['enable', 'disable', 'test', 'status'],
+          description: 'Action to perform on notifications',
+        },
+        type: {
+          type: 'string',
+          enum: ['push', 'email', 'sms', 'device_offline', 'device_online', 'automation_triggered', 'energy_threshold'],
+          description: 'Type of notification to manage',
+        },
+      },
+      required: ['action'],
+    },
+  },
+  {
+    name: 'install_app',
+    description: 'Show instructions or trigger app installation prompt',
+    parameters: {
+      type: 'object',
+      properties: {
+        platform: {
+          type: 'string',
+          enum: ['auto', 'ios', 'android', 'desktop'],
+          description: 'Platform-specific installation instructions',
+        },
+      },
+      required: [],
+    },
+  },
+  {
+    name: 'check_pwa_status',
+    description: 'Check PWA installation and notification status',
+    parameters: {
+      type: 'object',
+      properties: {},
+      required: [],
+    },
+  },
+  {
+    name: 'sync_offline_data',
+    description: 'Force sync of offline data when connection is restored',
+    parameters: {
+      type: 'object',
+      properties: {},
+      required: [],
+    },
+  },
 ];

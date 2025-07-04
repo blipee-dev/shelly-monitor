@@ -26,6 +26,8 @@ import { useAIStreamChat } from '@/lib/ai/hooks';
 import { useDeviceStore } from '@/lib/stores/deviceStore';
 import { useAutomationStore } from '@/lib/stores/automationStore';
 import { AutomationParser } from '@/lib/automation/parser';
+import { pushManager } from '@/lib/notifications/push-manager';
+import { createClient } from '@/lib/supabase/client';
 import { formatDistanceToNow } from 'date-fns';
 
 interface AskBlipeeEnhancedProps {
@@ -75,6 +77,14 @@ ${automations.length > 5 ? `... and ${automations.length - 5} more` : ''}
 
 SCENES (${scenes.length} total):
 ${scenes.map(s => `- ${s.name}`).join('\n')}
+
+PWA & NOTIFICATION FEATURES:
+- Enable/disable push notifications
+- Test notification delivery
+- Check app installation status
+- Guide through PWA installation
+- Sync offline data
+- Monitor online/offline status
 
 You can help with:
 - Controlling devices (turn on/off, adjust brightness)
@@ -245,6 +255,136 @@ When creating automations, be clear about what will happen and when.`,
               estimatedDailyCost: `€${((totalPower * 24 / 1000) * 0.15).toFixed(2)}`,
             };
           }
+
+          case 'manage_notifications': {
+            try {
+              const supabase = createClient();
+              const { data: { user } } = await supabase.auth.getUser();
+              
+              if (!user) {
+                return { success: false, message: 'Please sign in to manage notifications' };
+              }
+
+              switch (args.action) {
+                case 'enable':
+                  if (args.type === 'push') {
+                    const permission = await pushManager.requestPermission();
+                    return { 
+                      success: permission === 'granted', 
+                      message: permission === 'granted' 
+                        ? 'Push notifications enabled' 
+                        : 'Push notification permission denied' 
+                    };
+                  }
+                  // Update preferences in database
+                  await supabase
+                    .from('user_preferences')
+                    .upsert({
+                      user_id: user.id,
+                      notification_preferences: {
+                        [`${args.type}_enabled`]: true,
+                      },
+                    });
+                  return { success: true, message: `${args.type} notifications enabled` };
+
+                case 'disable':
+                  if (args.type === 'push') {
+                    await pushManager.unsubscribe();
+                  }
+                  await supabase
+                    .from('user_preferences')
+                    .upsert({
+                      user_id: user.id,
+                      notification_preferences: {
+                        [`${args.type}_enabled`]: false,
+                      },
+                    });
+                  return { success: true, message: `${args.type} notifications disabled` };
+
+                case 'test':
+                  await pushManager.sendTestNotification();
+                  return { success: true, message: 'Test notification sent' };
+
+                case 'status':
+                  const state = await pushManager.getPermissionState();
+                  return { 
+                    success: true, 
+                    status: {
+                      permission: state.permission,
+                      isSupported: state.isSupported,
+                      hasSubscription: !!state.subscription,
+                    },
+                  };
+              }
+            } catch (error) {
+              return { 
+                success: false, 
+                message: `Failed to manage notifications: ${error instanceof Error ? error.message : 'Unknown error'}` 
+              };
+            }
+            break;
+          }
+
+          case 'install_app': {
+            const platform = args.platform || 'auto';
+            const instructions = {
+              ios: 'To install on iOS: Open this site in Safari, tap the Share button, then "Add to Home Screen"',
+              android: 'To install on Android: Tap the menu (⋮) in Chrome, then "Add to Home screen"',
+              desktop: 'To install on desktop: Look for the install icon in your browser\'s address bar',
+              auto: 'I can help you install the app. Which device are you using? iOS, Android, or Desktop?',
+            };
+            
+            // Trigger install prompt if available
+            if (platform === 'auto' && window.matchMedia('(display-mode: browser)').matches) {
+              // The install prompt is handled by the InstallPrompt component
+              return { 
+                success: true, 
+                message: 'Look for the "Install App" button that just appeared!',
+                showInstallPrompt: true,
+              };
+            }
+            
+            return { 
+              success: true, 
+              message: instructions[platform as keyof typeof instructions] || instructions.auto,
+            };
+          }
+
+          case 'check_pwa_status': {
+            const isInstalled = window.matchMedia('(display-mode: standalone)').matches || 
+                              (window.navigator as any).standalone === true;
+            const isOnline = navigator.onLine;
+            const notificationState = await pushManager.getPermissionState();
+            
+            return {
+              success: true,
+              status: {
+                installed: isInstalled,
+                online: isOnline,
+                notifications: {
+                  supported: notificationState.isSupported,
+                  permission: notificationState.permission,
+                  enabled: notificationState.permission === 'granted',
+                },
+              },
+              message: `App ${isInstalled ? 'is' : 'is not'} installed. ${isOnline ? 'Online' : 'Offline'} mode. Notifications ${notificationState.permission === 'granted' ? 'enabled' : 'disabled'}.`,
+            };
+          }
+
+          case 'sync_offline_data': {
+            if (!navigator.onLine) {
+              return { success: false, message: 'Cannot sync while offline' };
+            }
+            
+            // Trigger background sync
+            if ('serviceWorker' in navigator && 'sync' in ServiceWorkerRegistration.prototype) {
+              const registration = await navigator.serviceWorker.ready;
+              await (registration as any).sync.register('sync-device-actions');
+              return { success: true, message: 'Offline data sync initiated' };
+            }
+            
+            return { success: false, message: 'Background sync not supported' };
+          }
         }
       } catch (error) {
         console.error(`Function ${name} failed:`, error);
@@ -277,8 +417,8 @@ When creating automations, be clear about what will happen and when.`,
   const suggestedQuestions = [
     "What's my current energy usage?",
     "Turn off all lights at 10 PM",
-    "Create a movie night scene",
-    "Show me my automations",
+    "Enable push notifications",
+    "Install this app on my phone",
   ];
 
   return (
