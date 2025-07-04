@@ -255,30 +255,119 @@ npx tsx scripts/test-blipee-smtp.ts
 - Admin: test.admin@gmail.com / Password: Admin123!
 - User: test.user@gmail.com / Password: User123!
 
-## Day 5 Plan - Device Management UI
+## Day 5 Specific Updates - Device Management UI
 
-### Objectives
-1. Create device listing views with Material UI DataGrid
-2. Build device detail pages with real-time status
-3. Implement device control interfaces
-4. Create device configuration forms
-5. Add device grouping functionality
-6. Implement real-time updates with Supabase
+### Implemented Features
+1. **Device Types**: Support for 5 Shelly device types
+   - Plus 2PM (dual relay with power monitoring)
+   - Plus 1PM (single relay with power monitoring)
+   - Motion 2 (motion sensor with temperature)
+   - Dimmer 2 (dimmable light control)
+   - BLU Motion (Bluetooth motion sensor)
 
-### Key Components to Build
-- Device list page with filtering/sorting
-- Device detail view with control panel
-- Add/Edit device forms
-- Device status indicators
-- Real-time WebSocket integration
-- Device group management
+2. **State Management**: Zustand store with real-time updates
+   - Device CRUD operations
+   - Real-time status synchronization
+   - Group management functionality
 
-### Design Patterns
-- Use Material Design 3 components consistently
-- Implement responsive layouts with Grid system
-- Use Zustand for device state management
-- Follow existing auth/layout patterns
-- Maintain TypeScript strict typing
+3. **Real-time Integration**: Supabase subscriptions
+   - WebSocket connections for live updates
+   - Automatic reconnection handling
+   - Optimistic UI updates
+
+### Key Files
+- `src/types/device.ts` - Comprehensive device type definitions
+- `src/lib/stores/deviceStore.ts` - Zustand device state management
+- `src/lib/realtime/deviceSubscription.ts` - Real-time subscription manager
+- `src/app/(dashboard)/devices/page.tsx` - Device listing page
+- `src/components/devices/` - Device UI components
+
+## Day 6 Specific Updates - Analytics & AI Integration
+
+### Implemented Features
+1. **AI Provider Architecture**
+   - Multi-provider support (DeepSeek, OpenAI, Anthropic)
+   - Automatic fallback mechanism
+   - Cost-optimized with DeepSeek as primary
+   - Streaming support for real-time responses
+
+2. **Ask Blipee Chat Assistant**
+   - Natural language device control
+   - Context-aware responses
+   - Function calling for device actions
+   - Real-time streaming responses
+
+3. **Analytics Dashboard**
+   - Real-time power consumption metrics
+   - Energy usage charts (24-hour, device breakdown)
+   - Cost estimation and tracking
+   - AI-powered insights generation
+
+4. **AI Insights System**
+   - Energy saving opportunities
+   - Usage pattern detection
+   - Anomaly detection
+   - Predictive maintenance suggestions
+
+### AI Configuration
+```bash
+# Required in .env.local
+DEEPSEEK_API_KEY=your-key        # Primary provider (cost-efficient)
+OPENAI_API_KEY=your-key          # Optional fallback
+ANTHROPIC_API_KEY=your-key       # Optional fallback
+```
+
+### Key AI Files
+- `src/lib/ai/service.ts` - AI service manager with fallback
+- `src/lib/ai/providers/` - Provider implementations
+- `src/lib/ai/hooks.ts` - React hooks for AI chat
+- `src/lib/ai/insights.ts` - Insights generation service
+- `src/components/ai/AskBlipee.tsx` - Chat interface component
+- `src/app/api/ai/` - AI API endpoints
+
+### AI Features
+1. **Natural Language Control**
+   - "Turn off all lights"
+   - "Show me today's energy usage"
+   - "Create a bedtime automation"
+   - "Which devices are consuming the most power?"
+
+2. **Smart Insights**
+   - Automatic anomaly detection
+   - Energy saving recommendations
+   - Usage pattern analysis
+   - Maintenance predictions
+
+3. **Cost Optimization**
+   - DeepSeek: $0.14/1M input, $0.28/1M output tokens
+   - OpenAI GPT-4: $10/1M input, $30/1M output tokens
+   - Anthropic Claude 3: $15/1M input, $75/1M output tokens
+
+### Database Migration Required
+Run the AI features migration in Supabase SQL editor:
+```sql
+-- Copy contents of supabase/migrations/003_ai_features.sql
+```
+
+This adds:
+- `ai_usage_logs` table for tracking API usage
+- `ai_insights` table for storing generated insights
+- Cost calculation functions
+- RLS policies for security
+
+### Testing AI Features
+```bash
+# Start development server
+npm run dev
+
+# Navigate to Analytics page
+http://localhost:3000/analytics
+
+# Test Ask Blipee chat
+- Try: "What's my current power usage?"
+- Try: "Turn off the living room lights"
+- Try: "Show me energy saving tips"
+```
 
 ## Contact
 
