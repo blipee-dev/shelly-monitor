@@ -103,20 +103,20 @@ async function seedDatabase() {
                 {
                   id: 0,
                   output: faker.datatype.boolean(),
-                  apower: faker.number.float({ min: 0, max: 200, precision: 0.1 }),
-                  voltage: faker.number.float({ min: 220, max: 240, precision: 0.1 }),
-                  current: faker.number.float({ min: 0, max: 1, precision: 0.01 }),
-                  energy: faker.number.float({ min: 0, max: 100, precision: 0.01 }),
-                  temperature: faker.number.float({ min: 20, max: 35, precision: 0.1 })
+                  apower: faker.number.float({ min: 0, max: 200, fractionDigits: 0.1 }),
+                  voltage: faker.number.float({ min: 220, max: 240, fractionDigits: 0.1 }),
+                  current: faker.number.float({ min: 0, max: 1, fractionDigits: 0.01 }),
+                  energy: faker.number.float({ min: 0, max: 100, fractionDigits: 0.01 }),
+                  temperature: faker.number.float({ min: 20, max: 35, fractionDigits: 0.1 })
                 },
                 {
                   id: 1,
                   output: faker.datatype.boolean(),
-                  apower: faker.number.float({ min: 0, max: 150, precision: 0.1 }),
-                  voltage: faker.number.float({ min: 220, max: 240, precision: 0.1 }),
-                  current: faker.number.float({ min: 0, max: 0.8, precision: 0.01 }),
-                  energy: faker.number.float({ min: 0, max: 80, precision: 0.01 }),
-                  temperature: faker.number.float({ min: 20, max: 35, precision: 0.1 })
+                  apower: faker.number.float({ min: 0, max: 150, fractionDigits: 0.1 }),
+                  voltage: faker.number.float({ min: 220, max: 240, fractionDigits: 0.1 }),
+                  current: faker.number.float({ min: 0, max: 0.8, fractionDigits: 0.01 }),
+                  energy: faker.number.float({ min: 0, max: 80, fractionDigits: 0.01 }),
+                  temperature: faker.number.float({ min: 20, max: 35, fractionDigits: 0.1 })
                 }
               ]
             }
@@ -136,12 +136,12 @@ async function seedDatabase() {
                   device_id: data.id,
                   channel,
                   timestamp: timestamp.toISOString(),
-                  power: faker.number.float({ min: 0, max: 200, precision: 0.1 }),
-                  voltage: faker.number.float({ min: 220, max: 240, precision: 0.1 }),
-                  current: faker.number.float({ min: 0, max: 1, precision: 0.01 }),
-                  energy: faker.number.float({ min: 0, max: 10, precision: 0.01 }),
-                  power_factor: faker.number.float({ min: 0.8, max: 1, precision: 0.01 }),
-                  temperature: faker.number.float({ min: 20, max: 35, precision: 0.1 })
+                  power: faker.number.float({ min: 0, max: 200, fractionDigits: 0.1 }),
+                  voltage: faker.number.float({ min: 220, max: 240, fractionDigits: 0.1 }),
+                  current: faker.number.float({ min: 0, max: 1, fractionDigits: 0.01 }),
+                  energy: faker.number.float({ min: 0, max: 10, fractionDigits: 0.01 }),
+                  power_factor: faker.number.float({ min: 0.8, max: 1, fractionDigits: 0.01 }),
+                  temperature: faker.number.float({ min: 20, max: 35, fractionDigits: 0.1 })
                 });
               }
             }
@@ -196,10 +196,10 @@ async function seedDatabase() {
               sensor: {
                 motion: faker.datatype.boolean({ probability: 0.2 }),
                 lux: faker.number.int({ min: 0, max: 500 }),
-                temperature: faker.number.float({ min: 15, max: 30, precision: 0.1 }),
+                temperature: faker.number.float({ min: 15, max: 30, fractionDigits: 0.1 }),
                 battery: {
                   percent: faker.number.int({ min: 20, max: 100 }),
-                  voltage: faker.number.float({ min: 2.8, max: 3.7, precision: 0.1 })
+                  voltage: faker.number.float({ min: 2.8, max: 3.7, fractionDigits: 0.1 })
                 },
                 vibration: faker.datatype.boolean({ probability: 0.1 })
               }
@@ -226,7 +226,7 @@ async function seedDatabase() {
                 timestamp: timestamp.toISOString(),
                 motion_detected: true,
                 lux: faker.number.int({ min: 0, max: 500 }),
-                temperature: faker.number.float({ min: 15, max: 30, precision: 0.1 }),
+                temperature: faker.number.float({ min: 15, max: 30, fractionDigits: 0.1 }),
                 battery_percent: faker.number.int({ min: 20, max: 100 }),
                 vibration_detected: faker.datatype.boolean({ probability: 0.1 })
               });

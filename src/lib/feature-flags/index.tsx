@@ -1,3 +1,4 @@
+import React from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -248,6 +249,16 @@ export function FeatureFlag({
   return <>{fallback}</> || null;
 }
 
+// Provider component to initialize feature flags
+export function FeatureFlagProvider({ children }: { children: React.ReactNode }) {
+  React.useEffect(() => {
+    // Fetch remote flags on mount
+    fetchRemoteFlags();
+  }, []);
+  
+  return <>{children}</>;
+}
+
 // Initialize feature flags from remote config (if available)
 export async function initializeFeatureFlags(userId?: string, userGroups?: string[]) {
   try {
@@ -261,9 +272,7 @@ export async function initializeFeatureFlags(userId?: string, userGroups?: strin
     });
     
     if (response.ok) {
-      const remoteFl
-
-s = await response.json();
+      const remoteFlags = await response.json();
       useFeatureFlags.getState().setFlags(remoteFlags);
     }
   } catch (error) {

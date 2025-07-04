@@ -314,5 +314,9 @@
     "daysAgo": "hace {{count}} días",
     "weeksAgo": "hace {{count}} semanas",
     "monthsAgo": "hace {{count}} meses"
+  },
+  "theme": {
+    "switchToDark": "Cambiar a tema oscuro",
+    "switchToLight": "Cambiar a tema claro"
   }
 }

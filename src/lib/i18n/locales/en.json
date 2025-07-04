@@ -314,5 +314,9 @@
     "daysAgo": "{{count}} days ago",
     "weeksAgo": "{{count}} weeks ago",
     "monthsAgo": "{{count}} months ago"
+  },
+  "theme": {
+    "switchToDark": "Switch to dark theme",
+    "switchToLight": "Switch to light theme"
   }
 }

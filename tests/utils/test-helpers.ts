@@ -49,20 +49,20 @@ export function createMockDeviceStatus(device: any) {
           {
             id: 0,
             output: faker.datatype.boolean(),
-            apower: faker.number.float({ min: 0, max: 300, precision: 0.1 }),
-            voltage: faker.number.float({ min: 220, max: 240, precision: 0.1 }),
-            current: faker.number.float({ min: 0, max: 2, precision: 0.01 }),
-            energy: faker.number.float({ min: 0, max: 1000, precision: 0.1 }),
-            temperature: faker.number.float({ min: 20, max: 40, precision: 0.1 })
+            apower: faker.number.float({ min: 0, max: 300, fractionDigits: 0.1 }),
+            voltage: faker.number.float({ min: 220, max: 240, fractionDigits: 0.1 }),
+            current: faker.number.float({ min: 0, max: 2, fractionDigits: 0.01 }),
+            energy: faker.number.float({ min: 0, max: 1000, fractionDigits: 0.1 }),
+            temperature: faker.number.float({ min: 20, max: 40, fractionDigits: 0.1 })
           },
           {
             id: 1,
             output: faker.datatype.boolean(),
-            apower: faker.number.float({ min: 0, max: 300, precision: 0.1 }),
-            voltage: faker.number.float({ min: 220, max: 240, precision: 0.1 }),
-            current: faker.number.float({ min: 0, max: 2, precision: 0.01 }),
-            energy: faker.number.float({ min: 0, max: 1000, precision: 0.1 }),
-            temperature: faker.number.float({ min: 20, max: 40, precision: 0.1 })
+            apower: faker.number.float({ min: 0, max: 300, fractionDigits: 0.1 }),
+            voltage: faker.number.float({ min: 220, max: 240, fractionDigits: 0.1 }),
+            current: faker.number.float({ min: 0, max: 2, fractionDigits: 0.01 }),
+            energy: faker.number.float({ min: 0, max: 1000, fractionDigits: 0.1 }),
+            temperature: faker.number.float({ min: 20, max: 40, fractionDigits: 0.1 })
           }
         ]
       },
@@ -76,10 +76,10 @@ export function createMockDeviceStatus(device: any) {
         sensor: {
           motion: faker.datatype.boolean({ probability: 0.2 }),
           lux: faker.number.int({ min: 0, max: 1000 }),
-          temperature: faker.number.float({ min: 15, max: 30, precision: 0.1 }),
+          temperature: faker.number.float({ min: 15, max: 30, fractionDigits: 0.1 }),
           battery: {
             percent: faker.number.int({ min: 0, max: 100 }),
-            voltage: faker.number.float({ min: 2.8, max: 3.7, precision: 0.1 })
+            voltage: faker.number.float({ min: 2.8, max: 3.7, fractionDigits: 0.1 })
           },
           vibration: faker.datatype.boolean({ probability: 0.1 })
         }
@@ -113,12 +113,12 @@ export function createMockPowerReading(deviceId: string, channel: number, overri
     device_id: deviceId,
     channel: channel,
     timestamp: faker.date.recent(),
-    power: faker.number.float({ min: 0, max: 300, precision: 0.1 }),
-    voltage: faker.number.float({ min: 220, max: 240, precision: 0.1 }),
-    current: faker.number.float({ min: 0, max: 2, precision: 0.01 }),
-    energy: faker.number.float({ min: 0, max: 10, precision: 0.01 }),
-    power_factor: faker.number.float({ min: 0.5, max: 1, precision: 0.01 }),
-    temperature: faker.number.float({ min: 20, max: 40, precision: 0.1 }),
+    power: faker.number.float({ min: 0, max: 300, fractionDigits: 0.1 }),
+    voltage: faker.number.float({ min: 220, max: 240, fractionDigits: 0.1 }),
+    current: faker.number.float({ min: 0, max: 2, fractionDigits: 0.01 }),
+    energy: faker.number.float({ min: 0, max: 10, fractionDigits: 0.01 }),
+    power_factor: faker.number.float({ min: 0.5, max: 1, fractionDigits: 0.01 }),
+    temperature: faker.number.float({ min: 20, max: 40, fractionDigits: 0.1 }),
     ...overrides
   };
 }
@@ -131,7 +131,7 @@ export function createMockMotionEvent(deviceId: string, overrides: Partial<any> 
     timestamp: faker.date.recent(),
     motion_detected: true,
     lux: faker.number.int({ min: 0, max: 1000 }),
-    temperature: faker.number.float({ min: 15, max: 30, precision: 0.1 }),
+    temperature: faker.number.float({ min: 15, max: 30, fractionDigits: 0.1 }),
     battery_percent: faker.number.int({ min: 0, max: 100 }),
     vibration_detected: faker.datatype.boolean({ probability: 0.1 }),
     ...overrides

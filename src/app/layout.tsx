@@ -1,15 +1,21 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import I18nProvider from '@/components/providers/I18nProvider';
+import { ThemeProvider } from '@/lib/theme/ThemeProvider';
+import { FeatureFlagProvider } from '@/lib/feature-flags';
 import '../styles/globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const roboto = Roboto({ 
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Shelly Monitor',
   description: 'Monitor and control your Shelly devices',
   manifest: '/manifest.json',
-  themeColor: '#1976d2',
+  themeColor: '#0061a4',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
   appleWebApp: {
     capable: true,
@@ -25,10 +31,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <I18nProvider>
-          {children}
-        </I18nProvider>
+      <body className={roboto.className}>
+        <FeatureFlagProvider>
+          <ThemeProvider>
+            <I18nProvider>
+              {children}
+            </I18nProvider>
+          </ThemeProvider>
+        </FeatureFlagProvider>
       </body>
     </html>
   );

@@ -38,8 +38,8 @@ async function resetAndSeed() {
     console.log('✅ Database reset complete');
     console.log('\n🌱 Running seed script...\n');
 
-    // Import and run the seed function
-    const { default: seedDatabase } = await import('./seed-data');
+    // Import and run the seed script
+    await import('./seed-data');
     
   } catch (error) {
     console.error('❌ Reset failed:', error);
