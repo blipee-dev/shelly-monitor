@@ -1,0 +1,8 @@
+Contact: mailto:security@shellymonitor.com
+Contact: https://github.com/blipee-dev/shelly-monitor/security/advisories/new
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://github.com/blipee-dev.gpg
+Acknowledgments: https://github.com/blipee-dev/shelly-monitor/blob/main/SECURITY.md
+Preferred-Languages: en
+Canonical: https://shellymonitor.com/.well-known/security.txt
+Policy: https://github.com/blipee-dev/shelly-monitor/blob/main/SECURITY.md

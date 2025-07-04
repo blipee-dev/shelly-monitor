@@ -1,0 +1,13 @@
+These are placeholder icons generated for PWA functionality.
+Please replace with actual designed icons before production deployment.
+
+Icon requirements:
+- Should include Shelly Monitor branding
+- Use Material Design 3 color scheme
+- Should work well on various backgrounds
+- Consider using adaptive icons for Android
+
+Recommended tools:
+- Figma or Sketch for design
+- https://maskable.app/ for maskable icon testing
+- https://www.pwabuilder.com/imageGenerator for generating all sizes

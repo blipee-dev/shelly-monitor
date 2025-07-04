@@ -7,6 +7,14 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Shelly Monitor',
   description: 'Monitor and control your Shelly devices',
+  manifest: '/manifest.json',
+  themeColor: '#1976d2',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Shelly Monitor',
+  },
 };
 
 export default function RootLayout({

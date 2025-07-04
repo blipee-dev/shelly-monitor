@@ -1,0 +1,36 @@
+{
+  "headers": {
+    "X-Frame-Options": "DENY",
+    "X-Content-Type-Options": "nosniff",
+    "X-XSS-Protection": "1; mode=block",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+    "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com; frame-ancestors 'none';"
+  },
+  "rateLimiting": {
+    "global": {
+      "windowMs": 900000,
+      "max": 1000
+    },
+    "auth": {
+      "windowMs": 900000,
+      "max": 5
+    },
+    "api": {
+      "windowMs": 60000,
+      "max": 100
+    },
+    "control": {
+      "windowMs": 60000,
+      "max": 20
+    }
+  },
+  "cors": {
+    "origin": ["https://shellymonitor.com", "https://www.shellymonitor.com"],
+    "credentials": true,
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "allowedHeaders": ["Content-Type", "Authorization"],
+    "maxAge": 86400
+  }
+}
