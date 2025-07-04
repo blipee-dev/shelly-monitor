@@ -255,6 +255,31 @@ npx tsx scripts/test-blipee-smtp.ts
 - Admin: test.admin@gmail.com / Password: Admin123!
 - User: test.user@gmail.com / Password: User123!
 
+## Day 5 Plan - Device Management UI
+
+### Objectives
+1. Create device listing views with Material UI DataGrid
+2. Build device detail pages with real-time status
+3. Implement device control interfaces
+4. Create device configuration forms
+5. Add device grouping functionality
+6. Implement real-time updates with Supabase
+
+### Key Components to Build
+- Device list page with filtering/sorting
+- Device detail view with control panel
+- Add/Edit device forms
+- Device status indicators
+- Real-time WebSocket integration
+- Device group management
+
+### Design Patterns
+- Use Material Design 3 components consistently
+- Implement responsive layouts with Grid system
+- Use Zustand for device state management
+- Follow existing auth/layout patterns
+- Maintain TypeScript strict typing
+
 ## Contact
 
 Project repository: https://github.com/blipee-dev/shelly-monitor

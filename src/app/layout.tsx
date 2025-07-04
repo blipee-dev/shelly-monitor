@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google';
 import I18nProvider from '@/components/providers/I18nProvider';
 import { ThemeProvider } from '@/lib/theme/ThemeProvider';
 import { FeatureFlagProvider } from '@/lib/feature-flags';
+import { SnackbarProvider } from '@/components/providers/SnackbarProvider';
 import '../styles/globals.css';
 
 const roboto = Roboto({ 
@@ -34,9 +35,11 @@ export default function RootLayout({
       <body className={roboto.className}>
         <FeatureFlagProvider>
           <ThemeProvider>
-            <I18nProvider>
-              {children}
-            </I18nProvider>
+            <SnackbarProvider>
+              <I18nProvider>
+                {children}
+              </I18nProvider>
+            </SnackbarProvider>
           </ThemeProvider>
         </FeatureFlagProvider>
       </body>
