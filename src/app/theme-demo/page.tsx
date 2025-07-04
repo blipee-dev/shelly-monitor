@@ -7,7 +7,6 @@ import {
   Typography,
   Button,
   Stack,
-  Grid2 as Grid,
   Chip,
   TextField,
   Switch,
@@ -16,6 +15,7 @@ import {
   IconButton,
   Paper,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import {
   Add as AddIcon,
   Edit as EditIcon,

@@ -546,6 +546,8 @@ Comprehensive audit trail for compliance and security.
 - [Deployment Guide](./docs/DEPLOYMENT.md)
 - [Security Best Practices](./docs/SECURITY.md)
 - [Performance Optimization](./docs/PERFORMANCE.md)
+- [Material Design 3 Theme Guide](./docs/THEME_GUIDE.md)
+- [Supabase Setup Guide](./docs/SUPABASE_SETUP.md)
 
 ## 🤝 Contributing
 

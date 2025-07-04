@@ -3,7 +3,7 @@
  * Following MD3 type scale guidelines
  */
 
-import { TypographyOptions } from '@mui/material/styles/createTypography';
+import type { TypographyOptions } from '@mui/material/styles';
 
 // MD3 Type Scale
 export const md3Typography: TypographyOptions = {

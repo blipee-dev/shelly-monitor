@@ -216,7 +216,7 @@ const getComponentOverrides = (mode: 'light' | 'dark') => {
       styleOverrides: {
         root: {
           borderRadius: 20, // Full rounding for buttons
-          textTransform: 'none',
+          textTransform: 'none' as const,
           fontWeight: 500,
           padding: '10px 24px',
           transition: 'all 0.2s cubic-bezier(0.2, 0, 0, 1)',

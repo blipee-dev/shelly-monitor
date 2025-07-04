@@ -194,6 +194,32 @@ npm run setup:complete
 npm run db:reset && npm run db:seed
 ```
 
+## Day 3 Specific Updates
+
+### Material Design 3 Theme
+- **Theme System**: Complete MD3 implementation in `src/lib/theme/`
+  - `colors.ts` - MD3 color system with light/dark schemes
+  - `typography.ts` - Full MD3 typography scale
+  - `theme.ts` - Theme configuration with component overrides
+  - `ThemeProvider.tsx` - Theme context with persistence
+- **Custom Components**: Located in `src/components/ui/`
+  - Card, Surface, NavigationRail, FAB components
+  - All follow MD3 design guidelines
+- **Theme Demo**: Available at `/theme-demo`
+  - Showcases all components and variants
+  - Interactive dark mode toggle
+  - Typography and color demonstrations
+
+### Testing Theme
+```bash
+# View theme demo
+npm run dev
+# Navigate to http://localhost:3000/theme-demo
+
+# Test theme configuration
+npx tsx scripts/test-theme.ts
+```
+
 ## Contact
 
 Project repository: https://github.com/blipee-dev/shelly-monitor
