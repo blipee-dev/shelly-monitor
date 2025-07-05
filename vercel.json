@@ -60,21 +60,6 @@
     }
   ],
   
-  "env": {
-    "NEXT_PUBLIC_APP_URL": "@app_url",
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key"
-  },
-  
-  "build": {
-    "env": {
-      "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
-      "CRON_SECRET": "@cron_secret",
-      "JWT_SECRET": "@jwt_secret",
-      "SESSION_SECRET": "@session_secret",
-      "ENCRYPTION_KEY": "@encryption_key"
-    }
-  },
   
   "rewrites": [
     {
