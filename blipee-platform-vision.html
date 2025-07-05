@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blipee AI-Powered Platform - $1B Vision</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fef7ff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Material Symbols */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* MD3 Colors */
+        :root {
+            --md3-primary: #6750a4;
+            --md3-primary-container: #eaddff;
+            --md3-secondary: #625b71;
+            --md3-secondary-container: #e8def8;
+            --md3-tertiary: #7d5260;
+            --md3-tertiary-container: #ffd8e4;
+            --md3-error: #ba1a1a;
+            --md3-error-container: #ffdad6;
+            --md3-success: #1b5e20;
+            --md3-surface: #fffbfe;
+            --md3-surface-variant: #e7e0ec;
+            --md3-on-surface: #1c1b1f;
+            --md3-on-surface-variant: #49454f;
+            --md3-outline: #79747e;
+            --md3-shadow: rgba(0, 0, 0, 0.05);
+            --md3-black: #1a1a1a;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--md3-primary-container) 0%, var(--md3-secondary-container) 100%);
+            border-radius: 28px;
+        }
+
+        .hero h1 {
+            font-size: 57px;
+            font-weight: 300;
+            margin-bottom: 16px;
+            color: var(--md3-on-surface);
+        }
+
+        .hero .subtitle {
+            font-size: 22px;
+            color: var(--md3-on-surface-variant);
+            max-width: 800px;
+            margin: 0 auto 32px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--md3-black);
+            color: white;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--md3-outline);
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--md3-primary-container);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--md3-primary);
+        }
+
+        .section h2 {
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--md3-on-surface);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--md3-surface);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px var(--md3-shadow);
+            border: 1px solid var(--md3-outline);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px var(--md3-shadow);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--md3-tertiary-container);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--md3-tertiary);
+        }
+
+        .card h3 {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--md3-on-surface);
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: var(--md3-on-surface-variant);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .card-features {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--md3-surface-variant);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: var(--md3-on-surface-variant);
+            font-size: 14px;
+        }
+
+        .feature-item .material-symbols-outlined {
+            font-size: 18px;
+            color: var(--md3-success);
+        }
+
+        /* Flow Diagram */
+        .flow-diagram {
+            background: var(--md3-surface);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 1px solid var(--md3-outline);
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-step-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--md3-primary-container);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 32px;
+            color: var(--md3-primary);
+        }
+
+        .flow-step h4 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--md3-on-surface);
+        }
+
+        .flow-step p {
+            font-size: 14px;
+            color: var(--md3-on-surface-variant);
+        }
+
+        .flow-arrow {
+            position: absolute;
+            top: 32px;
+            right: -40px;
+            font-size: 24px;
+            color: var(--md3-outline);
+        }
+
+        /* Navigation Rail Demo */
+        .nav-rail-demo {
+            display: flex;
+            gap: 24px;
+            background: var(--md3-surface);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--md3-outline);
+            overflow-x: auto;
+        }
+
+        .nav-rail {
+            width: 80px;
+            background: var(--md3-surface-variant);
+            border-radius: 16px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            height: 56px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(103, 80, 164, 0.08);
+        }
+
+        .nav-item.active {
+            background: var(--md3-secondary-container);
+            color: var(--md3-on-secondary-container);
+        }
+
+        .nav-item span {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* Dashboard Preview */
+        .dashboard-preview {
+            flex: 1;
+            background: #fef7ff;
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .dashboard-header {
+            margin-bottom: 24px;
+        }
+
+        .metric-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .metric-card {
+            background: var(--md3-surface);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--md3-outline);
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 300;
+            color: var(--md3-primary);
+            margin: 8px 0;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--md3-on-surface-variant);
+        }
+
+        .metric-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: var(--md3-success);
+            color: white;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* Pipeline Diagram */
+        .pipeline-diagram {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            margin: 40px 0;
+            overflow-x: auto;
+            padding: 24px 0;
+        }
+
+        .pipeline-stage {
+            flex: 1;
+            min-width: 200px;
+            background: var(--md3-surface);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--md3-shadow) 0 2px 8px;
+            transition: all 0.3s ease;
+        }
+
+        .pipeline-stage:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--md3-shadow) 0 8px 24px;
+        }
+
+        .stage-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--md3-primary-container);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .stage-icon .material-symbols-outlined {
+            color: var(--md3-primary);
+            font-size: 28px;
+        }
+
+        .pipeline-stage h4 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--md3-on-surface);
+        }
+
+        .pipeline-stage p {
+            font-size: 14px;
+            color: var(--md3-on-surface-variant);
+            margin-bottom: 16px;
+        }
+
+        .pipeline-stage ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pipeline-stage li {
+            font-size: 13px;
+            color: var(--md3-on-surface-variant);
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .pipeline-stage li:before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: var(--md3-primary);
+        }
+
+        .pipeline-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--md3-primary);
+            margin-top: 60px;
+        }
+
+        .pipeline-arrow .material-symbols-outlined {
+            font-size: 32px;
+        }
+
+        /* Data Flow Examples */
+        .data-flow-examples {
+            margin-top: 60px;
+        }
+
+        .flow-example {
+            background: var(--md3-surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--md3-shadow) 0 2px 8px;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .example-header .material-symbols-outlined {
+            font-size: 28px;
+            color: var(--md3-primary);
+        }
+
+        .example-header h4 {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--md3-on-surface);
+            margin: 0;
+        }
+
+        .flow-steps {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .flow-item {
+            background: var(--md3-surface-variant);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            flex: 0 1 auto;
+        }
+
+        .flow-item strong {
+            color: var(--md3-primary);
+            font-weight: 500;
+        }
+
+        /* Ask Blipee Chat */
+        .chat-demo {
+            background: var(--md3-surface);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--md3-outline);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--md3-surface-variant);
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--md3-black);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-messages {
+            margin-bottom: 24px;
+        }
+
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .message-bubble {
+            background: var(--md3-surface-variant);
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 80%;
+            font-size: 14px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.user .message-bubble {
+            background: var(--md3-black);
+            color: white;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .suggestion-chip {
+            padding: 8px 16px;
+            background: var(--md3-surface-variant);
+            border-radius: 16px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid var(--md3-outline);
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-chip:hover {
+            background: var(--md3-secondary-container);
+        }
+
+        /* FAB */
+        .fab-demo {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--md3-black);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .fab-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--md3-on-surface-variant);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                display: none;
+            }
+
+            .nav-rail-demo {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="container">
+        <div class="hero">
+            <h1>Blipee AI-Powered Platform</h1>
+            <p class="subtitle">
+                The World's First AI-Driven Sustainability Intelligence System<br>
+                Powered by GPT-4 with Predictive Analytics & Autonomous Operations
+            </p>
+            <div style="text-align: center; margin: 24px 0;">
+                <span style="background: #1b5e20; color: white; padding: 12px 24px; border-radius: 24px; font-size: 18px; font-weight: 500;">
+                    🚀 From $10M Platform → $1B AI Intelligence System
+                </span>
+            </div>
+            <div class="hero-badges">
+                <div class="badge">
+                    <span class="material-symbols-outlined">auto_awesome</span>
+                    GPT-4 Turbo
+                </div>
+                <div class="badge">
+                    <span class="material-symbols-outlined">visibility</span>
+                    Vision Analysis
+                </div>
+                <div class="badge">
+                    <span class="material-symbols-outlined">psychology</span>
+                    Predictive AI
+                </div>
+                <div class="badge">
+                    <span class="material-symbols-outlined">smart_toy</span>
+                    Autonomous Ops
+                </div>
+                <div class="badge">
+                    <span class="material-symbols-outlined">trending_up</span>
+                    96% Accuracy
+                </div>
+                <div class="badge">
+                    <span class="material-symbols-outlined">speed</span>
+                    100x Faster
+                </div>
+            </div>
+        </div>
+
+        <!-- User Journey Flow -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">route</span>
+                </div>
+                <h2>AI-Powered User Journey</h2>
+            </div>
+            
+            <div class="flow-diagram">
+                <div class="flow-steps">
+                    <div class="flow-step" style="border: 2px solid #4caf50;">
+                        <div class="flow-step-icon" style="background: #4caf50;">
+                            <span class="material-symbols-outlined">chat</span>
+                        </div>
+                        <h4>AI Onboarding</h4>
+                        <p>5-min conversational setup</p>
+                        <span class="flow-arrow material-symbols-outlined">arrow_forward</span>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-step-icon">
+                            <span class="material-symbols-outlined">login</span>
+                        </div>
+                        <h4>Smart Login</h4>
+                        <p>AI-powered security & fraud detection</p>
+                        <span class="flow-arrow material-symbols-outlined">arrow_forward</span>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-step-icon">
+                            <span class="material-symbols-outlined">auto_awesome</span>
+                        </div>
+                        <h4>AI Dashboard</h4>
+                        <p>Predictive metrics & anomaly alerts</p>
+                        <span class="flow-arrow material-symbols-outlined">arrow_forward</span>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-step-icon">
+                            <span class="material-symbols-outlined">psychology</span>
+                        </div>
+                        <h4>Intelligence Engine</h4>
+                        <p>GPT-4 analysis & recommendations</p>
+                        <span class="flow-arrow material-symbols-outlined">arrow_forward</span>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-step-icon">
+                            <span class="material-symbols-outlined">smart_toy</span>
+                        </div>
+                        <h4>Autonomous Action</h4>
+                        <p>AI executes optimizations 24/7</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Revolutionary AI-Driven Onboarding -->
+        <section class="section" style="background: linear-gradient(135deg, rgba(103, 80, 164, 0.1) 0%, rgba(76, 175, 80, 0.1) 100%); padding: 40px; border-radius: 28px; margin-bottom: 80px;">
+            <div class="section-header">
+                <div class="section-icon" style="background: linear-gradient(135deg, #6750a4, #4caf50);">
+                    <span class="material-symbols-outlined">chat</span>
+                </div>
+                <h2>🚀 Revolutionary AI-Driven Conversational Onboarding</h2>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 40px;">
+                <span style="background: #1b5e20; color: white; padding: 12px 24px; border-radius: 24px; font-size: 18px; font-weight: 500;">
+                    ✨ NEW! 5-Minute Setup Through Natural Conversation
+                </span>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card" style="border: 2px solid #4caf50;">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #4caf50;">
+                            <span class="material-symbols-outlined">chat_bubble</span>
+                        </div>
+                    </div>
+                    <h3>Natural Language Setup</h3>
+                    <p>Configure your entire platform through conversation - no forms, no complexity!</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            "We're Acme Manufacturing in Berlin"
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            "Add John as sustainability manager"
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            "We have 3 factories in Germany"
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            "Track energy, water, and emissions"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="border: 2px solid #6750a4;">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #6750a4;">
+                            <span class="material-symbols-outlined">psychology</span>
+                        </div>
+                    </div>
+                    <h3>AI-Powered Intelligence</h3>
+                    <p>GPT-4 understands context and guides you with industry-specific suggestions</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            NLP entity recognition
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Industry best practices
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Smart role suggestions
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Compliance pre-configuration
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="border: 2px solid #ff9800;">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #ff9800;">
+                            <span class="material-symbols-outlined">database</span>
+                        </div>
+                    </div>
+                    <h3>Automatic Database Setup</h3>
+                    <p>AI populates all tables with proper relationships and permissions instantly</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Organizations & hierarchies
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            User accounts & permissions
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Sites & locations
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Data configurations
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversation Flow Example -->
+            <div style="margin-top: 48px;">
+                <h3 style="text-align: center; margin-bottom: 32px;">See It In Action</h3>
+                <div class="chat-demo" style="max-width: 800px; background: white;">
+                    <div class="chat-messages">
+                        <div class="message">
+                            <div class="chat-avatar" style="background: #4caf50;">
+                                <span class="material-symbols-outlined">smart_toy</span>
+                            </div>
+                            <div class="message-bubble">
+                                👋 Welcome to Blipee! I'll help you set up your sustainability platform in just a few minutes. Let's start with your organization. What's your company name?
+                            </div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-bubble">
+                                We're Global Manufacturing Corp, headquartered in Berlin
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="chat-avatar" style="background: #4caf50;">
+                                <span class="material-symbols-outlined">smart_toy</span>
+                            </div>
+                            <div class="message-bubble">
+                                Great! Global Manufacturing Corp in Berlin. What industry are you in? I see options like:
+                                <br>• Manufacturing
+                                <br>• Healthcare
+                                <br>• Professional Services
+                                <br>• Retail
+                            </div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-bubble">
+                                Manufacturing - we produce automotive parts
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="chat-avatar" style="background: #4caf50;">
+                                <span class="material-symbols-outlined">smart_toy</span>
+                            </div>
+                            <div class="message-bubble">
+                                Perfect! For manufacturing companies, I'll configure tracking for:
+                                <br>✅ Scope 1, 2, and 3 emissions
+                                <br>✅ Energy, water, and waste metrics
+                                <br>✅ Supply chain sustainability
+                                <br>✅ ISO 14001, GRI, CDP compliance
+                                <br><br>Now, let's set up your team. What's your name and role?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Benefits -->
+            <div style="margin-top: 48px; text-align: center;">
+                <h3 style="margin-bottom: 24px;">Transformational Benefits</h3>
+                <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; font-weight: bold; color: #4caf50;">95%</div>
+                        <div>Faster Setup</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; font-weight: bold; color: #6750a4;">100%</div>
+                        <div>Data Accuracy</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; font-weight: bold; color: #ff9800;">Zero</div>
+                        <div>Training Required</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; font-weight: bold; color: #1b5e20;">5 min</div>
+                        <div>To Production</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Authentication & Security -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">security</span>
+                </div>
+                <h2>Enterprise Authentication & Security</h2>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">key</span>
+                        </div>
+                    </div>
+                    <h3>Enterprise Authentication</h3>
+                    <p>Secure, multi-factor authentication with role-based access control</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Email/Password with MFA
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            SSO Integration (SAML/OAuth)
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Biometric Support
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Session Management
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">groups</span>
+                        </div>
+                    </div>
+                    <h3>User Roles & Permissions</h3>
+                    <p>Hierarchical role system with granular permissions</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Admin - Full system access
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Manager - Site management
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Analyst - Data entry/analysis
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Viewer - Read-only access
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">school</span>
+                        </div>
+                    </div>
+                    <h3>Interactive Onboarding</h3>
+                    <p>Guided setup process with contextual tutorials</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Organization Setup Wizard
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Site Configuration
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Data Import Tools
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Interactive Tutorials
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Navigation -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">menu</span>
+                </div>
+                <h2>Pure MD3 Navigation & Dashboard</h2>
+            </div>
+            
+            <div class="nav-rail-demo">
+                <div class="nav-rail">
+                    <div class="nav-item active">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <span>Dashboard</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="material-symbols-outlined">eco</span>
+                        <span>Emissions</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="material-symbols-outlined">target</span>
+                        <span>Targets</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="material-symbols-outlined">science</span>
+                        <span>Simulator</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="material-symbols-outlined">gavel</span>
+                        <span>Compliance</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="material-symbols-outlined">assessment</span>
+                        <span>Reports</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-preview">
+                    <div class="dashboard-header">
+                        <h3>Sustainability Dashboard</h3>
+                        <p style="color: var(--md3-on-surface-variant); margin-top: 4px;">
+                            Real-time environmental impact tracking
+                        </p>
+                    </div>
+                    
+                    <div class="metric-cards">
+                        <div class="metric-card">
+                            <div class="metric-label">Scope 1 Emissions</div>
+                            <div class="metric-value">245.8</div>
+                            <div class="metric-label">tCO₂e</div>
+                            <div class="metric-change">
+                                <span class="material-symbols-outlined" style="font-size: 16px;">trending_down</span>
+                                -12.5%
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-label">Scope 2 Emissions</div>
+                            <div class="metric-value">189.3</div>
+                            <div class="metric-label">tCO₂e</div>
+                            <div class="metric-change">
+                                <span class="material-symbols-outlined" style="font-size: 16px;">trending_down</span>
+                                -8.2%
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-label">Scope 3 Emissions</div>
+                            <div class="metric-value">1024.7</div>
+                            <div class="metric-label">tCO₂e</div>
+                            <div class="metric-change">
+                                <span class="material-symbols-outlined" style="font-size: 16px;">trending_down</span>
+                                -5.1%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Features -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">star</span>
+                </div>
+                <h2>Core Platform Features</h2>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">eco</span>
+                        </div>
+                    </div>
+                    <h3>AI-Enhanced Emissions Intelligence</h3>
+                    <p>Predictive carbon tracking with anomaly detection</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Predictive forecasting
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Anomaly detection
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Pattern recognition
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Auto-optimization
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">target</span>
+                        </div>
+                    </div>
+                    <h3>AI-Driven Target Management</h3>
+                    <p>Dynamic targets that adapt to your performance</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Dynamic adjustments
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Scenario planning
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Risk assessment
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Action generation
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">science</span>
+                        </div>
+                    </div>
+                    <h3>AI-Powered Impact Simulator</h3>
+                    <p>10,000 scenarios analyzed in seconds</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Monte Carlo simulations
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Optimal path finding
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Investment optimization
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <strong>AI:</strong> Confidence scoring
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Transformation Features -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">auto_awesome</span>
+                </div>
+                <h2>🚀 AI-Powered Transformation</h2>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, rgba(103, 80, 164, 0.1) 0%, rgba(98, 91, 113, 0.1) 100%); border-radius: 16px; padding: 24px; margin-bottom: 24px; border: 1px solid var(--md3-primary);">
+                <h3 style="color: var(--md3-primary); margin-bottom: 16px;">Revolutionary AI Capabilities That Set Us Apart</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <span class="material-symbols-outlined">description</span>
+                            </div>
+                        </div>
+                        <h3>AI Report Generation</h3>
+                        <p>Complete compliance reports in 30 seconds</p>
+                        <div class="card-features">
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                CSRD, TCFD auto-generation
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Professional narratives
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                45 min → 30 sec
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Multi-language support
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </div>
+                        </div>
+                        <h3>Vision Analysis</h3>
+                        <p>Extract data from any document instantly</p>
+                        <div class="card-features">
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Utility bill scanning
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Chart interpretation
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Invoice extraction
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                96% accuracy
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <span class="material-symbols-outlined">psychology</span>
+                            </div>
+                        </div>
+                        <h3>Predictive Intelligence</h3>
+                        <p>Know what happens before it does</p>
+                        <div class="card-features">
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Emission forecasting
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Anomaly detection
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Risk prediction
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Optimization suggestions
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <span class="material-symbols-outlined">chat</span>
+                            </div>
+                        </div>
+                        <h3>Natural Language Everything</h3>
+                        <p>Talk to your data like a colleague</p>
+                        <div class="card-features">
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                "Create net-zero plan"
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                "Why emissions spike?"
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                "Generate board deck"
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Voice interface
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <span class="material-symbols-outlined">smart_toy</span>
+                            </div>
+                        </div>
+                        <h3>Autonomous Operations</h3>
+                        <p>Self-managing sustainability 24/7</p>
+                        <div class="card-features">
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Auto-optimization
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Proactive alerts
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Self-healing systems
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                24/7 monitoring
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <span class="material-symbols-outlined">trending_up</span>
+                            </div>
+                        </div>
+                        <h3>Strategic Intelligence</h3>
+                        <p>C-suite insights & market analysis</p>
+                        <div class="card-features">
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Competitor analysis
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Market intelligence
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                M&A due diligence
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">check_circle</span>
+                                ROI optimization
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding: 32px; background: var(--md3-success); color: white; border-radius: 16px;">
+                <h3 style="margin-bottom: 16px;">AI Transformation Impact</h3>
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 24px;">
+                    <div>
+                        <div style="font-size: 36px; font-weight: bold;">95%</div>
+                        <div>Time Saved</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 36px; font-weight: bold;">96%</div>
+                        <div>Accuracy</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 36px; font-weight: bold;">100x</div>
+                        <div>Faster Insights</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 36px; font-weight: bold;">847%</div>
+                        <div>ROI</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Features -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">rocket_launch</span>
+                </div>
+                <h2>Advanced Enterprise Features</h2>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">gavel</span>
+                        </div>
+                    </div>
+                    <h3>ESG Compliance & Reporting</h3>
+                    <p>Comprehensive regulatory compliance and automated reporting</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            CSRD, TCFD, SASB, GRI, CDP
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            One-click report generation
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Multi-framework alignment
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            PDF/Excel/API exports
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">verified_user</span>
+                        </div>
+                    </div>
+                    <h3>Audit Trail & Verification</h3>
+                    <p>Complete transparency with blockchain verification</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Immutable audit logs
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Blockchain verification
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Third-party attestation
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Digital signatures
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">payments</span>
+                        </div>
+                    </div>
+                    <h3>Carbon Credit Trading</h3>
+                    <p>Advanced carbon credit marketplace integration</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Real-time market pricing
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Automated trading
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Blockchain verification
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            ROI optimization
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Strategic Tools -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">business_center</span>
+                </div>
+                <h2>Executive Strategic Intelligence</h2>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">trending_up</span>
+                        </div>
+                    </div>
+                    <h3>Strategic Decision Support</h3>
+                    <p>C-suite dashboards for strategic sustainability decisions</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Financial Impact Analysis
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Risk Assessment Matrix
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Opportunity Identification
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Board-Ready Reports
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">analytics</span>
+                        </div>
+                    </div>
+                    <h3>Market Intelligence</h3>
+                    <p>Competitive analysis and industry benchmarking</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Competitor Tracking
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Industry Benchmarks
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Performance Rankings
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Strategic Positioning
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">attach_money</span>
+                        </div>
+                    </div>
+                    <h3>Value Creation Analytics</h3>
+                    <p>Revenue impact and financial optimization tools</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            ESG Premium Capture
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Cost Reduction Tracking
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Revenue Growth Drivers
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            847% ROI Calculations
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- $1B Vision Features -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">rocket</span>
+                </div>
+                <h2>$1B Platform Vision - Game-Changing Features</h2>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">psychology</span>
+                        </div>
+                    </div>
+                    <h3>Predictive Analytics Engine</h3>
+                    <p>ML-powered insights and future projections</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Emission Forecasting
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Risk Prediction Models
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Optimization Algorithms
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Anomaly Detection
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">hub</span>
+                        </div>
+                    </div>
+                    <h3>Deep Enterprise Integration</h3>
+                    <p>Seamless connection with enterprise systems</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            SAP S/4HANA Integration
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Oracle ERP Cloud
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Microsoft 365 Suite
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Salesforce CRM
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">sensors</span>
+                        </div>
+                    </div>
+                    <h3>IoT & Real-time Data</h3>
+                    <p>Direct sensor integration for live monitoring</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Smart Meter Integration
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Environmental Sensors
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Fleet Tracking
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Building Management
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cards-grid" style="margin-top: 24px;">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">speed</span>
+                        </div>
+                    </div>
+                    <h3>Revenue Acceleration</h3>
+                    <p>Features designed for rapid ARR growth to $100M+</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Self-Service Onboarding
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Usage-Based Pricing
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Partner Ecosystem
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            API Marketplace
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">smart_toy</span>
+                        </div>
+                    </div>
+                    <h3>Ask Blipee AI Assistant</h3>
+                    <p>Natural language interface for all platform features</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Conversational AI
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Action Automation
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Insights Generation
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            24/7 Availability
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">auto_awesome</span>
+                        </div>
+                    </div>
+                    <h3>Autonomous Operations</h3>
+                    <p>AI agents that actively manage sustainability</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Auto-optimization
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Proactive Alerts
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Self-healing Systems
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Continuous Learning
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Intelligence Pipeline -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">insights</span>
+                </div>
+                <h2>The Blipee Intelligence Pipeline - How Everything Connects</h2>
+            </div>
+            
+            <div class="pipeline-diagram">
+                <div class="pipeline-stage">
+                    <div class="stage-icon">
+                        <span class="material-symbols-outlined">input</span>
+                    </div>
+                    <h4>1. Data Acquisition</h4>
+                    <p>Multi-source data ingestion</p>
+                    <ul>
+                        <li>Manual Entry (Web/Mobile)</li>
+                        <li>IoT Sensors (Real-time)</li>
+                        <li>ERP Integration (SAP/Oracle)</li>
+                        <li>API Connections</li>
+                        <li>Excel/CSV Imports</li>
+                    </ul>
+                </div>
+                
+                <div class="pipeline-arrow">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </div>
+                
+                <div class="pipeline-stage">
+                    <div class="stage-icon">
+                        <span class="material-symbols-outlined">storage</span>
+                    </div>
+                    <h4>2. Data Processing</h4>
+                    <p>Intelligent data transformation</p>
+                    <ul>
+                        <li>Automated CO₂e Calculations</li>
+                        <li>Data Validation & Cleaning</li>
+                        <li>Multi-tenant Isolation</li>
+                        <li>Real-time Aggregation</li>
+                        <li>Historical Tracking</li>
+                    </ul>
+                </div>
+                
+                <div class="pipeline-arrow">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </div>
+                
+                <div class="pipeline-stage">
+                    <div class="stage-icon">
+                        <span class="material-symbols-outlined">psychology</span>
+                    </div>
+                    <h4>3. AI/ML Analysis</h4>
+                    <p>Advanced intelligence layer</p>
+                    <ul>
+                        <li>Pattern Recognition</li>
+                        <li>Anomaly Detection</li>
+                        <li>Predictive Modeling</li>
+                        <li>Optimization Algorithms</li>
+                        <li>Scenario Simulation</li>
+                    </ul>
+                </div>
+                
+                <div class="pipeline-arrow">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </div>
+                
+                <div class="pipeline-stage">
+                    <div class="stage-icon">
+                        <span class="material-symbols-outlined">auto_awesome</span>
+                    </div>
+                    <h4>4. Insights Generation</h4>
+                    <p>Actionable intelligence</p>
+                    <ul>
+                        <li>Real-time Dashboards</li>
+                        <li>Automated Alerts</li>
+                        <li>Compliance Reports</li>
+                        <li>Executive Summaries</li>
+                        <li>Recommendations</li>
+                    </ul>
+                </div>
+                
+                <div class="pipeline-arrow">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </div>
+                
+                <div class="pipeline-stage">
+                    <div class="stage-icon">
+                        <span class="material-symbols-outlined">smart_toy</span>
+                    </div>
+                    <h4>5. Ask Blipee</h4>
+                    <p>Natural language interface</p>
+                    <ul>
+                        <li>Conversational Queries</li>
+                        <li>Action Automation</li>
+                        <li>Proactive Suggestions</li>
+                        <li>Cross-data Analysis</li>
+                        <li>Strategic Guidance</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="data-flow-examples">
+                <h3 style="text-align: center; margin: 40px 0 24px; color: var(--md3-primary);">
+                    Real-World Data Flow Examples
+                </h3>
+                
+                <div class="flow-example">
+                    <div class="example-header">
+                        <span class="material-symbols-outlined">local_gas_station</span>
+                        <h4>Example 1: Fleet Fuel Consumption</h4>
+                    </div>
+                    <div class="flow-steps">
+                        <div class="flow-item">
+                            <strong>Input:</strong> IoT sensors track fuel usage in real-time
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Process:</strong> Automatic CO₂e calculation using DEFRA factors
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>AI Analysis:</strong> Detects 15% spike in emissions
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Insight:</strong> Route optimization could save 12% emissions
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Ask Blipee:</strong> "Your fleet emissions are trending up. Shall I optimize routes?"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flow-example">
+                    <div class="example-header">
+                        <span class="material-symbols-outlined">factory</span>
+                        <h4>Example 2: Manufacturing Energy Usage</h4>
+                    </div>
+                    <div class="flow-steps">
+                        <div class="flow-item">
+                            <strong>Input:</strong> SAP integration pulls energy data hourly
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Process:</strong> Aggregates by site, calculates Scope 2 emissions
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>AI Analysis:</strong> Predicts 8% increase next quarter
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Insight:</strong> Peak load shifting could reduce costs by $45K
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Ask Blipee:</strong> "I've identified $45K savings through load shifting. View details?"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flow-example">
+                    <div class="example-header">
+                        <span class="material-symbols-outlined">gavel</span>
+                        <h4>Example 3: Compliance Reporting</h4>
+                    </div>
+                    <div class="flow-steps">
+                        <div class="flow-item">
+                            <strong>Input:</strong> Multi-source data across all scopes
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Process:</strong> Validates completeness, fills gaps with estimates
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>AI Analysis:</strong> Maps to CSRD requirements, identifies gaps
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Insight:</strong> 92% CSRD compliant, 3 data points missing
+                        </div>
+                        <div class="flow-item">→</div>
+                        <div class="flow-item">
+                            <strong>Ask Blipee:</strong> "CSRD report due in 14 days. Missing 3 data points. Shall I request them?"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ask Blipee AI -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">smart_toy</span>
+                </div>
+                <h2>Ask Blipee - GPT-4 Enhanced Intelligence</h2>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 40px;">
+                <div style="display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+                    <span class="badge" style="background: var(--md3-primary); color: white; padding: 8px 16px; border-radius: 20px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">auto_awesome</span>
+                        GPT-4 Turbo
+                    </span>
+                    <span class="badge" style="background: var(--md3-tertiary); color: white; padding: 8px 16px; border-radius: 20px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">visibility</span>
+                        Vision Analysis
+                    </span>
+                    <span class="badge" style="background: var(--md3-secondary); color: white; padding: 8px 16px; border-radius: 20px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">search</span>
+                        RAG Enhanced
+                    </span>
+                    <span class="badge" style="background: var(--md3-success); color: white; padding: 8px 16px; border-radius: 20px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">insights</span>
+                        Embeddings
+                    </span>
+                </div>
+            </div>
+            
+            <div class="chat-demo">
+                <div class="chat-header">
+                    <div class="chat-avatar">
+                        <span class="material-symbols-outlined">smart_toy</span>
+                    </div>
+                    <div>
+                        <h4>Ask Blipee AI</h4>
+                        <p style="font-size: 12px; color: var(--md3-on-surface-variant);">
+                            Powered by GPT-4 with Vision, RAG, and Advanced Analytics
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="chat-messages">
+                    <div class="message">
+                        <div class="message-bubble">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                <span style="background: #6750a4; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px;">GPT-4 Turbo</span>
+                                <span style="background: #1b5e20; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px;">96% Confidence</span>
+                            </div>
+                            Hello! I'm Blipee AI, enhanced with GPT-4's advanced reasoning, vision capabilities for chart analysis, and RAG-powered knowledge base. I provide strategic sustainability intelligence with 96%+ accuracy.
+                        </div>
+                    </div>
+                    
+                    <div class="message user">
+                        <div class="message-bubble">
+                            <div style="background: #f5f5f5; padding: 12px; border-radius: 8px; margin-bottom: 8px; text-align: center;">
+                                <span class="material-symbols-outlined" style="font-size: 48px; color: #999;">insert_chart</span>
+                                <p style="margin: 8px 0 0 0; font-size: 12px; color: #666;">emissions_trend_2024.png</p>
+                            </div>
+                            Analyze this emissions trend chart and predict our Q2 2025 performance
+                        </div>
+                    </div>
+                    
+                    <div class="message">
+                        <div class="message-bubble">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                <span style="background: #6750a4; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px;">GPT-4 Vision</span>
+                                <span style="background: #625b71; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px;">RAG Enhanced</span>
+                            </div>
+                            <strong>📊 Chart Analysis Complete</strong>
+                            <br><br>
+                            Your emissions chart reveals a <strong>polynomial reduction curve</strong> with quarterly decreases averaging 3.8% (R² = 0.94). Current trajectory shows 5,595 tCO₂e total emissions.
+                            <br><br>
+                            <strong>🎯 Q2 2025 Prediction:</strong>
+                            <br>• Projected emissions: <strong>4,847 tCO₂e</strong> (95% CI: 4,720-4,974)
+                            <br>• Expected reduction: <strong>13.4%</strong> from current levels
+                            <br>• SBTi pathway compliance: <strong>ON TRACK</strong> ✅
+                            <br><br>
+                            <strong>📈 Key Drivers Identified:</strong>
+                            <br>• Renewable energy transition (38% impact)
+                            <br>• Supply chain optimization (27% impact)
+                            <br>• Energy efficiency programs (21% impact)
+                            <br>• Fleet electrification (14% impact)
+                            <br><br>
+                            <strong>💡 Strategic Recommendations:</strong>
+                            <br>1. <strong>Accelerate PPA negotiations</strong> - Lock in 65MW renewable capacity by Q4 2024 (NPV: $3.2M)
+                            <br>2. <strong>Deploy AI energy management</strong> - ML models predict 12% additional savings in manufacturing
+                            <br>3. <strong>Supplier engagement program</strong> - Target top 20 suppliers for 15% Scope 3 reduction
+                            <br><br>
+                            <strong>⚠️ Risk Factors:</strong>
+                            <br>• Grid emission factor changes could impact -2% to +1%
+                            <br>• Supply chain disruptions may delay Scope 3 improvements
+                            <br><br>
+                            <em>Analysis powered by: GPT-4 Vision, SBTi criteria database, historical emissions patterns, Monte Carlo simulation (n=10,000)</em>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="suggestions">
+                    <div class="suggestion-chip">Are we on track for net-zero?</div>
+                    <div class="suggestion-chip">Show me our ROI</div>
+                    <div class="suggestion-chip">Compare to competitors</div>
+                    <div class="suggestion-chip">What are quick wins?</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Architecture -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">architecture</span>
+                </div>
+                <h2>Technical Architecture</h2>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">code</span>
+                        </div>
+                    </div>
+                    <h3>Frontend Stack</h3>
+                    <p>Modern, performant, and fully type-safe</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Next.js 15 + React 18
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Pure MD3 Components
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            TypeScript + Strict Mode
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Real-time WebSockets
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">storage</span>
+                        </div>
+                    </div>
+                    <h3>Backend Infrastructure</h3>
+                    <p>Enterprise-grade, scalable, and secure</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Supabase PostgreSQL
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Row-Level Security (RLS)
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Edge Functions
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Real-time Subscriptions
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">bug_report</span>
+                        </div>
+                    </div>
+                    <h3>A+++ Testing Excellence</h3>
+                    <p>96% testing score with AI-powered optimization</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            777+ test scenarios
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            AI test generation
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            99.2% reliability
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Predictive analytics
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Differentiators -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <span class="material-symbols-outlined">diamond</span>
+                </div>
+                <h2>What Makes Blipee A++++++++</h2>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">palette</span>
+                        </div>
+                    </div>
+                    <h3>100% Pure MD3 Design</h3>
+                    <p>Beautiful, consistent, and compliant with Material Design 3</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            No MUI dependencies
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Official Google specifications
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Custom black theme
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Accessibility compliant
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">psychology</span>
+                        </div>
+                    </div>
+                    <h3>AI-First Platform</h3>
+                    <p>Intelligence built into every feature</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Natural language interface
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Predictive analytics
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Automated insights
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Smart recommendations
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span class="material-symbols-outlined">speed</span>
+                        </div>
+                    </div>
+                    <h3>Enterprise Performance</h3>
+                    <p>Built for scale, speed, and reliability</p>
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <2s page load times
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Real-time updates
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            99.9% uptime SLA
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            Global edge network
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p style="font-size: 28px; font-weight: bold;">Blipee AI-First Platform - The Future of Sustainability</p>
+            <p style="margin-top: 16px; font-size: 18px;">🚀 Powered by GPT-4 | 🎯 96% Accuracy | ⚡ 100x Faster | 📈 847% ROI</p>
+            <p style="margin-top: 12px;">✅ AI Report Generation | ✅ Vision Analysis | ✅ Predictive Intelligence | ✅ Autonomous Operations</p>
+            <p style="margin-top: 12px;">✅ Natural Language Interface | ✅ Strategic Intelligence | ✅ Real-time Optimization</p>
+            <p style="margin-top: 20px; font-size: 20px; color: #4caf50;">
+                <strong>From $10M Platform → $1B AI Intelligence System</strong>
+            </p>
+            <p style="margin-top: 12px; font-size: 16px;">
+                Transform Sustainability from Data Management to Autonomous Intelligence
+            </p>
+        </div>
+    </div>
+
+    <!-- Floating Ask Blipee Button -->
+    <div class="fab-demo">
+        <span class="material-symbols-outlined">smart_toy</span>
+        Ask Blipee
+    </div>
+</body>
+</html>

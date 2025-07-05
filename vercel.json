@@ -18,6 +18,12 @@
     },
     "src/app/api/data/export/route.ts": {
       "maxDuration": 300
+    },
+    "src/app/api/ai/chat/route.ts": {
+      "maxDuration": 120
+    },
+    "src/app/api/ai/stream/route.ts": {
+      "maxDuration": 120
     }
   },
   
@@ -28,6 +34,27 @@
         {
           "key": "Cache-Control",
           "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
         }
       ]
     }
@@ -42,7 +69,57 @@
   "build": {
     "env": {
       "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
-      "CRON_SECRET": "@cron_secret"
+      "CRON_SECRET": "@cron_secret",
+      "JWT_SECRET": "@jwt_secret",
+      "SESSION_SECRET": "@session_secret",
+      "ENCRYPTION_KEY": "@encryption_key"
     }
-  }
+  },
+  
+  "rewrites": [
+    {
+      "source": "/api/health",
+      "destination": "/api/health"
+    }
+  ],
+  
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.blipee.com"
+        }
+      ],
+      "destination": "https://blipee.com",
+      "permanent": true
+    }
+  ],
+  
+  "regions": ["iad1"],
+  
+  "github": {
+    "enabled": true,
+    "silent": false,
+    "autoAlias": true,
+    "autoJobCancelation": true
+  },
+  
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "develop": true,
+      "feature/*": true,
+      "hotfix/*": true,
+      "release/*": true
+    }
+  },
+  
+  "passwordProtection": {
+    "deploymentType": "preview"
+  },
+  
+  "cleanUrls": true,
+  "trailingSlash": false
 }

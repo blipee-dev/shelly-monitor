@@ -1,45 +1,79 @@
-# Shelly Monitor
+# Blipee Operating System
 
-Enterprise-grade monitoring platform for Shelly IoT devices with real-time dashboards, AI-powered analytics, and natural language control.
+AI-powered sustainability intelligence platform that transforms enterprise data into actionable insights through conversational interfaces and autonomous operations.
 
-## 🚀 Features
+## 🚀 Vision
 
-- **Real-time Monitoring**: Live device status and metrics with WebSocket updates
-- **Multi-device Support**: Plus 2PM, Plus 1PM, Motion 2, Dimmer 2, BLU Motion
-- **AI Assistant "Ask Blipee"**: Natural language control and automation creation
-- **Predictive Notifications**: AI analyzes patterns to suggest smart alerts
-- **Smart Automations**: AI-powered scheduling and trigger-based device control
-- **One-tap Scenes**: Control multiple devices instantly
-- **Advanced Analytics**: Energy consumption tracking with AI insights
-- **Anomaly Detection**: Security alerts for unusual activity
-- **Cost Optimization**: DeepSeek AI integration for affordable intelligence
-- **Progressive Web App**: Install as native app with offline support
-- **Push Notifications**: Real-time alerts with natural language creation
-- **Enterprise Security**: RBAC, audit logs, secure API
-- **Material Design 3**: Modern, responsive UI with dark mode
+Blipee OS is the intelligent core of the Blipee Sustainability Platform - an AI brain that understands your business through conversation, sees through documents and images, predicts and prevents problems, and automates compliance and reporting at enterprise scale.
 
-## Tech Stack
+## 🌟 Key Features
 
-- **Frontend**: Next.js 14, TypeScript, Material UI v5, Zustand
-- **Backend**: Supabase (PostgreSQL, Auth, Realtime)
-- **AI**: DeepSeek, OpenAI, Anthropic (multi-provider support)
-- **Testing**: Jest, Playwright
-- **Monitoring**: Prometheus metrics
-- **Email**: Custom SMTP support
+### AI Intelligence Core
+- **Conversational Everything**: Natural language as the primary interface - no forms, just talk
+- **Vision Analysis**: Point camera at utility bills, equipment, or documents for instant insights
+- **Predictive Intelligence**: Know problems before they occur with 95% confidence
+- **Autonomous Operations**: Self-managing, self-optimizing, self-healing systems
 
-## Quick Start
+### Enterprise Capabilities
+- **5-Minute Setup**: Conversational onboarding vs traditional 50-hour implementations
+- **Multi-Organization**: Manage subsidiaries, locations, and complex hierarchies
+- **Compliance Automation**: CSRD, TCFD, GRI, CDP report generation
+- **Industry Modules**: Manufacturing, Retail, Commercial Real Estate
+- **White-Label Ready**: Full customization for partners
+
+### Sustainability Intelligence
+- **Real-time Monitoring**: IoT devices, energy systems, and environmental sensors
+- **Carbon Footprint Tracking**: Scope 1, 2, and 3 emissions with AI predictions
+- **ESG Reporting**: Automated compliance and investor-grade reports
+- **Supply Chain Analytics**: End-to-end visibility and optimization
+- **ROI Calculations**: AI-powered investment recommendations
+
+### Technical Excellence
+- **Progressive Web App**: Install on any device with offline support
+- **Enterprise Security**: SOC2, RBAC, audit trails, encryption
+- **API Marketplace**: 100+ integrations with enterprise systems
+- **Real-time Everything**: WebSocket updates, live dashboards
+- **Multi-Provider AI**: GPT-4, Claude, DeepSeek with automatic fallback
+
+## 🏗️ Architecture
+
+```
+Blipee Operating System
+├── AI Intelligence Layer
+│   ├── Natural Language Processing
+│   ├── Computer Vision (GPT-4V)
+│   ├── Predictive Analytics
+│   └── Autonomous Agents
+├── Data Platform
+│   ├── IoT Integration
+│   ├── Document Processing
+│   ├── Real-time Analytics
+│   └── Time-series Database
+├── Enterprise Services
+│   ├── Multi-tenant Management
+│   ├── Compliance Engine
+│   ├── Reporting System
+│   └── API Gateway
+└── User Experience
+    ├── Conversational UI
+    ├── Executive Dashboards
+    ├── Mobile PWA
+    └── Voice Interface
+```
+
+## 🚀 Quick Start
 
 ```bash
 # Clone repository
-git clone https://github.com/blipee-dev/shelly-monitor.git
-cd shelly-monitor
+git clone https://github.com/blipee-dev/blipee-os.git
+cd blipee-os
 
 # Install dependencies
 npm install
 
 # Set up environment
 cp .env.example .env.local
-# Edit .env.local with your Supabase credentials
+# Edit .env.local with your credentials
 
 # Set up database
 npm run db:setup
@@ -49,91 +83,123 @@ npm run db:seed
 npm run dev
 ```
 
-Visit http://localhost:3000
+Visit http://localhost:3000 and start with our conversational onboarding!
 
-## AI Assistant - Ask Blipee
+## 📋 Prerequisites
 
-Ask Blipee is your intelligent home assistant that understands natural language:
+- Node.js 18+ and npm
+- Supabase account (or self-hosted instance)
+- AI API keys (at least one):
+  - DeepSeek (recommended for cost efficiency)
+  - OpenAI GPT-4
+  - Anthropic Claude
 
-### Device Control
-- "Turn off all lights"
-- "Dim the living room to 50%"
-- "What's my current energy usage?"
+## 🔧 Configuration
 
-### Automations
-- "Turn off all lights at 10 PM every day"
-- "When motion is detected, turn on hallway lights"
-- "Create a morning routine"
+### Essential Environment Variables
 
-### Scenes
-- "Create a movie night scene"
-- "Activate bedtime mode"
-- "Set up an away mode"
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_KEY=your-service-key
 
-### Management
-- "Show me all my automations"
-- "Disable the morning routine"
-- "What scenes do I have?"
+# AI Providers (at least one required)
+DEEPSEEK_API_KEY=your-deepseek-key
+OPENAI_API_KEY=your-openai-key
+ANTHROPIC_API_KEY=your-anthropic-key
 
-## Documentation
+# Optional
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email
+SMTP_PASS=your-password
+```
 
-- [Getting Started Guide](docs/setup/GETTING_STARTED.md)
-- [AI Features Guide](docs/guides/AI_FEATURES.md)
-- [PWA & Notifications Guide](docs/guides/PWA_GUIDE.md)
-- [API Documentation](http://localhost:3000/api-docs)
-- [Project Structure](docs/PROJECT_STRUCTURE.md)
-- [Authentication Guide](docs/guides/AUTHENTICATION.md)
-- [Theme Customization](docs/guides/THEME_CUSTOMIZATION.md)
+## 🧪 Testing
 
-## Test Accounts
-
-After seeding the database:
-- Admin: `test.admin@gmail.com` / `Admin123!`
-- User: `test.user@gmail.com` / `User123!`
-
-## Scripts
-
-Common commands:
 ```bash
-npm run dev              # Development server
-npm run build           # Production build
-npm run test            # Run all tests
-npm run lint            # ESLint
-npm run type-check      # TypeScript check
+# Run all tests
+npm test
 
-# Database
-npm run db:setup        # Initialize database
-npm run db:seed         # Seed test data
-npm run db:reset        # Reset and re-seed
+# Unit tests only
+npm run test:unit
 
-# Utilities
-npm run check:env       # Verify environment
-npm run create:test-users # Create test users
+# E2E tests
+npm run test:e2e
+
+# Coverage report
+npm run test:coverage
 ```
 
-See [scripts/README.md](scripts/README.md) for all available scripts.
+## 📚 Documentation
 
-## Project Structure
+- [Transformation Plan](./BLIPEE_OS_TRANSFORMATION_PLAN.md) - Our journey from IoT to AI platform
+- [AI Architecture](./docs/AI_ARCHITECTURE.md) - Deep dive into our AI systems
+- [API Documentation](./docs/API.md) - RESTful and GraphQL APIs
+- [Deployment Guide](./docs/DEPLOYMENT.md) - Production deployment instructions
+- [Contributing](./CONTRIBUTING.md) - How to contribute to Blipee OS
 
-```
-src/
-├── app/              # Next.js App Router
-├── components/       # React components
-├── lib/             # Core libraries
-├── types/           # TypeScript types
-docs/
-├── setup/           # Setup guides
-├── guides/          # Development guides
-scripts/
-├── setup/           # Setup scripts
-├── maintenance/     # Maintenance utilities
-├── test/           # Test utilities
-```
+## 🎯 Use Cases
 
-## Contributing
+### For Enterprises
+- Achieve net-zero with AI-powered optimization
+- Automate ESG reporting and compliance
+- Predict and prevent equipment failures
+- Optimize energy consumption across locations
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+### For Sustainability Consultants
+- 10x your client capacity with AI automation
+- Generate reports in minutes, not weeks
+- Provide predictive insights, not just historical data
 
-## License
+### For Facility Managers
+- Natural language control of all systems
+- Predictive maintenance alerts
+- Energy optimization recommendations
+- One-tap scene control
 
-MIT
+## 🚀 Roadmap
+
+### Phase 1: Foundation (Current)
+- ✅ Core platform with IoT monitoring
+- ✅ AI chat interface (Ask Blipee)
+- ✅ Predictive notifications
+- ✅ PWA with offline support
+- 🔄 Enterprise rebranding
+
+### Phase 2: Intelligence (Q1 2025)
+- 🔲 GPT-4 Vision integration
+- 🔲 Advanced report generation
+- 🔲 Scenario planning
+- 🔲 Industry modules
+
+### Phase 3: Scale (Q2 2025)
+- 🔲 Multi-region deployment
+- 🔲 White-label platform
+- 🔲 API marketplace
+- 🔲 Voice interface
+
+### Phase 4: Integration (Q3 2025)
+- 🔲 Merge with main Blipee platform
+- 🔲 Unified sustainability suite
+- 🔲 Global expansion
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
+
+## 📄 License
+
+Copyright © 2025 Blipee. All rights reserved.
+
+## 🌐 Links
+
+- [Website](https://blipee.com)
+- [Documentation](https://docs.blipee.com)
+- [API Reference](https://api.blipee.com)
+- [Status Page](https://status.blipee.com)
+
+---
+
+**Blipee OS** - Where AI meets sustainability to create a better tomorrow. 🌍

@@ -1,10 +1,13 @@
-# Shelly Monitor - AI Assistant Context
+# Blipee Operating System - AI Assistant Context
 
-This document provides context for AI assistants working on the Shelly Monitor project.
+This document provides context for AI assistants working on the Blipee OS project.
 
 ## Project Overview
 
-Shelly Monitor is an enterprise-grade IoT device monitoring platform for Shelly devices (Plus 2PM and Motion 2). It provides real-time monitoring, control, analytics, and comprehensive enterprise features.
+Blipee Operating System (formerly Shelly Monitor) is an AI-powered sustainability intelligence platform that serves as the intelligent core of the Blipee Sustainability Platform. It transforms enterprise data into actionable insights through conversational interfaces, computer vision, predictive analytics, and autonomous operations.
+
+### Vision
+Transform from a $10M IoT monitoring platform to a $1B AI-powered enterprise sustainability intelligence system that will be integrated into the main Blipee Sustainability App.
 
 ## Tech Stack
 
@@ -485,10 +488,10 @@ http://localhost:3000/automations
 - ✅ Day 4: Authentication System
 - ✅ Day 5: Device Management UI
 - ✅ Day 6: Analytics & AI Integration
-- ✅ Day 7: Automation & Scheduling (with fixes)
+- ✅ Day 7: Automation & Scheduling
 - ✅ Day 8: Mobile PWA & Push Notifications
-- 🔲 Day 9: Export/Import & Backup System
-- 🔲 Day 10: Performance Optimization & Testing
+- ✅ Day 9: Export/Import & Backup System
+- ✅ Day 10: Dashboard Development
 
 ## Day 8 Specific Updates - Mobile PWA & Push Notifications
 
@@ -560,6 +563,124 @@ This adds:
 - Functions for sending notifications
 - RLS policies for security
 
+## Day 9 Specific Updates - Export/Import & Backup System
+
+### Implemented Features
+1. **Export/Import System**
+   - Export all data to JSON or CSV formats
+   - Import from backup files with validation
+   - Preview import changes before applying
+   - Conflict resolution for existing data
+
+2. **Automated Backup System**
+   - Create manual backups on demand
+   - Store backups in Supabase Storage
+   - Automatic cleanup of old backups
+   - Download backups for offline storage
+
+3. **Backup Scheduling**
+   - Daily, weekly, or monthly automatic backups
+   - Customizable retention periods
+   - Next run time calculation
+   - Enable/disable schedules
+
+4. **Data Migration Tools**
+   - Version detection and migration
+   - Backward compatibility support
+   - Data validation and sanitization
+   - Migration error handling
+
+5. **Restore Functionality**
+   - One-click restore from any backup
+   - Selective data restoration
+   - Overwrite or merge options
+   - Restore progress tracking
+
+### Key Files
+- `src/lib/backup/export-manager.ts` - Export functionality
+- `src/lib/backup/import-manager.ts` - Import and validation
+- `src/lib/backup/backup-service.ts` - Backup management
+- `src/lib/backup/migration-tools.ts` - Version migration
+- `src/components/backup/BackupManager.tsx` - Backup UI
+- `src/components/backup/BackupScheduler.tsx` - Schedule UI
+- `src/app/(dashboard)/settings/backup/page.tsx` - Settings page
+
+### Database Migration Required
+Run the backup system migration in Supabase SQL editor:
+```sql
+-- Copy contents of supabase/migrations/006_backup_system.sql
+```
+
+This adds:
+- `backup_records` table for tracking backups
+- `backup_schedules` table for automation
+- Storage bucket configuration
+- RLS policies for security
+
+### Testing Backup Features
+```bash
+# Navigate to backup settings
+http://localhost:3000/settings/backup
+
+# Test features:
+1. Create a manual backup
+2. Export data as JSON/CSV
+3. Set up a daily backup schedule
+4. Import from a backup file
+5. Restore from a previous backup
+```
+
+### Storage Configuration
+In Supabase Dashboard:
+1. Go to Storage section
+2. Create bucket named 'backups'
+3. Set to private (not public)
+4. Apply RLS policies
+
+## Day 10 Specific Updates - Dashboard Development
+
+### Implemented Features
+1. **Main Dashboard Page**
+   - Central hub at `/dashboard` for authenticated users
+   - Real-time device statistics and monitoring
+   - Responsive grid layout with Material UI
+
+2. **Statistics Cards**
+   - Active devices counter with online/offline status
+   - Current power consumption in watts
+   - Energy usage today in kWh
+   - Average temperature from all sensors
+   - Trend indicators showing percentage changes
+
+3. **Device Grid**
+   - Devices organized by room/location
+   - Interactive device cards with status indicators
+   - Real-time updates via Supabase subscriptions
+   - Click navigation to device detail pages
+   - Visual indicators for device types (lights, motion, etc.)
+
+4. **Quick Actions Panel**
+   - One-click access to key features
+   - Automations, Analytics, Alerts, Settings buttons
+   - System status monitoring
+   - API health and sync status indicators
+
+5. **Loading & Empty States**
+   - Skeleton loaders during data fetch
+   - Empty state with call-to-action for new users
+   - Error states with retry functionality
+   - Refresh button with animation
+
+### Key Files
+- `src/app/(dashboard)/dashboard/page.tsx` - Main dashboard implementation
+
+### Dashboard Features
+- **Real-time Updates**: Live device status via WebSocket
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Performance**: Optimized rendering with loading states
+- **User Experience**: Intuitive navigation and visual feedback
+- **Data Visualization**: Statistics with trend indicators
+
 ## Recent Fixes (January 7, 2025)
 1. **Fixed middleware rate limiting error** - Temporarily disabled rate limiting imports
 2. **Fixed FeatureFlagProvider error** - Changed fetchRemoteFlags to initializeFeatureFlags
@@ -567,7 +688,26 @@ This adds:
 4. **Fixed CSP blocking Supabase** - Updated next.config.js CSP headers
 5. **Fixed Grid component warnings** - Updated to Grid v2 syntax
 6. **Created placeholder PWA icons** - Added basic icons for manifest
+7. **Created proper favicon** - Added Material Icons psychology icon
+
+## AI Transformation Goals
+
+1. **Conversational Everything**: Natural language as primary interface
+2. **Vision Intelligence**: Process documents, utility bills, equipment photos
+3. **Predictive Analytics**: 95% confidence in behavioral predictions  
+4. **Autonomous Operations**: Self-managing, self-healing systems
+5. **5-Minute Setup**: Conversational onboarding vs 50-hour implementations
+6. **Enterprise Scale**: Multi-org, compliance automation, industry modules
+
+## Integration Path
+
+This project will be absorbed into the main Blipee Sustainability App as its operating system layer, providing:
+- AI intelligence core
+- IoT device management
+- Predictive analytics engine
+- Compliance automation
+- Natural language interface
 
 ## Contact
 
-Project repository: https://github.com/blipee-dev/shelly-monitor
+Project repository: https://github.com/blipee-dev/blipee-os

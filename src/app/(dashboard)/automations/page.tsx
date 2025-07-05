@@ -166,7 +166,7 @@ export default function AutomationsPage() {
           {/* Automations Tab */}
           <Grid container spacing={3} sx={{ p: 2 }}>
             {automations.length === 0 ? (
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <Box textAlign="center" py={8}>
                   <Schedule sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
                   <Typography variant="h6" gutterBottom>
@@ -189,13 +189,13 @@ export default function AutomationsPage() {
                 {/* Enabled Automations */}
                 {enabledAutomations.length > 0 && (
                   <>
-                    <Grid item xs={12}>
+                    <Grid size={12}>
                       <Typography variant="subtitle2" color="text.secondary">
                         ACTIVE ({enabledAutomations.length})
                       </Typography>
                     </Grid>
                     {enabledAutomations.map(automation => (
-                      <Grid item xs={12} sm={6} lg={4} key={automation.id}>
+                      <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={automation.id}>
                         <Card elevation={0} sx={{ border: 1, borderColor: 'divider' }}>
                           <CardContent>
                             <Box display="flex" justifyContent="space-between" alignItems="flex-start">
@@ -251,13 +251,13 @@ export default function AutomationsPage() {
                 {/* Disabled Automations */}
                 {disabledAutomations.length > 0 && (
                   <>
-                    <Grid item xs={12}>
+                    <Grid size={12}>
                       <Typography variant="subtitle2" color="text.secondary">
                         INACTIVE ({disabledAutomations.length})
                       </Typography>
                     </Grid>
                     {disabledAutomations.map(automation => (
-                      <Grid item xs={12} sm={6} lg={4} key={automation.id}>
+                      <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={automation.id}>
                         <Card elevation={0} sx={{ border: 1, borderColor: 'divider', opacity: 0.7 }}>
                           <CardContent>
                             <Box display="flex" justifyContent="space-between" alignItems="flex-start">
@@ -291,7 +291,7 @@ export default function AutomationsPage() {
           {/* Scenes Tab */}
           <Grid container spacing={3} sx={{ p: 2 }}>
             {scenes.length === 0 ? (
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <Box textAlign="center" py={8}>
                   <AutoAwesome sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
                   <Typography variant="h6" gutterBottom>
@@ -311,7 +311,7 @@ export default function AutomationsPage() {
               </Grid>
             ) : (
               scenes.map(scene => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={scene.id}>
+                <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={scene.id}>
                   <Card 
                     elevation={0} 
                     sx={{ 

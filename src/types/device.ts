@@ -1,4 +1,4 @@
-// Device types for Shelly Monitor
+// Device types for Blipee OS
 
 export type DeviceType = 'plus2pm' | 'plus1pm' | 'motion2' | 'dimmer2' | 'blu_motion';
 export type DeviceStatus = 'online' | 'offline' | 'error';

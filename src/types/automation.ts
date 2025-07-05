@@ -1,4 +1,4 @@
-// Automation types for Shelly Monitor
+// Automation types for Blipee OS
 
 export type TriggerType = 
   | 'time'           // Specific time of day

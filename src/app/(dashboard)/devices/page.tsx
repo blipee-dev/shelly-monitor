@@ -266,12 +266,12 @@ export default function DevicesPage() {
       {/* Two column layout */}
       <Grid container spacing={3}>
         {/* Device Groups - Sidebar */}
-        <Grid item xs={12} md={3}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <DeviceGroupList />
         </Grid>
 
         {/* Device List - Main Content */}
-        <Grid item xs={12} md={9}>
+        <Grid size={{ xs: 12, md: 9 }}>
           {/* Filters */}
           <Card sx={{ mb: 3 }}>
             <Box p={2}>

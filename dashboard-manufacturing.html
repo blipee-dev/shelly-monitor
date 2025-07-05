@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dashboard - Manufacturing Demo - blipee AI Sustainability Platform</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="js/demo-data.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Visually hidden class for screen reader content */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        /* Navigation Rail */
+        .nav-rail {
+            width: 80px;
+            background: linear-gradient(180deg, rgba(255, 107, 107, 0.1) 0%, rgba(103, 80, 164, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+        
+        .nav-logo {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #6750A4 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+        
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-items {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        
+        .nav-item {
+            width: 100%;
+            height: 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+        
+        .nav-item.active {
+            color: #FF6B6B;
+            background: rgba(255, 107, 107, 0.1);
+        }
+        
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 32px;
+            background: #FF6B6B;
+            border-radius: 0 3px 3px 0;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            margin-top: 2px;
+        }
+        
+        .nav-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .theme-toggle {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .theme-toggle .material-icons {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.05);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 80px;
+            padding: 2rem;
+            max-width: 1600px;
+            width: 100%;
+            margin-right: auto;
+        }
+        
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .header-content {
+            flex: 1;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FF6B6B 0%, #6750A4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.125rem;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        /* Help button */
+        .intro-help-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 0.5rem;
+        }
+        
+        .intro-help-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.05);
+        }
+        
+        .intro-help-btn .material-icons {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .intro-help-btn:hover .material-icons {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .light-mode .intro-help-btn {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .light-mode .intro-help-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        
+        .light-mode .intro-help-btn .material-icons {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .light-mode .intro-help-btn:hover .material-icons {
+            color: rgba(0, 0, 0, 0.9);
+        }
+        
+        /* AI Intelligence Bar */
+        .ai-intelligence-bar {
+            background: linear-gradient(135deg, rgba(103, 80, 164, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .ai-insights {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .ai-insight {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .ai-insight-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .ai-insight-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .ai-recommendations {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .ai-recommendation {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .ai-recommendation:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+        
+        /* Metric Cards Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .metric-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(103, 80, 164, 0.2) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .metric-badge {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .metric-badge.negative {
+            background: rgba(244, 67, 54, 0.1);
+            color: #F44336;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+        }
+        
+        .metric-chart {
+            height: 60px;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #4CAF50, rgba(76, 175, 80, 0.3));
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-action {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .metric-action:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+        
+        /* Real-time Monitoring Section */
+        .monitoring-section {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(103, 80, 164, 0.05) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .monitoring-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .monitoring-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #4CAF50;
+        }
+        
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .monitor-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        .monitor-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .monitor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .monitor-title {
+            font-weight: 500;
+        }
+        
+        .monitor-status {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+        }
+        
+        .monitor-status.warning {
+            background: #FFB74D;
+        }
+        
+        .monitor-status.critical {
+            background: #F44336;
+        }
+        
+        .monitor-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .monitor-trend {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* AI Actions Timeline */
+        .actions-timeline {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .timeline-filter {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .filter-chip {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        
+        .filter-chip.active {
+            background: rgba(103, 80, 164, 0.2);
+            border-color: rgba(103, 80, 164, 0.4);
+        }
+        
+        .timeline-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+        
+        .timeline-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(103, 80, 164, 0.2) 0%, rgba(255, 107, 107, 0.2) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-action {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .timeline-details {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-impact {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .impact-badge {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        /* AI Assistant Widget */
+        /* AI Assistant FAB */
+        .ai-assistant-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #6750A4 0%, #4A90E2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(103, 80, 164, 0.4);
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+        
+        .ai-assistant-fab:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(103, 80, 164, 0.5);
+        }
+        
+        .ai-assistant-fab.active {
+            transform: scale(0.95);
+        }
+        
+        /* AI Assistant Chat Window */
+        .ai-assistant-window {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 400px;
+            max-width: calc(100vw - 4rem);
+            height: 600px;
+            max-height: calc(100vh - 10rem);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(0, 0, 0, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .ai-assistant-window.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+        
+        /* Chat Header */
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(103, 80, 164, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .chat-header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6750A4 0%, #4A90E2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chat-header-text h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .chat-header-text p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .chat-close {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .chat-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+        
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .message {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+        
+        .message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #6750A4 0%, #4A90E2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+        }
+        
+        .message-content {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1rem;
+            max-width: 80%;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        
+        .message.user .message-content {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(102, 187, 106, 0.2) 100%);
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            padding: 0 1.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .quick-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .quick-action:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .quick-action .material-icons {
+            font-size: 14px;
+            vertical-align: middle;
+            margin-right: 0.25rem;
+        }
+        
+        /* Chat Input */
+        .chat-input-container {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chat-input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        
+        .chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            font-size: 0.875rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .chat-input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #6750A4;
+        }
+        
+        .chat-send {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6750A4 0%, #4A90E2 100%);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #ffffff;
+        }
+        
+        .chat-send:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(103, 80, 164, 0.4);
+        }
+        
+        .chat-send:active {
+            transform: scale(0.95);
+        }
+        
+        /* Light mode chat */
+        .light-mode .ai-assistant-window {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .light-mode .chat-header {
+            background: linear-gradient(135deg, rgba(103, 80, 164, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%);
+            border-bottom-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .light-mode .chat-header-text h3 {
+            color: #1a1a1a;
+        }
+        
+        .light-mode .chat-header-text p {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .light-mode .chat-close {
+            background: rgba(0, 0, 0, 0.05);
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .light-mode .chat-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #1a1a1a;
+        }
+        
+        .light-mode .message-content {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: rgba(0, 0, 0, 0.87);
+        }
+        
+        .light-mode .quick-action {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: rgba(0, 0, 0, 0.87);
+        }
+        
+        .light-mode .quick-action:hover {
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.16);
+        }
+        
+        .light-mode .chat-input {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: #1a1a1a;
+        }
+        
+        .light-mode .chat-input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .light-mode .chat-input:focus {
+            background: rgba(0, 0, 0, 0.06);
+            border-color: #6750A4;
+        }
+        
+        /* Introduction overlay */
+        .introduction-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .introduction-overlay.active {
+            display: flex;
+        }
+        
+        .intro-content {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(0, 0, 0, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .intro-title {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #6750A4 0%, #42A5F5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .intro-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .intro-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6750A4 0%, #42A5F5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-icon .material-icons {
+            font-size: 20px;
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .feature-content p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        .intro-close {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #6750A4 0%, #42A5F5 100%);
+            border: none;
+            border-radius: 100px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .intro-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(103, 80, 164, 0.3);
+        }
+        
+        /* Light mode for introduction */
+        .light-mode .intro-content {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .light-mode .intro-subtitle {
+            color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .light-mode .feature-card {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+        
+        .light-mode .feature-card:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .light-mode .feature-title {
+            color: #1a1a1a;
+        }
+        
+        .light-mode .feature-content p {
+            color: rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Proactive Notification */
+        .proactive-notification {
+            position: fixed;
+            bottom: 100px;
+            right: 100px;
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.95) 0%, rgba(255, 107, 107, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(244, 67, 54, 0.3);
+            animation: slideIn 0.3s ease;
+            z-index: 999;
+            cursor: pointer;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .notification-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+        
+        .notification-message {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+        }
+        
+        .notification-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .notification-button {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-family: inherit;
+        }
+        
+        .notification-button.primary {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        
+        .notification-button.secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+        
+        /* Light Mode Styles */
+        body.light-mode {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+        
+        .light-mode .nav-rail {
+            background: linear-gradient(180deg, rgba(255, 107, 107, 0.08) 0%, rgba(103, 80, 164, 0.08) 100%);
+        }
+        
+        .light-mode .nav-item {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .light-mode .nav-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: #1a1a1a;
+        }
+        
+        .light-mode .theme-toggle {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+        
+        .light-mode .theme-toggle .material-icons {
+            color: rgba(0, 0, 0, 0.87);
+        }
+        
+        .light-mode .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        
+        .light-mode .ai-intelligence-bar,
+        .light-mode .metric-card,
+        .light-mode .monitoring-section,
+        .light-mode .actions-timeline {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+        
+        .light-mode .metric-card:hover {
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .light-mode .ai-insight-label,
+        .light-mode .metric-label,
+        .light-mode .page-subtitle,
+        .light-mode .timeline-details,
+        .light-mode .monitor-trend {
+            color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .light-mode .ai-recommendation,
+        .light-mode .metric-action,
+        .light-mode .filter-chip {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: rgba(0, 0, 0, 0.87);
+        }
+        
+        .light-mode .ai-recommendation:hover,
+        .light-mode .metric-action:hover,
+        .light-mode .filter-chip:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        
+        .light-mode .monitor-item {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .light-mode .monitor-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        
+        .light-mode .timeline-item {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .light-mode .timeline-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Screen reader only class */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Rail -->
+    <nav class="nav-rail" aria-label="Main navigation">
+        <div class="nav-logo" onclick="location.href='industry-demo-manufacturing.html'" aria-label="blipee home">
+            <span class="material-icons" style="font-size: 32px; color: white;">smart_toy</span>
+        </div>
+        
+        <div class="nav-items">
+            <a href="dashboard-manufacturing.html" class="nav-item active" aria-label="Dashboard" aria-current="page">
+                <span class="material-icons">dashboard</span>
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="emissions-manufacturing.html" class="nav-item" aria-label="Emissions">
+                <span class="material-icons">cloud</span>
+                <span class="nav-label">Emissions</span>
+            </a>
+            <a href="targets-manufacturing.html" class="nav-item" aria-label="Targets">
+                <span class="material-icons">track_changes</span>
+                <span class="nav-label">Targets</span>
+            </a>
+            <a href="impact-manufacturing.html" class="nav-item" aria-label="Impact">
+                <span class="material-icons">insights</span>
+                <span class="nav-label">Impact</span>
+            </a>
+            <a href="reports-manufacturing.html" class="nav-item" aria-label="Reports">
+                <span class="material-icons">description</span>
+                <span class="nav-label">Reports</span>
+            </a>
+            <a href="compliance-manufacturing.html" class="nav-item" aria-label="Compliance">
+                <span class="material-icons">verified</span>
+                <span class="nav-label">Compliance</span>
+            </a>
+        </div>
+        
+        <div class="nav-bottom">
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch to light mode">
+                <span class="material-icons" id="theme-icon">light_mode</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1>AI Command Center</h1>
+                <p class="page-subtitle">Real-time sustainability optimization powered by proactive AI</p>
+            </div>
+            <div class="header-actions">
+                <div class="view-selector" style="display: flex; gap: 0.5rem; margin-right: 1rem;">
+                    <button class="view-toggle active" onclick="setViewMode('monthly')" data-view="monthly" style="padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; color: #ffffff; font-size: 0.875rem; cursor: pointer; transition: all 0.2s ease;">
+                        Monthly
+                    </button>
+                    <button class="view-toggle" onclick="setViewMode('ytd')" data-view="ytd" style="padding: 0.5rem 1rem; background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; color: rgba(255, 255, 255, 0.7); font-size: 0.875rem; cursor: pointer; transition: all 0.2s ease;">
+                        YTD
+                    </button>
+                </div>
+                <button class="intro-help-btn" onclick="showIntroduction()" aria-label="How it works - Show introduction">
+                    <span class="material-icons">help_outline</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- AI Intelligence Bar -->
+        <div class="ai-intelligence-bar">
+            <div class="ai-insights">
+                <div class="ai-insight">
+                    <div class="ai-insight-label">AI Status</div>
+                    <div class="ai-insight-value" style="color: #4CAF50;">Active</div>
+                </div>
+                <div class="ai-insight">
+                    <div class="ai-insight-label">Optimizations Today</div>
+                    <div class="ai-insight-value" style="color: #42A5F5;">47</div>
+                </div>
+                <div class="ai-insight">
+                    <div class="ai-insight-label">Emissions Prevented</div>
+                    <div class="ai-insight-value" style="color: #66BB6A;">-4.8 tCO₂e</div>
+                </div>
+                <div class="ai-insight">
+                    <div class="ai-insight-label">Cost Savings</div>
+                    <div class="ai-insight-value" style="color: #6750A4;">$2,340</div>
+                </div>
+                
+                <div class="ai-recommendations">
+                    <div class="ai-recommendation" onclick="executeOptimization()">
+                        <span class="material-icons" style="font-size: 18px;">auto_fix_high</span>
+                        Optimize Now
+                    </div>
+                    <div class="ai-recommendation" onclick="viewPredictions()">
+                        <span class="material-icons" style="font-size: 18px;">query_stats</span>
+                        View Predictions
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Metric Cards -->
+        <div class="metrics-grid">
+            <!-- Total Emissions Card -->
+            <div class="metric-card" onclick="navigateToEmissions()">
+                <div class="metric-header">
+                    <div class="metric-icon">
+                        <span class="material-icons" style="color: #FF6B6B;">co2</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span class="material-icons" style="font-size: 14px;">trending_down</span>
+                        -15%
+                    </div>
+                </div>
+                <div class="metric-value">168 tCO₂e</div>
+                <div class="metric-label">Total Emissions This Month</div>
+                <div class="metric-chart" id="emissionsChart"></div>
+                <a href="#" class="metric-action" onclick="event.stopPropagation(); analyzeEmissions(); return false;">
+                    <span class="material-icons" style="font-size: 18px;">analytics</span>
+                    Analyze Trends
+                </a>
+            </div>
+            
+            <!-- Energy Efficiency Card -->
+            <div class="metric-card" onclick="navigateToEnergy()">
+                <div class="metric-header">
+                    <div class="metric-icon">
+                        <span class="material-icons" style="color: #FFB74D;">bolt</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span class="material-icons" style="font-size: 14px;">trending_down</span>
+                        -18%
+                    </div>
+                </div>
+                <div class="metric-value">2.1 kWh/unit</div>
+                <div class="metric-label">Energy Intensity</div>
+                <div class="metric-chart" id="energyChart"></div>
+                <a href="#" class="metric-action" onclick="event.stopPropagation(); optimizeEnergy(); return false;">
+                    <span class="material-icons" style="font-size: 18px;">tune</span>
+                    Optimize Usage
+                </a>
+            </div>
+            
+            <!-- Target Progress Card -->
+            <div class="metric-card" onclick="navigateToTargets()">
+                <div class="metric-header">
+                    <div class="metric-icon">
+                        <span class="material-icons" style="color: #4CAF50;">flag</span>
+                    </div>
+                    <div class="metric-badge">
+                        <span class="material-icons" style="font-size: 14px;">check_circle</span>
+                        On Track
+                    </div>
+                </div>
+                <div class="metric-value">75%</div>
+                <div class="metric-label">2025 Target Progress</div>
+                <div class="metric-chart" id="targetChart"></div>
+                <a href="#" class="metric-action" onclick="event.stopPropagation(); accelerateProgress(); return false;">
+                    <span class="material-icons" style="font-size: 18px;">speed</span>
+                    Accelerate Progress
+                </a>
+            </div>
+            
+            <!-- AI Opportunities Card -->
+            <div class="metric-card" onclick="viewOpportunities()">
+                <div class="metric-header">
+                    <div class="metric-icon">
+                        <span class="material-icons" style="color: #6750A4;">lightbulb</span>
+                    </div>
+                    <div class="metric-badge negative">
+                        <span class="material-icons" style="font-size: 14px;">priority_high</span>
+                        3 Urgent
+                    </div>
+                </div>
+                <div class="metric-value">12</div>
+                <div class="metric-label">AI-Identified Opportunities</div>
+                <div class="metric-chart" id="opportunityChart"></div>
+                <a href="#" class="metric-action" onclick="event.stopPropagation(); implementAll(); return false;">
+                    <span class="material-icons" style="font-size: 18px;">rocket_launch</span>
+                    Implement All
+                </a>
+            </div>
+        </div>
+        
+        <!-- Real-time Monitoring Section -->
+        <div class="monitoring-section">
+            <div class="monitoring-header">
+                <div class="monitoring-title">
+                    <span class="material-icons">monitor_heart</span>
+                    Real-time System Monitoring
+                </div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    Live Updates
+                </div>
+            </div>
+            
+            <div class="monitoring-grid">
+                <div class="monitor-item">
+                    <div class="monitor-header">
+                        <div class="monitor-title">Building A</div>
+                        <div class="monitor-status"></div>
+                    </div>
+                    <div class="monitor-value">42.3 kW</div>
+                    <div class="monitor-trend">↓ 5% from baseline</div>
+                </div>
+                
+                <div class="monitor-item">
+                    <div class="monitor-header">
+                        <div class="monitor-title">Building B</div>
+                        <div class="monitor-status"></div>
+                    </div>
+                    <div class="monitor-value">38.7 kW</div>
+                    <div class="monitor-trend">↓ 12% from baseline</div>
+                </div>
+                
+                <div class="monitor-item">
+                    <div class="monitor-header">
+                        <div class="monitor-title">Building C</div>
+                        <div class="monitor-status critical"></div>
+                    </div>
+                    <div class="monitor-value" style="color: #F44336;">68.2 kW</div>
+                    <div class="monitor-trend">↑ 45% anomaly detected</div>
+                </div>
+                
+                <div class="monitor-item">
+                    <div class="monitor-header">
+                        <div class="monitor-title">Solar Generation</div>
+                        <div class="monitor-status"></div>
+                    </div>
+                    <div class="monitor-value" style="color: #66BB6A;">127 kW</div>
+                    <div class="monitor-trend">Peak production</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Actions Timeline -->
+        <div class="actions-timeline">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <span class="material-icons">history</span>
+                    AI Actions & Optimizations
+                </div>
+                <div class="timeline-filter">
+                    <div class="filter-chip active" onclick="filterTimeline('all')">All</div>
+                    <div class="filter-chip" onclick="filterTimeline('auto')">Automated</div>
+                    <div class="filter-chip" onclick="filterTimeline('pending')">Pending</div>
+                </div>
+            </div>
+            
+            <div class="timeline-items">
+                <div class="timeline-item" onclick="viewActionDetails('anomaly')">
+                    <div class="timeline-icon">
+                        <span class="material-icons" style="color: #F44336;">warning</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-action">Anomaly Detected - Building C HVAC System</div>
+                        <div class="timeline-details">2 minutes ago • AI detected 45% energy spike, dispatching maintenance</div>
+                        <div class="timeline-impact">
+                            <div class="impact-badge" style="background: rgba(244, 67, 54, 0.1); color: #F44336;">
+                                +12 tCO₂e risk
+                            </div>
+                            <div class="impact-badge">
+                                Auto-resolving
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" onclick="viewActionDetails('optimization')">
+                    <div class="timeline-icon">
+                        <span class="material-icons" style="color: #42A5F5;">auto_fix_high</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-action">Production Schedule Optimized</div>
+                        <div class="timeline-details">1 hour ago • Shifted 3 processes to off-peak hours</div>
+                        <div class="timeline-impact">
+                            <div class="impact-badge">
+                                -2.3 tCO₂e saved
+                            </div>
+                            <div class="impact-badge" style="background: rgba(103, 80, 164, 0.1); color: #6750A4;">
+                                $450 saved
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" onclick="viewActionDetails('hvac')">
+                    <div class="timeline-icon">
+                        <span class="material-icons" style="color: #66BB6A;">thermostat</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-action">HVAC Zones Auto-Adjusted</div>
+                        <div class="timeline-details">3 hours ago • 12 zones optimized based on occupancy</div>
+                        <div class="timeline-impact">
+                            <div class="impact-badge">
+                                -1.8 tCO₂e daily
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" onclick="viewActionDetails('vfd')">
+                    <div class="timeline-icon">
+                        <span class="material-icons" style="color: #6750A4;">settings</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-action">VFD Installation Scheduled</div>
+                        <div class="timeline-details">Yesterday • 3 vendor quotes received, best option selected</div>
+                        <div class="timeline-impact">
+                            <div class="impact-badge">
+                                -35 tCO₂e/month
+                            </div>
+                            <div class="impact-badge" style="background: rgba(103, 80, 164, 0.1); color: #6750A4;">
+                                18 mo ROI
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- AI Assistant FAB -->
+    <div class="ai-assistant-fab" 
+         onclick="toggleAssistant()" 
+         aria-label="Open AI Dashboard Assistant"
+         aria-expanded="false"
+         aria-controls="assistantWindow">
+        <span class="material-icons" style="font-size: 32px; color: #ffffff;" aria-hidden="true">smart_toy</span>
+    </div>
+    
+    <!-- AI Assistant Chat Window -->
+    <div class="ai-assistant-window" id="assistantWindow" role="dialog" aria-labelledby="chatTitle">
+        <div class="chat-header">
+            <div class="chat-header-content">
+                <div class="chat-avatar" aria-hidden="true">
+                    <span class="material-icons" style="font-size: 24px; color: #ffffff;" aria-hidden="true">smart_toy</span>
+                </div>
+                <div class="chat-header-text">
+                    <h3 id="chatTitle">AI Dashboard Assistant</h3>
+                    <p>Proactive monitoring and optimization</p>
+                </div>
+            </div>
+            <button class="chat-close" onclick="toggleAssistant()" aria-label="Close chat">
+                <span class="material-icons" aria-hidden="true">close</span>
+            </button>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-label="Chat messages">
+            <!-- Initial message -->
+            <div class="message ai">
+                <div class="message-avatar" aria-hidden="true">
+                    <span class="material-icons" style="font-size: 18px; color: #ffffff;" aria-hidden="true">smart_toy</span>
+                </div>
+                <div class="message-content">
+                    👋 I'm your proactive AI Dashboard Assistant. I monitor your operations 24/7 and take immediate action to optimize sustainability performance.<br><br>
+                    📊 <strong>Key Insight:</strong> Your carbon intensity has improved to 0.373 kg CO₂e/unit (down from 0.505 kg/unit last year) through energy efficiency gains. Energy intensity is now 2.1 kWh/unit.<br><br>
+                    ⚠️ <strong>Current Alert:</strong> HVAC anomaly detected in Building C. I can dispatch maintenance now to prevent +12 tCO₂e impact. Shall I proceed?
+                </div>
+            </div>
+        </div>
+        
+        <div class="quick-actions">
+            <button class="quick-action" onclick="sendQuickAction('Fix the HVAC anomaly immediately')">
+                <span class="material-icons" aria-hidden="true">build</span>
+                Fix Anomaly Now
+            </button>
+            <button class="quick-action" onclick="sendQuickAction('Show me real-time monitoring')">
+                <span class="material-icons" aria-hidden="true">monitoring</span>
+                Real-time Status
+            </button>
+            <button class="quick-action" onclick="sendQuickAction('Optimize all systems')">
+                <span class="material-icons" aria-hidden="true">auto_fix_high</span>
+                Auto-Optimize
+            </button>
+            <button class="quick-action" onclick="sendQuickAction('Predict next 24h issues')">
+                <span class="material-icons" aria-hidden="true">query_stats</span>
+                24h Forecast
+            </button>
+        </div>
+        
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <input type="text" 
+                       class="chat-input" 
+                       id="chatInput" 
+                       placeholder="Ask me anything about your operations..."
+                       onkeypress="handleKeyPress(event)"
+                       aria-label="Type your message">
+                <button class="chat-send" onclick="sendMessage()" aria-label="Send message">
+                    <span class="material-icons" aria-hidden="true">send</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Screen reader announcements -->
+        <div class="visually-hidden" role="status" aria-live="polite" id="chatAnnouncements"></div>
+    </div>
+    
+    <!-- Proactive Notification (Hidden by default) -->
+    <div class="proactive-notification" id="proactiveNotification" style="display: none;">
+        <div class="notification-header">
+            <span class="material-icons" style="color: #ffffff; font-size: 24px;">warning</span>
+            <div class="notification-title">AI Alert: Immediate Action Required</div>
+        </div>
+        <div class="notification-message">
+            Building C HVAC system showing critical malfunction. Energy consumption 45% above normal. Estimated impact: +12 tCO₂e if not resolved.
+        </div>
+        <div class="notification-actions">
+            <button class="notification-button primary" onclick="fixAnomaly()">
+                Dispatch Maintenance
+            </button>
+            <button class="notification-button secondary" onclick="dismissNotification()">
+                Investigate Later
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // Current view mode
+        let currentViewMode = 'monthly';
+        
+        // Set view mode (Monthly vs YTD)
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            
+            // Update button states
+            document.querySelectorAll('.view-toggle').forEach(btn => {
+                if (btn.dataset.view === mode) {
+                    btn.classList.add('active');
+                    btn.style.background = 'rgba(255, 255, 255, 0.1)';
+                    btn.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    btn.style.color = '#ffffff';
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.background = 'transparent';
+                    btn.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                    btn.style.color = 'rgba(255, 255, 255, 0.7)';
+                }
+            });
+            
+            // Light mode adjustments
+            if (document.body.classList.contains('light-mode')) {
+                document.querySelectorAll('.view-toggle').forEach(btn => {
+                    if (btn.classList.contains('active')) {
+                        btn.style.background = 'rgba(0, 0, 0, 0.08)';
+                        btn.style.borderColor = 'rgba(0, 0, 0, 0.16)';
+                        btn.style.color = '#1a1a1a';
+                    } else {
+                        btn.style.background = 'transparent';
+                        btn.style.borderColor = 'rgba(0, 0, 0, 0.08)';
+                        btn.style.color = 'rgba(0, 0, 0, 0.6)';
+                    }
+                });
+            }
+            
+            // Refresh data with new view mode
+            populateDashboardData();
+            populateCharts();
+        }
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate dashboard with real data
+            populateDashboardData();
+            
+            // Populate charts
+            populateCharts();
+            
+            // Show proactive notification after 3 seconds
+            setTimeout(() => {
+                showProactiveNotification();
+            }, 3000);
+            
+            // Update real-time values
+            setInterval(updateRealTimeValues, 5000);
+        });
+        
+        function populateDashboardData() {
+            // Get latest data from unified data source
+            if (typeof demoData !== 'undefined') {
+                let emissionsValue, energyValue, carbonIntensity, targetProgress;
+                
+                if (currentViewMode === 'ytd') {
+                    // Calculate Year-to-Date values
+                    const currentMonth = 11; // October (0-indexed)
+                    const yearStart = currentMonth - 9; // Jan 2024 (starting from index 2)
+                    
+                    // YTD Emissions
+                    let ytdEmissions = 0;
+                    for (let i = yearStart; i <= currentMonth; i++) {
+                        ytdEmissions += demoData.monthlyEmissions[i].total;
+                    }
+                    
+                    // YTD Energy and Production
+                    let ytdEnergy = 0;
+                    let ytdProduction = 0;
+                    for (let i = yearStart; i <= currentMonth; i++) {
+                        ytdEnergy += demoData.energyData[i].electricity + demoData.energyData[i].naturalGas - demoData.energyData[i].solar;
+                        ytdProduction += demoData.productionData[i].units;
+                    }
+                    
+                    // Calculate YTD averages
+                    const monthsCount = currentMonth - yearStart + 1;
+                    emissionsValue = Math.round(ytdEmissions);
+                    energyValue = (ytdEnergy / ytdProduction).toFixed(1);
+                    carbonIntensity = (ytdEmissions / ytdProduction * 1000).toFixed(3);
+                    
+                    // YTD target progress (use latest)
+                    targetProgress = demoData.targetProgress[currentMonth];
+                    
+                    // YTD change vs prior year
+                    let priorYtdEmissions = 0;
+                    for (let i = 0; i < monthsCount && i < demoData.monthlyEmissions.length; i++) {
+                        priorYtdEmissions += demoData.monthlyEmissions[i].total;
+                    }
+                    const ytdChange = ((ytdEmissions - priorYtdEmissions) / priorYtdEmissions * 100).toFixed(0);
+                    
+                    // Update emissions card for YTD
+                    const emissionsCard = document.querySelector('.metric-card:nth-child(1)');
+                    if (emissionsCard) {
+                        emissionsCard.querySelector('.metric-value').textContent = emissionsValue + ' tCO₂e';
+                        emissionsCard.querySelector('.metric-label').textContent = 'Total Emissions YTD';
+                        emissionsCard.querySelector('.metric-badge').innerHTML = `<span class="material-icons" style="font-size: 14px;">trending_down</span>${ytdChange}%`;
+                    }
+                    
+                    // Update energy card for YTD
+                    const energyCard = document.querySelector('.metric-card:nth-child(2)');
+                    if (energyCard) {
+                        energyCard.querySelector('.metric-value').textContent = energyValue + ' kWh/unit';
+                        const metricLabel = energyCard.querySelector('.metric-label');
+                        metricLabel.innerHTML = `Energy Intensity YTD<br><span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">Carbon: ${carbonIntensity} kg CO₂e/unit</span>`;
+                    }
+                    
+                    // Update AI insights for YTD
+                    const preventedValue = document.querySelector('.ai-insight:nth-child(3) .ai-insight-value');
+                    if (preventedValue) {
+                        const ytdPrevented = (priorYtdEmissions - ytdEmissions).toFixed(1);
+                        preventedValue.textContent = `-${ytdPrevented} tCO₂e`;
+                    }
+                    
+                    const savingsValue = document.querySelector('.ai-insight:nth-child(4) .ai-insight-value');
+                    if (savingsValue) {
+                        const ytdSavings = Math.round(ytdEmissions * 1.5 * 100); // Estimate $150/tCO₂e saved
+                        savingsValue.textContent = demoData.formatCurrency(ytdSavings);
+                    }
+                } else {
+                    // Monthly view (current behavior)
+                    const latest = demoData.getLatestEmissions();
+                    const yearlyChange = demoData.getYearOverYearChange();
+                    targetProgress = demoData.targetProgress[demoData.targetProgress.length - 1];
+                    const latestEnergy = demoData.energyData[demoData.energyData.length - 1];
+                    
+                    emissionsValue = latest.total;
+                    energyValue = demoData.productionData[11].efficiency;
+                    carbonIntensity = (latest.total / demoData.productionData[11].units * 1000).toFixed(3);
+                    
+                    // Update emissions card for monthly
+                    const emissionsCard = document.querySelector('.metric-card:nth-child(1)');
+                    if (emissionsCard) {
+                        emissionsCard.querySelector('.metric-value').textContent = emissionsValue + ' tCO₂e';
+                        emissionsCard.querySelector('.metric-label').textContent = 'Total Emissions This Month';
+                        emissionsCard.querySelector('.metric-badge').innerHTML = `<span class="material-icons" style="font-size: 14px;">trending_down</span>-15%`;
+                    }
+                    
+                    // Update energy card for monthly
+                    const energyCard = document.querySelector('.metric-card:nth-child(2)');
+                    if (energyCard) {
+                        energyCard.querySelector('.metric-value').textContent = energyValue.toFixed(1) + ' kWh/unit';
+                        const metricLabel = energyCard.querySelector('.metric-label');
+                        metricLabel.innerHTML = `Energy Intensity<br><span style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">Carbon: ${carbonIntensity} kg CO₂e/unit</span>`;
+                    }
+                    
+                    // Reset AI insights for monthly
+                    const preventedValue = document.querySelector('.ai-insight:nth-child(3) .ai-insight-value');
+                    if (preventedValue) {
+                        preventedValue.textContent = '-4.8 tCO₂e';
+                    }
+                    
+                    const savingsValue = document.querySelector('.ai-insight:nth-child(4) .ai-insight-value');
+                    if (savingsValue) {
+                        savingsValue.textContent = '$2,340';
+                    }
+                }
+                
+                // Update target progress (same for both views)
+                const targetValue = document.querySelector('.metric-card:nth-child(3) .metric-value');
+                if (targetValue) {
+                    targetValue.textContent = Math.round(targetProgress.actualProgress) + '%';
+                }
+                
+                // Update building energy values with real data
+                const buildingData = demoData.getBuildingEnergyData('2024-10');
+                const monitorItems = document.querySelectorAll('.monitor-item');
+                
+                if (monitorItems[0]) {
+                    monitorItems[0].querySelector('.monitor-value').textContent = 
+                        buildingData.buildingA.electricity.toFixed(1) + ' kW';
+                }
+                if (monitorItems[1]) {
+                    monitorItems[1].querySelector('.monitor-value').textContent = 
+                        buildingData.buildingB.electricity.toFixed(1) + ' kW';
+                }
+                if (monitorItems[2]) {
+                    // Show anomaly for Building C
+                    monitorItems[2].querySelector('.monitor-value').textContent = 
+                        (buildingData.buildingC.electricity * 1.45).toFixed(1) + ' kW';
+                }
+                if (monitorItems[3]) {
+                    // Solar generation
+                    monitorItems[3].querySelector('.monitor-value').textContent = 
+                        latestEnergy.solar.toFixed(0) + ' kW';
+                }
+            }
+        }
+        
+        function populateCharts() {
+            const maxHeight = 100;
+            
+            if (typeof demoData !== 'undefined') {
+                if (currentViewMode === 'ytd') {
+                    // YTD view - show cumulative values for 2024
+                    const yearStart = 2; // Jan 2024 (index 2)
+                    const currentMonth = 11; // Oct 2024 (index 11)
+                    
+                    // Emissions chart - cumulative YTD
+                    const emissionsChart = document.getElementById('emissionsChart');
+                    let cumulativeEmissions = 0;
+                    const ytdEmissions = [];
+                    
+                    for (let i = yearStart; i <= currentMonth; i++) {
+                        cumulativeEmissions += demoData.monthlyEmissions[i].total;
+                        ytdEmissions.push(cumulativeEmissions);
+                    }
+                    
+                    const maxCumulative = Math.max(...ytdEmissions);
+                    
+                    emissionsChart.innerHTML = ytdEmissions.map((value, index) => {
+                        const height = (value / maxCumulative) * maxHeight + '%';
+                        const isLatest = index === ytdEmissions.length - 1;
+                        return `<div class="chart-bar" style="height: ${height}; background: linear-gradient(to top, #FF6B6B, rgba(255, 107, 107, 0.3)); opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                    }).join('');
+                    
+                    // Energy chart - cumulative YTD
+                    const energyChart = document.getElementById('energyChart');
+                    let cumulativeEnergy = 0;
+                    const ytdEnergy = [];
+                    
+                    for (let i = yearStart; i <= currentMonth; i++) {
+                        const totalEnergy = demoData.energyData[i].electricity + demoData.energyData[i].naturalGas - demoData.energyData[i].solar;
+                        cumulativeEnergy += totalEnergy;
+                        ytdEnergy.push(cumulativeEnergy);
+                    }
+                    
+                    const maxCumulativeEnergy = Math.max(...ytdEnergy);
+                    
+                    energyChart.innerHTML = ytdEnergy.map((value, index) => {
+                        const height = (value / maxCumulativeEnergy) * maxHeight + '%';
+                        const isLatest = index === ytdEnergy.length - 1;
+                        return `<div class="chart-bar" style="height: ${height}; background: linear-gradient(to top, #FFB74D, rgba(255, 183, 77, 0.3)); opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                    }).join('');
+                    
+                    // Target chart - YTD progress
+                    const targetChart = document.getElementById('targetChart');
+                    const ytdProgress = [];
+                    
+                    for (let i = yearStart; i <= currentMonth; i++) {
+                        ytdProgress.push(demoData.targetProgress[i]);
+                    }
+                    
+                    targetChart.innerHTML = ytdProgress.map((month, index) => {
+                        const height = month.actualProgress + '%';
+                        const isLatest = index === ytdProgress.length - 1;
+                        return `<div class="chart-bar" style="height: ${height}; background: linear-gradient(to top, #4CAF50, rgba(76, 175, 80, 0.3)); opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                    }).join('');
+                    
+                    // Opportunity chart - YTD cumulative opportunities
+                    const opportunityChart = document.getElementById('opportunityChart');
+                    const ytdOpportunities = [3, 8, 12, 19, 25, 33, 42, 52, 63, 73]; // Cumulative
+                    
+                    opportunityChart.innerHTML = ytdOpportunities.map((value, index) => {
+                        const height = (value / 80) * maxHeight + '%';
+                        const isLatest = index === ytdOpportunities.length - 1;
+                        return `<div class="chart-bar" style="height: ${height}; background: linear-gradient(to top, #6750A4, rgba(103, 80, 164, 0.3)); opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                    }).join('');
+                } else {
+                    // Monthly view (original code)
+                    // Emissions chart - use real data
+                    const emissionsChart = document.getElementById('emissionsChart');
+                    const last12Months = demoData.monthlyEmissions.slice(-12);
+                    const maxEmissions = Math.max(...last12Months.map(m => m.total));
+                    
+                    emissionsChart.innerHTML = last12Months.map((month, index) => {
+                        const height = (month.total / maxEmissions) * maxHeight + '%';
+                        const isLatest = index === last12Months.length - 1;
+                        return `<div class="chart-bar" style="height: ${height}; background: linear-gradient(to top, #FF6B6B, rgba(255, 107, 107, 0.3)); opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                    }).join('');
+                    
+                    // Energy chart - use real energy data
+                    const energyChart = document.getElementById('energyChart');
+                    const last12Energy = demoData.energyData.slice(-12);
+                    const maxEnergy = Math.max(...last12Energy.map(e => e.electricity + e.naturalGas));
+                    
+                    energyChart.innerHTML = last12Energy.map((month, index) => {
+                        const totalEnergy = month.electricity + month.naturalGas - month.solar;
+                        const height = (totalEnergy / maxEnergy) * maxHeight + '%';
+                        const isLatest = index === last12Energy.length - 1;
+                        return `<div class="chart-bar" style="height: ${height}; background: linear-gradient(to top, #FFB74D, rgba(255, 183, 77, 0.3)); opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                    }).join('');
+                    
+                    // Target chart - use real target progress
+                    const targetChart = document.getElementById('targetChart');
+                    const last12Progress = demoData.targetProgress.slice(-12);
+                    
+                    targetChart.innerHTML = last12Progress.map((month, index) => {
+                        const height = month.actualProgress + '%';
+                        const isLatest = index === last12Progress.length - 1;
+                        return `<div class="chart-bar" style="height: ${height}; background: linear-gradient(to top, #4CAF50, rgba(76, 175, 80, 0.3)); opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                    }).join('');
+                    
+                    // Opportunity chart - AI opportunities grow over time
+                    const opportunityChart = document.getElementById('opportunityChart');
+                    const opportunityData = [3, 5, 4, 7, 6, 8, 9, 10, 11, 10, 12, 12];
+                    
+                    opportunityChart.innerHTML = opportunityData.map((value, index) => {
+                        const height = (value / 15) * maxHeight + '%';
+                        const isLatest = index === opportunityData.length - 1;
+                        return `<div class="chart-bar" style="height: ${height}; background: linear-gradient(to top, #6750A4, rgba(103, 80, 164, 0.3)); opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                    }).join('');
+                }
+            } else {
+                // Fallback data if demo data not loaded
+                const emissionsChart = document.getElementById('emissionsChart');
+                const emissionsData = [85, 78, 82, 75, 70, 68, 65, 60, 58, 55, 52, 48];
+                
+                emissionsChart.innerHTML = emissionsData.map((value, index) => {
+                    const height = (value / 100) * maxHeight + '%';
+                    const isLatest = index === emissionsData.length - 1;
+                    return `<div class="chart-bar" style="height: ${height}; opacity: ${isLatest ? 1 : 0.6};"></div>`;
+                }).join('');
+                
+                // Similar fallbacks for other charts...
+            }
+        }
+        
+        function updateRealTimeValues() {
+            // Simulate real-time updates
+            const values = document.querySelectorAll('.monitor-value');
+            values.forEach(value => {
+                if (!value.style.color || value.style.color !== 'rgb(244, 67, 54)') {
+                    const currentValue = parseFloat(value.textContent);
+                    const variation = (Math.random() - 0.5) * 2;
+                    const newValue = (currentValue + variation).toFixed(1);
+                    value.textContent = newValue + ' kW';
+                }
+            });
+        }
+        
+        function showProactiveNotification() {
+            const notification = document.getElementById('proactiveNotification');
+            notification.style.display = 'block';
+            
+            // Auto-dismiss after 10 seconds
+            setTimeout(() => {
+                if (notification.style.display === 'block') {
+                    dismissNotification();
+                }
+            }, 10000);
+        }
+        
+        function dismissNotification() {
+            const notification = document.getElementById('proactiveNotification');
+            notification.style.display = 'none';
+        }
+        
+        function fixAnomaly() {
+            dismissNotification();
+            alert('✅ Maintenance team dispatched to Building C\n\nWork Order: #2024-1028\nPriority: Critical\nETA: 15 minutes\n\nAI has temporarily rerouted to backup systems.\nImpact reduced from +12 to +2 tCO₂e.');
+            
+            // Update the monitoring display
+            const buildingC = document.querySelectorAll('.monitor-item')[2];
+            const status = buildingC.querySelector('.monitor-status');
+            status.classList.remove('critical');
+            status.classList.add('warning');
+            
+            const value = buildingC.querySelector('.monitor-value');
+            value.style.color = '#FFB74D';
+            value.textContent = '52.1 kW';
+            
+            const trend = buildingC.querySelector('.monitor-trend');
+            trend.textContent = '↓ Backup systems engaged';
+        }
+        
+        function executeOptimization() {
+            alert('🚀 AI Optimization Started\n\nAnalyzing all systems...\nIdentifying inefficiencies...\nImplementing adjustments...\n\nEstimated completion: 5 minutes\nProjected savings: -6.2 tCO₂e, $850');
+        }
+        
+        function viewPredictions() {
+            alert('📊 November 2024 Predictions\n\nEmissions: 156 tCO₂e (-7% MoM)\nEnergy: 2.1 kWh/unit (-9%)\nCost Savings: $18,500\n\nKey Risks:\n• Cold weather impact: +8 tCO₂e\n• Holiday surge: +5 tCO₂e\n\nMitigation ready for deployment.');
+        }
+        
+        function analyzeEmissions() {
+            alert('📈 Emissions Analysis\n\nCurrent trend: -15% YoY\nMain drivers:\n• Production efficiency: -8%\n• Renewable energy: -5%\n• Process optimization: -2%\n\nAI recommends focusing on Scope 3 for next phase.');
+        }
+        
+        function optimizeEnergy() {
+            alert('⚡ Energy Optimization Available\n\n3 immediate actions:\n1. Shift Process A to 2 AM (-1.2 tCO₂e)\n2. Reduce Building B cooling 2°C (-0.8 tCO₂e)\n3. Activate solar battery storage (-0.5 tCO₂e)\n\nImplement all now?');
+        }
+        
+        function accelerateProgress() {
+            window.location.href = 'targets-manufacturing.html';
+        }
+        
+        function implementAll() {
+            alert('🎯 Implementing All Opportunities\n\n12 actions queued:\n• 3 immediate (no cost)\n• 5 short-term (<$10k)\n• 4 long-term (>$10k)\n\nTotal impact: -89 tCO₂e/month\nTotal investment: $185,000\nPayback period: 2.1 years\n\nProceeding with immediate actions...');
+        }
+        
+        function viewOpportunities() {
+            alert('💡 AI-Identified Opportunities\n\nUrgent (3):\n• Building C HVAC fix (-12 tCO₂e)\n• Compressed air leaks (-8 tCO₂e)\n• Weekend shutdown (-5 tCO₂e)\n\nHigh Impact (5):\n• VFD installation (-35 tCO₂e)\n• Solar expansion (-45 tCO₂e)\n• Process optimization (-18 tCO₂e)\n\nQuick Wins (4):\n• Lighting schedules (-3 tCO₂e)\n• Thermostat adjustment (-2 tCO₂e)');
+        }
+        
+        function viewActionDetails(action) {
+            const details = {
+                anomaly: 'Building C HVAC Anomaly\n\nDetected: 11:42 AM\nType: Compressor malfunction\nImpact: +12 tCO₂e potential\n\nActions taken:\n• Maintenance dispatched\n• Backup systems engaged\n• Real-time monitoring active',
+                optimization: 'Production Schedule Optimization\n\nProcesses shifted:\n• Extrusion Line A → 2 AM\n• Molding Station B → 3 AM\n• Assembly Line C → 4 AM\n\nResults:\n• -2.3 tCO₂e saved today\n• $450 energy cost reduction\n• Zero production impact',
+                hvac: 'HVAC Zone Optimization\n\nZones adjusted: 12\nOccupancy-based control active\nTemperature variance: ±2°C\n\nDaily savings:\n• -1.8 tCO₂e emissions\n• 15% energy reduction\n• Comfort maintained',
+                vfd: 'VFD Installation Project\n\nVendors evaluated: 3\nSelected: EnergyPro Solutions\nInstallation date: Nov 15-17\n\nProjected impact:\n• -35 tCO₂e/month\n• $125,000 investment\n• 18-month payback'
+            };
+            
+            alert(details[action] || 'Action details not available');
+        }
+        
+        function filterTimeline(filter) {
+            // Update active filter
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // In a real implementation, this would filter the timeline items
+            console.log(`Filtering timeline by: ${filter}`);
+        }
+        
+        function navigateToEmissions() {
+            window.location.href = 'emissions-manufacturing.html';
+        }
+        
+        function navigateToEnergy() {
+            // In a real app, this would navigate to energy management
+            alert('Energy Management page coming soon!');
+        }
+        
+        function navigateToTargets() {
+            window.location.href = 'targets-manufacturing.html';
+        }
+        
+        // Toggle AI Assistant
+        function toggleAssistant() {
+            const window = document.getElementById('assistantWindow');
+            const fab = document.querySelector('.ai-assistant-fab');
+            const isOpen = window.classList.contains('open');
+            
+            if (isOpen) {
+                window.classList.remove('open');
+                fab.classList.remove('active');
+                fab.setAttribute('aria-expanded', 'false');
+            } else {
+                window.classList.add('open');
+                fab.classList.add('active');
+                fab.setAttribute('aria-expanded', 'true');
+                // Focus on input when opening
+                setTimeout(() => {
+                    document.getElementById('chatInput').focus();
+                }, 300);
+            }
+        }
+        
+        // Handle enter key in chat
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+        
+        // Send message
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                processDashboardRequest(message);
+            }, 1000);
+        }
+        
+        // Send quick action
+        function sendQuickAction(message) {
+            addMessage(message, 'user');
+            setTimeout(() => {
+                processDashboardRequest(message);
+            }, 1000);
+        }
+        
+        // Add message to chat
+        function addMessage(message, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const avatarIcon = type === 'user' ? 'person' : 'smart_toy';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar" aria-hidden="true">
+                    <span class="material-icons" style="font-size: 18px; color: #ffffff;" aria-hidden="true">${avatarIcon}</span>
+                </div>
+                <div class="message-content">${message}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            announceToScreenReader(type === 'user' ? `You said: ${message}` : `Assistant says: ${message}`);
+        }
+        
+        // Process dashboard requests
+        function processDashboardRequest(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('anomaly') || lowerMessage.includes('fix')) {
+                addMessage('🔧 <strong>Anomaly Resolution in Progress</strong><br><br>✅ Maintenance team dispatched (ETA: 15 min)<br>✅ Switching to backup systems now<br>✅ Impact reduced from +12 to +2 tCO₂e<br>✅ Work order #2024-1028 created', 'ai');
+                fixAnomaly();
+            } else if (lowerMessage.includes('monitor') || lowerMessage.includes('real-time')) {
+                let statusMessage = '📊 <strong>Real-time Monitoring Active</strong><br><br>';
+                
+                if (typeof demoData !== 'undefined') {
+                    const buildingData = demoData.getBuildingEnergyData('2024-10');
+                    statusMessage += `• Building A (Extrusion): ${buildingData.buildingA.electricity.toFixed(1)} kW ✅ Normal<br>`;
+                    statusMessage += `• Building B (Molding): ${buildingData.buildingB.electricity.toFixed(1)} kW ✅ Optimal<br>`;
+                    statusMessage += `• Building C (Assembly): ${(buildingData.buildingC.electricity * 1.45).toFixed(1)} kW ⚠️ Anomaly detected<br>`;
+                    statusMessage += `• Building D (Warehouse): ${buildingData.buildingD.electricity.toFixed(1)} kW ✅ Normal<br>`;
+                    statusMessage += `• Solar Generation: ${demoData.energyData[11].solar.toFixed(0)} kW ☀️ Peak production<br><br>`;
+                    statusMessage += `Overall efficiency: 94% (Target: 90%)`;
+                } else {
+                    statusMessage += '• Building A: 45.2 kW ✅ Normal<br>• Building B: 48.7 kW ✅ Optimal<br>• Building C: 82.3 kW ⚠️ Backup active<br>• Building D: 44.1 kW ✅ Normal<br><br>Overall efficiency: 94% (Target: 90%)';
+                }
+                
+                addMessage(statusMessage, 'ai');
+            } else if (lowerMessage.includes('optimize')) {
+                addMessage('🚀 <strong>System Optimization Initiated</strong><br><br>Analyzing 47 parameters...<br>Found 6 optimization opportunities:<br><br>1. Shift Extrusion Line A to off-peak (-2.3 tCO₂e)<br>2. Adjust HVAC zones in Buildings B & C (-1.8 tCO₂e)<br>3. Optimize compressed air in Assembly (-1.2 tCO₂e)<br>4. Reduce Molding Station B idle time (-0.8 tCO₂e)<br><br>Implementing now... Complete in 5 minutes.', 'ai');
+            } else if (lowerMessage.includes('predict') || lowerMessage.includes('forecast')) {
+                let predictMessage = '🔮 <strong>24-Hour Predictive Analysis</strong><br><br>';
+                
+                if (typeof demoData !== 'undefined') {
+                    const latest = demoData.getLatestEmissions();
+                    const trend = demoData.getYearOverYearChange();
+                    predictMessage += `⚡ <strong>Energy:</strong> Peak expected at 2 PM tomorrow (est. ${(demoData.energyData[11].electricity * 1.15 / 1000).toFixed(1)} MWh)<br>`;
+                    predictMessage += `🌡️ <strong>Weather:</strong> 3°C drop will increase heating +8% (+${(latest.total * 0.08).toFixed(1)} tCO₂e)<br>`;
+                    predictMessage += `🏭 <strong>Production:</strong> Molding Line B maintenance window optimal at 3 AM<br>`;
+                    predictMessage += `⚠️ <strong>Risk:</strong> Compressor #4 in Building C showing early failure signs<br>`;
+                    predictMessage += `📈 <strong>Trend:</strong> ${trend.toFixed(1)}% YoY reduction maintained<br><br>`;
+                    predictMessage += 'Shall I schedule preventive maintenance?';
+                } else {
+                    predictMessage += '⚡ <strong>Energy:</strong> Peak expected at 2 PM tomorrow<br>🌡️ <strong>Weather:</strong> 3°C drop will increase heating +8%<br>🏭 <strong>Production:</strong> Line B maintenance window optimal at 3 AM<br>⚠️ <strong>Risk:</strong> Compressor #4 showing early failure signs<br><br>Shall I schedule preventive maintenance?';
+                }
+                
+                addMessage(predictMessage, 'ai');
+            } else if (lowerMessage.includes('progress') || lowerMessage.includes('performance')) {
+                let progressMessage = '📈 <strong>Performance Summary</strong><br><br>';
+                
+                if (typeof demoData !== 'undefined') {
+                    const latest = demoData.getLatestEmissions();
+                    const yearlyChange = demoData.getYearOverYearChange();
+                    const targetProgress = demoData.targetProgress[demoData.targetProgress.length - 1];
+                    
+                    progressMessage += `🎯 <strong>Current Emissions:</strong> ${latest.total} tCO₂e (${yearlyChange.toFixed(1)}% YoY reduction)<br>`;
+                    progressMessage += `📊 <strong>Target Progress:</strong> ${Math.round(targetProgress.actualProgress)}% of 2025 goal achieved<br>`;
+                    progressMessage += `⚡ <strong>Energy Efficiency:</strong> ${demoData.productionData[11].efficiency}% (Best in class)<br>`;
+                    progressMessage += `♻️ <strong>Waste Diversion:</strong> ${demoData.wasteData[11].diversionRate}% (Target: 80%)<br>`;
+                    progressMessage += `💰 <strong>Cost Savings YTD:</strong> ${demoData.formatCurrency(234500)}<br><br>`;
+                    progressMessage += 'Excellent progress! You\'re outperforming 87% of manufacturing peers.';
+                } else {
+                    progressMessage += 'Loading performance data...';
+                }
+                
+                addMessage(progressMessage, 'ai');
+            } else if (lowerMessage.includes('carbon intensity') || lowerMessage.includes('efficiency')) {
+                let efficiencyMessage = '📊 <strong>Carbon Intensity vs Energy Efficiency Analysis</strong><br><br>';
+                
+                if (typeof demoData !== 'undefined') {
+                    const currentCarbon = (demoData.monthlyEmissions[11].total / demoData.productionData[11].units * 1000).toFixed(3);
+                    const yearAgoCarbon = (demoData.monthlyEmissions[0].total / demoData.productionData[0].units * 1000).toFixed(3);
+                    const currentEnergy = demoData.productionData[11].efficiency;
+                    const yearAgoEnergy = demoData.productionData[0].efficiency;
+                    
+                    efficiencyMessage += `<strong>Current Status:</strong><br>`;
+                    efficiencyMessage += `• Carbon Intensity: ${currentCarbon} kg CO₂e/unit (was ${yearAgoCarbon})<br>`;
+                    efficiencyMessage += `• Energy Intensity: ${currentEnergy} kWh/unit (was ${yearAgoEnergy})<br>`;
+                    efficiencyMessage += `• Production: ${(demoData.productionData[11].units/1000).toFixed(0)}k units/month<br><br>`;
+                    
+                    efficiencyMessage += `<strong>Key Improvements:</strong><br>`;
+                    efficiencyMessage += `• 26% reduction in carbon intensity YoY<br>`;
+                    efficiencyMessage += `• 25% improvement in energy efficiency<br>`;
+                    efficiencyMessage += `• 15% increase in production volume<br><br>`;
+                    
+                    efficiencyMessage += `<strong>Correlation Analysis:</strong><br>`;
+                    efficiencyMessage += `The improvements are directly correlated:<br>`;
+                    efficiencyMessage += `• LED retrofit (Jan) reduced electricity by 10%<br>`;
+                    efficiencyMessage += `• Solar installation (Mar) offset 25 MWh/month<br>`;
+                    efficiencyMessage += `• Process optimization reduced energy per unit<br>`;
+                    efficiencyMessage += `• Result: Lower emissions despite higher production`;
+                } else {
+                    efficiencyMessage += 'Loading efficiency data...';
+                }
+                
+                addMessage(efficiencyMessage, 'ai');
+            } else if (lowerMessage.includes('help')) {
+                addMessage('I\'m your proactive Dashboard Assistant. I continuously monitor and optimize your manufacturing operations:<br><br>🔍 <strong>Real-time Monitoring:</strong> 24/7 surveillance of all buildings and production lines<br>🤖 <strong>Predictive Analytics:</strong> Prevent equipment failures and energy waste<br>⚡ <strong>Auto-Optimization:</strong> Continuously improve efficiency across extrusion, molding, and assembly<br>🎯 <strong>Impact Tracking:</strong> Monitor progress to SBTi-validated targets<br>📊 <strong>Smart Insights:</strong> Data-driven recommendations for your facility<br><br>What would you like me to help with?', 'ai');
+            } else {
+                addMessage(`Analyzing "${message}"... Based on current operations, I recommend focusing on the Building C HVAC anomaly first as it has the highest immediate impact. Would you like me to dispatch maintenance immediately?`, 'ai');
+            }
+        }
+        
+        // Screen reader announcements
+        function announceToScreenReader(message) {
+            const announcements = document.getElementById('chatAnnouncements');
+            if (announcements) {
+                announcements.textContent = message;
+                setTimeout(() => {
+                    announcements.textContent = '';
+                }, 100);
+            }
+        }
+        
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                themeIcon.textContent = 'light_mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.textContent = 'dark_mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (savedTheme === 'light') {
+                body.classList.add('light-mode');
+                themeIcon.textContent = 'light_mode';
+            }
+        });
+        
+        // Show introduction
+        function showIntroduction() {
+            const overlay = document.getElementById('introductionOverlay');
+            overlay.classList.add('active');
+            
+            // Focus on close button for accessibility
+            setTimeout(() => {
+                const closeButton = overlay.querySelector('.intro-close');
+                if (closeButton) closeButton.focus();
+            }, 100);
+        }
+        
+        // Hide introduction
+        function hideIntroduction() {
+            const overlay = document.getElementById('introductionOverlay');
+            overlay.classList.remove('active');
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Escape key closes modals
+            if (e.key === 'Escape') {
+                if (document.getElementById('introductionOverlay') && document.getElementById('introductionOverlay').classList.contains('active')) {
+                    hideIntroduction();
+                }
+            }
+        });
+    </script>
+    
+    <!-- Introduction Overlay -->
+    <div class="introduction-overlay" id="introductionOverlay">
+        <div class="intro-content">
+            <h2 class="intro-title">AI Command Center</h2>
+            <p class="intro-subtitle">Your proactive AI assistant that monitors, predicts, and optimizes sustainability performance 24/7</p>
+            
+            <div class="intro-features">
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <span class="material-icons">monitoring</span>
+                        </div>
+                        <div class="feature-title">Real-time Monitoring</div>
+                    </div>
+                    <div class="feature-content">
+                        <p>Continuously tracks energy consumption, emissions, and operational efficiency across all facilities with millisecond precision.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <span class="material-icons">auto_fix_high</span>
+                        </div>
+                        <div class="feature-title">Proactive Optimization</div>
+                    </div>
+                    <div class="feature-content">
+                        <p>AI automatically detects anomalies and takes immediate action - dispatching maintenance, adjusting systems, and preventing emissions.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <span class="material-icons">insights</span>
+                        </div>
+                        <div class="feature-title">Predictive Analytics</div>
+                    </div>
+                    <div class="feature-content">
+                        <p>Forecasts future issues before they occur, schedules preventive maintenance, and optimizes operations based on weather and production data.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <span class="material-icons">speed</span>
+                        </div>
+                        <div class="feature-title">Instant Actions</div>
+                    </div>
+                    <div class="feature-content">
+                        <p>Execute complex optimizations with one click - shift production schedules, adjust HVAC zones, or implement energy-saving measures instantly.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="intro-close" onclick="hideIntroduction()">Get Started</button>
+        </div>
+    </div>
+</body>
+</html>

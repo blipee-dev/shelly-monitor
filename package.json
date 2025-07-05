@@ -1,6 +1,6 @@
 {
-  "name": "shelly-monitor",
-  "version": "2.0.0",
+  "name": "blipee-os",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -25,7 +25,10 @@
     "sync:users": "tsx scripts/maintenance/sync-users.ts",
     "create:test-users": "tsx scripts/test/create-test-users.ts",
     "generate:types": "tsx scripts/generate-types.ts",
-    "analyze": "ANALYZE=true next build"
+    "analyze": "ANALYZE=true next build",
+    "configure:env": "tsx scripts/setup/configure-vercel-env.ts",
+    "vercel:pull": "vercel env pull .env.local",
+    "vercel:preview": "vercel --env preview"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.56.0",

@@ -158,7 +158,7 @@ export default function DeviceCard({
         {device.type === 'plus_2pm' && deviceData?.switch && (
           <Grid container spacing={2}>
             {deviceData.switch.map((channel: any, index: number) => (
-              <Grid item xs={12} key={channel.id}>
+              <Grid size={12} key={channel.id}>
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Box>
                     <Typography variant="body2" fontWeight="medium">

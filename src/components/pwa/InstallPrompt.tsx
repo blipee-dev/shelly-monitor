@@ -119,7 +119,7 @@ export function InstallPrompt() {
           <Box display="flex" alignItems="center" justifyContent="space-between">
             <Box display="flex" alignItems="center" gap={1}>
               <InstallMobile color="primary" />
-              <Typography variant="h6">Install Shelly Monitor</Typography>
+              <Typography variant="h6">Install Blipee OS</Typography>
             </Box>
             <IconButton onClick={handleClose} size="small">
               <Close />
@@ -129,7 +129,7 @@ export function InstallPrompt() {
         
         <DialogContent>
           <Typography variant="body1" paragraph>
-            Install Shelly Monitor on your device for a better experience:
+            Install Blipee OS on your device for a better experience:
           </Typography>
           
           <Box component="ul" sx={{ pl: 2 }}>

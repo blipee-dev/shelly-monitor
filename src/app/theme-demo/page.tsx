@@ -15,7 +15,7 @@ import {
   IconButton,
   Paper,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
 import {
   Add as AddIcon,
   Edit as EditIcon,
@@ -47,7 +47,7 @@ export default function ThemeDemoPage() {
         onItemClick={setSelectedNav}
         expanded={true}
         header={
-          <Typography variant="titleLarge">Shelly Monitor</Typography>
+          <Typography variant="titleLarge">Blipee OS</Typography>
         }
         footer={<ThemeToggle />}
       />

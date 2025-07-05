@@ -136,12 +136,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 fontWeight: 600,
               }}
             >
-              SM
+              BO
             </Typography>
           </Box>
           {!isMobile && (
             <Typography variant="titleLarge">
-              Shelly Monitor
+              Blipee OS
             </Typography>
           )}
         </Box>

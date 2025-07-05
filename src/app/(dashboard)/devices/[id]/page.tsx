@@ -161,7 +161,7 @@ export default function DeviceDetailPage({ params }: DeviceDetailPageProps) {
       return (
         <Grid container spacing={2}>
           {deviceData.relays.map((relay, index) => (
-            <Grid item xs={12} md={6} key={index}>
+            <Grid size={{ xs: 12, md: 6 }} key={index}>
               <RelayControl
                 device={device}
                 relay={relay}
@@ -297,7 +297,7 @@ export default function DeviceDetailPage({ params }: DeviceDetailPageProps) {
       {tabValue === 0 && (
         <Grid container spacing={3}>
           {/* Device Info */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -346,7 +346,7 @@ export default function DeviceDetailPage({ params }: DeviceDetailPageProps) {
           </Grid>
 
           {/* Controls */}
-          <Grid item xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             {renderControls()}
           </Grid>
         </Grid>

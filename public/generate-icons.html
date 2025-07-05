@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .icon-container { display: flex; flex-wrap: wrap; gap: 20px; }
+        .icon-box { text-align: center; }
+        canvas { border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>Shelly Monitor Icon Generator</h1>
+    <p>Right-click on each canvas and save as PNG with the specified filename.</p>
+    <div class="icon-container" id="icons"></div>
+    
+    <script>
+        const sizes = [16, 32, 48, 72, 96, 128, 144, 152, 192, 384, 512];
+        const container = document.getElementById('icons');
+        
+        sizes.forEach(size => {
+            const box = document.createElement('div');
+            box.className = 'icon-box';
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0, size, size);
+                
+                // Create download link
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `icon-${size}x${size}.png`;
+                    a.textContent = `Download ${size}x${size}`;
+                    box.appendChild(a);
+                });
+            };
+            
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8IS0tIFJvdW5kZWQgc3F1YXJlIGJhY2tncm91bmQgLS0+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSI5NiIgcnk9Ijk2IiBmaWxsPSIjNTg2NUYyIi8+CiAgCiAgPCEtLSBNYXRlcmlhbCBJY29ucyBQc3ljaG9sb2d5IEljb24gLSBwcm9wZXJseSBjZW50ZXJlZCBhbmQgc2NhbGVkIC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI1NiwgMjU2KSI+CiAgICA8ZyB0cmFuc2Zvcm09InNjYWxlKDEwLCAxMCkgdHJhbnNsYXRlKC0xMiwgLTEyKSI+CiAgICAgIDwhLS0gVGhpcyBpcyB0aGUgZXhhY3QgcGF0aCBmcm9tIE1hdGVyaWFsIEljb25zIGZvciBwc3ljaG9sb2d5IC0tPgogICAgICA8cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMTMgOC41N2MtLjc5IDAtMS40My42NC0xLjQzIDEuNDNzLjY0IDEuNDMgMS40MyAxLjQzIDEuNDMtLjY0IDEuNDMtMS40My0uNjQtMS40My0xLjQzLTEuNDN6Ii8+CiAgICAgIDxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0xMyAzQzguMDMgMyA0IDcuMDMgNCAxMmgyYzAtMy44NiAzLjE0LTcgNy03czcgMy4xNCA3IDctMy4xNCA3LTcgN2MtMS44OCAwLTMuNjQtLjc0LTQuOTUtMi4wNWwtMS40MSAxLjQxQzguMjcgMTkuOTkgMTAuNTEgMjEgMTMgMjFjNC45NyAwIDktNC4wMyA5LTlzLTQuMDMtOS05LTl6Ii8+CiAgICAgIDxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0xMiAxNHYyYzAgMS4xLjkgMiAyIDJoMXYzaDJ2LTNoMWMxLjEgMCAyLS45IDItMnYtMmMwLTEuMS0uOS0yLTItMmgtNGMtMS4xIDAtMiAuOS0yIDJ6Ii8+CiAgICAgIDxjaXJjbGUgZmlsbD0iIzU4NjVGMiIgY3g9IjE1IiBjeT0iMTQiIHI9IjEiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==';
+            
+            const label = document.createElement('p');
+            label.textContent = `${size}x${size}`;
+            
+            box.appendChild(canvas);
+            box.appendChild(label);
+            container.appendChild(box);
+        });
+        
+        // Also create favicon.ico suggestion
+        const note = document.createElement('p');
+        note.innerHTML = '<br><strong>For favicon.ico:</strong> Use an online converter to convert the 16x16 and 32x32 PNGs to ICO format.';
+        document.body.appendChild(note);
+    </script>
+</body>
+</html>

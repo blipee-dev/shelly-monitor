@@ -30,6 +30,7 @@ import { pushManager } from '@/lib/notifications/push-manager';
 import { createClient } from '@/lib/supabase/client';
 import { PredictiveNotificationEngine } from '@/lib/ai/predictive-notifications';
 import { formatDistanceToNow } from 'date-fns';
+import { BLIPEE_OS_SYSTEM_PROMPT, ENTERPRISE_FEATURES_PROMPT } from '@/lib/ai/prompts/blipee-os-system';
 
 interface AskBlipeeEnhancedProps {
   onDeviceControl?: (deviceId: string, action: string, value?: any) => Promise<void>;
@@ -66,8 +67,11 @@ export default function AskBlipeeEnhanced({ onDeviceControl }: AskBlipeeEnhanced
     clearMessages,
     stopStreaming,
   } = useAIStreamChat({
-    systemPrompt: `You are Blipee, an AI assistant for the Shelly Monitor IoT platform. 
-You help users control and monitor their Shelly smart devices. You have access to the following:
+    systemPrompt: `${BLIPEE_OS_SYSTEM_PROMPT}
+
+${ENTERPRISE_FEATURES_PROMPT}
+
+CURRENT SYSTEM STATE:
 
 DEVICES (${devices.length} total):
 ${devices.map(d => `- ${d.name} (${d.type}): ${d.status}`).join('\n')}
@@ -79,41 +83,7 @@ ${automations.length > 5 ? `... and ${automations.length - 5} more` : ''}
 SCENES (${scenes.length} total):
 ${scenes.map(s => `- ${s.name}`).join('\n')}
 
-PWA & NOTIFICATION FEATURES:
-- Send custom notifications with natural language
-- Analyze your usage patterns for predictive notifications
-- Detect anomalies and unusual behavior
-- Suggest energy-saving notifications
-- Schedule notifications for later or recurring
-- Enable/disable notification types
-- Guide through PWA installation
-
-PREDICTIVE CAPABILITIES:
-- Analyze device usage patterns
-- Predict when you'll need notifications
-- Detect unusual activity
-- Identify energy waste
-- Suggest automations based on behavior
-- Recommend maintenance schedules
-
-You can help with:
-- Controlling devices (turn on/off, adjust brightness)
-- Creating automations (e.g., "Turn off lights at 10 PM")
-- Sending notifications (e.g., "Remind me to check the lights in 30 minutes")
-- Analyzing patterns (e.g., "What patterns have you noticed in my usage?")
-- Predicting needs (e.g., "What notifications would help me save energy?")
-- Managing scenes and device groups
-- Providing insights and recommendations
-
-Examples:
-- "Analyze my usage patterns and suggest notifications"
-- "What unusual activity have you detected?"
-- "Suggest energy-saving notifications based on my behavior"
-- "What predictive notifications do you recommend?"
-- "Enable the top 3 suggested notifications"
-
-Be friendly, concise, and helpful. Use device names when referring to specific devices.
-When creating automations, be clear about what will happen and when.`,
+Current user is authenticated and has full access to all features.`,
     enableDeviceFunctions: true,
     onFunctionCall: async (name, args) => {
       try {

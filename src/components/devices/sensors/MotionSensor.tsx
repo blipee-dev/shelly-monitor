@@ -41,7 +41,7 @@ export function MotionSensor({ device, data }: MotionSensorProps) {
   return (
     <Grid container spacing={2}>
       {/* Motion Status */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <Card>
           <CardContent>
             <Stack spacing={2}>
@@ -88,7 +88,7 @@ export function MotionSensor({ device, data }: MotionSensorProps) {
       </Grid>
 
       {/* Sensor Data */}
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -179,14 +179,14 @@ export function MotionSensor({ device, data }: MotionSensorProps) {
 
       {/* Rotation Data for BLU Motion */}
       {isBluMotionData(data) && (
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Device Orientation
               </Typography>
               <Grid container spacing={2}>
-                <Grid item xs={4}>
+                <Grid size={4}>
                   <Box textAlign="center">
                     <Typography variant="body2" color="text.secondary">
                       X Axis
@@ -196,7 +196,7 @@ export function MotionSensor({ device, data }: MotionSensorProps) {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid size={4}>
                   <Box textAlign="center">
                     <Typography variant="body2" color="text.secondary">
                       Y Axis
@@ -206,7 +206,7 @@ export function MotionSensor({ device, data }: MotionSensorProps) {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid size={4}>
                   <Box textAlign="center">
                     <Typography variant="body2" color="text.secondary">
                       Z Axis

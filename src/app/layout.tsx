@@ -14,13 +14,13 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'Shelly Monitor',
+  title: 'Blipee OS',
   description: 'Monitor and control your Shelly devices',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Shelly Monitor',
+    title: 'Blipee OS',
   },
   other: {
     'mobile-web-app-capable': 'yes',

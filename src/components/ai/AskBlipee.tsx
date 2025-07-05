@@ -44,7 +44,7 @@ export default function AskBlipee({ onDeviceControl }: AskBlipeeProps) {
     clearMessages,
     stopStreaming,
   } = useAIStreamChat({
-    systemPrompt: `You are Blipee, an AI assistant for the Shelly Monitor IoT platform. 
+    systemPrompt: `You are Blipee, an AI assistant for the Blipee OS IoT platform. 
 You help users control and monitor their Shelly smart devices. You have access to the following devices:
 ${devices.map(d => `- ${d.name} (${d.type}): ${d.status}`).join('\n')}
 

@@ -198,7 +198,7 @@ export default function AuditLogViewer() {
         <Card sx={{ mb: 3 }}>
           <CardContent>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <FormControl fullWidth size="small">
                   <InputLabel>Event Type</InputLabel>
                   <Select
@@ -213,7 +213,7 @@ export default function AuditLogViewer() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <FormControl fullWidth size="small">
                   <InputLabel>Severity</InputLabel>
                   <Select
@@ -228,7 +228,7 @@ export default function AuditLogViewer() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <TextField
                   fullWidth
                   size="small"
@@ -237,7 +237,7 @@ export default function AuditLogViewer() {
                   onChange={(e) => setFilters({ ...filters, userId: e.target.value })}
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <TextField
                   fullWidth
                   size="small"
@@ -246,7 +246,7 @@ export default function AuditLogViewer() {
                   onChange={(e) => setFilters({ ...filters, searchTerm: e.target.value })}
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <TextField
                   fullWidth
                   size="small"
@@ -257,7 +257,7 @@ export default function AuditLogViewer() {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                 <TextField
                   fullWidth
                   size="small"
@@ -334,7 +334,7 @@ export default function AuditLogViewer() {
                       <Collapse in={expandedRows.has(log.id)}>
                         <Box p={2} sx={{ backgroundColor: 'action.hover' }}>
                           <Grid container spacing={2}>
-                            <Grid item xs={12} md={6}>
+                            <Grid size={{ xs: 12, md: 6 }}>
                               <Typography variant="subtitle2" gutterBottom>
                                 Details
                               </Typography>
@@ -347,7 +347,7 @@ export default function AuditLogViewer() {
                                 {JSON.stringify(log.details, null, 2)}
                               </pre>
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid size={{ xs: 12, md: 6 }}>
                               <Typography variant="subtitle2" gutterBottom>
                                 Additional Information
                               </Typography>

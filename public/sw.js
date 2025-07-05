@@ -1,4 +1,4 @@
-// Service Worker for Shelly Monitor PWA
+// Service Worker for Blipee OS PWA
 const CACHE_NAME = 'shelly-monitor-v1';
 const STATIC_CACHE_NAME = 'shelly-static-v1';
 const DYNAMIC_CACHE_NAME = 'shelly-dynamic-v1';
@@ -6,10 +6,7 @@ const DYNAMIC_CACHE_NAME = 'shelly-dynamic-v1';
 // Files to cache for offline use
 const urlsToCache = [
   '/',
-  '/dashboard',
-  '/devices',
-  '/analytics',
-  '/automations',
+  '/offline.html',
   '/manifest.json',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
@@ -20,7 +17,8 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE_NAME).then((cache) => {
       console.log('Opened cache');
-      return cache.addAll(urlsToCache.map(url => new Request(url, { cache: 'no-cache' })));
+      // Only cache essential files, let Next.js handle its own assets
+      return cache.addAll(urlsToCache);
     })
   );
   self.skipWaiting();
@@ -51,27 +49,53 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET requests
-  if (request.method !== 'GET') return;
-
-  // Skip API and Supabase requests
-  if (url.pathname.startsWith('/api/') || 
-      url.hostname.includes('supabase.co') ||
-      url.hostname.includes('deepseek.com')) {
+  // Skip caching for Next.js specific routes
+  if (url.pathname.startsWith('/_next/')) {
+    // For Next.js assets, use network-first strategy
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          // Only cache successful responses
+          if (response && response.status === 200 && response.type === 'basic') {
+            const responseToCache = response.clone();
+            caches.open(DYNAMIC_CACHE_NAME).then(cache => {
+              cache.put(request, responseToCache);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          // If network fails, try cache
+          return caches.match(request);
+        })
+    );
     return;
   }
 
+  // Skip caching for API routes
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  // For navigation requests, use network-first
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).catch(() => {
+        return caches.match('/offline.html');
+      })
+    );
+    return;
+  }
+
+  // For other requests, use cache-first strategy
   event.respondWith(
-    caches.match(request).then((response) => {
-      // Return cached response if found
+    caches.match(request).then(response => {
       if (response) {
         return response;
       }
 
-      // Clone the request
-      const fetchRequest = request.clone();
-
-      return fetch(fetchRequest).then((response) => {
+      return fetch(request).then(response => {
         // Check if valid response
         if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
@@ -80,116 +104,67 @@ self.addEventListener('fetch', (event) => {
         // Clone the response
         const responseToCache = response.clone();
 
-        // Cache the response for future use
-        caches.open(DYNAMIC_CACHE_NAME).then((cache) => {
+        caches.open(DYNAMIC_CACHE_NAME).then(cache => {
           cache.put(request, responseToCache);
         });
 
         return response;
-      }).catch(() => {
-        // Return offline page for navigation requests
-        if (request.mode === 'navigate') {
-          return caches.match('/offline.html');
-        }
       });
     })
   );
 });
 
-// Push notification handling
+// Handle push notifications
 self.addEventListener('push', (event) => {
   const options = {
-    body: event.data ? event.data.text() : 'New notification from Shelly Monitor',
+    body: event.data ? event.data.text() : 'New notification from Blipee OS',
     icon: '/icons/icon-192x192.png',
     badge: '/icons/icon-72x72.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
-      primaryKey: 1
+      primaryKey: 1,
     },
-    actions: [
-      {
-        action: 'view',
-        title: 'View',
-        icon: '/icons/icon-72x72.png'
-      },
-      {
-        action: 'close',
-        title: 'Close',
-        icon: '/icons/icon-72x72.png'
-      }
-    ]
   };
 
   event.waitUntil(
-    self.registration.showNotification('Shelly Monitor', options)
+    self.registration.showNotification('Blipee OS', options)
   );
 });
 
-// Notification click handling
+// Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
-  if (event.action === 'view') {
-    event.waitUntil(
-      clients.openWindow('/dashboard')
-    );
-  }
+  event.waitUntil(
+    clients.openWindow('/')
+  );
 });
 
-// Background sync for offline actions
+// Handle background sync
 self.addEventListener('sync', (event) => {
-  if (event.tag === 'sync-device-actions') {
-    event.waitUntil(syncDeviceActions());
+  if (event.tag === 'sync-device-status') {
+    event.waitUntil(syncDeviceStatus());
   }
 });
 
-async function syncDeviceActions() {
+async function syncDeviceStatus() {
   try {
-    // Get pending actions from IndexedDB
-    const db = await openDB();
-    const tx = db.transaction('pending-actions', 'readonly');
-    const store = tx.objectStore('pending-actions');
-    const actions = await store.getAll();
-
-    // Process each pending action
-    for (const action of actions) {
-      try {
-        const response = await fetch('/api/devices/control', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(action),
-        });
-
-        if (response.ok) {
-          // Remove successful action from IndexedDB
-          const deleteTx = db.transaction('pending-actions', 'readwrite');
-          await deleteTx.objectStore('pending-actions').delete(action.id);
+    const cache = await caches.open(DYNAMIC_CACHE_NAME);
+    const requests = await cache.keys();
+    
+    // Sync any pending device status updates
+    for (const request of requests) {
+      if (request.url.includes('/api/devices/') && request.method === 'POST') {
+        try {
+          await fetch(request);
+          await cache.delete(request);
+        } catch (error) {
+          console.error('Failed to sync:', error);
         }
-      } catch (error) {
-        console.error('Failed to sync action:', error);
       }
     }
   } catch (error) {
-    console.error('Sync failed:', error);
+    console.error('Background sync failed:', error);
   }
-}
-
-// Simple IndexedDB wrapper
-function openDB() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open('shelly-monitor', 1);
-    
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-    
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains('pending-actions')) {
-        db.createObjectStore('pending-actions', { keyPath: 'id', autoIncrement: true });
-      }
-    };
-  });
 }

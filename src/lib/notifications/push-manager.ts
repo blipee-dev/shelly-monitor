@@ -154,7 +154,7 @@ export class PushNotificationManager {
     }
 
     const options: NotificationOptions = {
-      body: 'This is a test notification from Shelly Monitor',
+      body: 'This is a test notification from Blipee OS',
       icon: '/icons/icon-192x192.png',
       badge: '/icons/icon-72x72.png',
       vibrate: [200, 100, 200],

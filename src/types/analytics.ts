@@ -1,4 +1,4 @@
-// Analytics types for Shelly Monitor
+// Analytics types for Blipee OS
 
 export interface DeviceMetrics {
   deviceId: string;

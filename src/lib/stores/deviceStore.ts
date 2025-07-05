@@ -7,6 +7,7 @@ import {
   DeviceData,
   DeviceUpdateEvent 
 } from '@/types/device';
+import { createClient } from '@/lib/supabase/client';
 
 interface DeviceState {
   // Devices
@@ -24,6 +25,7 @@ interface DeviceState {
   error: string | null;
   
   // Actions - Devices
+  fetchDevices: () => Promise<void>;
   setDevices: (devices: Device[]) => void;
   addDevice: (device: Device) => void;
   updateDevice: (id: string, updates: Partial<Device>) => void;
@@ -73,6 +75,27 @@ export const useDeviceStore = create<DeviceState>()(
       error: null,
       
       // Device actions
+      fetchDevices: async () => {
+        const supabase = createClient();
+        set({ isLoading: true, error: null });
+        
+        try {
+          const { data: devices, error } = await supabase
+            .from('devices')
+            .select('*')
+            .order('created_at', { ascending: false });
+            
+          if (error) throw error;
+          
+          set({ devices: devices || [], isLoading: false });
+        } catch (error) {
+          set({ 
+            error: error instanceof Error ? error.message : 'Failed to fetch devices',
+            isLoading: false 
+          });
+        }
+      },
+      
       setDevices: (devices) => set({ devices }),
       
       addDevice: (device) => 
