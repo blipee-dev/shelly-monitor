@@ -116,10 +116,6 @@
     }
   },
   
-  "passwordProtection": {
-    "deploymentType": "preview"
-  },
-  
   "cleanUrls": true,
   "trailingSlash": false
 }
