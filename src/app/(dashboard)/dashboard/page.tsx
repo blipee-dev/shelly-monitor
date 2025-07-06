@@ -59,13 +59,16 @@ export default function DashboardPage() {
   const { user, loading: authLoading } = useRequireAuth();
   const { devices, fetchDevices, isLoading, error } = useDeviceStore();
   const [refreshing, setRefreshing] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
   // Enable real-time subscriptions
   useDeviceRealtime();
 
   // Update time every minute
   useEffect(() => {
+    // Set initial time on client
+    setCurrentTime(new Date());
+    
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 60000);
@@ -242,7 +245,7 @@ export default function DashboardPage() {
               Welcome back, {user?.user_metadata?.name || user?.email}!
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {format(currentTime, 'EEEE, MMMM d, yyyy • h:mm a')}
+              {currentTime ? format(currentTime, 'EEEE, MMMM d, yyyy • h:mm a') : 'Loading...'}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: 2 }}>

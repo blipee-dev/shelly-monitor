@@ -6,6 +6,11 @@ import { pushManager } from '@/lib/notifications/push-manager';
 
 export function PWAProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Only run on client
+    if (typeof window === 'undefined') {
+      return;
+    }
+    
     // Register service worker
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       navigator.serviceWorker

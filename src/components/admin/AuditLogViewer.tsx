@@ -161,11 +161,18 @@ export default function AuditLogViewer() {
       });
       
       const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `audit-logs-${format(new Date(), 'yyyy-MM-dd')}.csv`;
-      a.click();
+      
+      // Create download link programmatically
+      if (typeof window !== 'undefined') {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `audit-logs-${format(new Date(), 'yyyy-MM-dd')}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }
     } catch (error) {
       console.error('Failed to export logs:', error);
     }

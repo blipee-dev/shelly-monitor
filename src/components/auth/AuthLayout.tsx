@@ -6,6 +6,7 @@ import { Psychology } from '@mui/icons-material';
 import Image from 'next/image';
 import { Surface } from '@/components/ui';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { getCurrentYear } from '@/lib/utils/date';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -203,7 +204,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
           align="center"
           sx={{ mt: 4, color: 'rgba(255, 255, 255, 0.5)' }}
         >
-          © {new Date().getFullYear()} Blipee OS. All rights reserved.
+          © {getCurrentYear()} Blipee OS. All rights reserved.
         </Typography>
       </Container>
 

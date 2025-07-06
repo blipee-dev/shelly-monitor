@@ -46,8 +46,10 @@ export const useI18n = create<I18nState>()(
         const translations = locales[locale];
         if (translations) {
           set({ locale, translations });
-          // Update document language
-          document.documentElement.lang = locale;
+          // Update document language only on client
+          if (typeof document !== 'undefined') {
+            document.documentElement.lang = locale;
+          }
         }
       },
       
@@ -159,6 +161,11 @@ export function formatRelativeTime(date: Date | string, locale: Locale): string 
 
 // Initialize locale from stored preference or browser language
 export function initializeI18n() {
+  // Only run on client
+  if (typeof window === 'undefined') {
+    return;
+  }
+  
   const storedLocale = localStorage.getItem('i18n-storage');
   if (storedLocale) {
     try {

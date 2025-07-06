@@ -34,6 +34,11 @@ export function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
+    // Only run on client
+    if (typeof window === 'undefined') {
+      return;
+    }
+    
     // Check if already installed
     if (window.matchMedia('(display-mode: standalone)').matches || 
         (window.navigator as any).standalone === true) {
@@ -52,7 +57,7 @@ export function InstallPrompt() {
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       
       // Show prompt after a delay or based on user engagement
-      const hasSeenPrompt = localStorage.getItem('pwa-prompt-seen');
+      const hasSeenPrompt = typeof window !== 'undefined' ? localStorage.getItem('pwa-prompt-seen') : null;
       if (!hasSeenPrompt) {
         setTimeout(() => setShowPrompt(true), 10000); // Show after 10 seconds
       }
@@ -64,7 +69,9 @@ export function InstallPrompt() {
     window.addEventListener('appinstalled', () => {
       setIsInstalled(true);
       setShowPrompt(false);
-      localStorage.setItem('pwa-installed', 'true');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('pwa-installed', 'true');
+      }
     });
 
     return () => {
