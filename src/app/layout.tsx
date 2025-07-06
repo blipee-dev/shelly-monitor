@@ -1,10 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Roboto } from 'next/font/google';
-import I18nProvider from '@/components/providers/I18nProvider';
-import { ThemeProvider } from '@/lib/theme/ThemeProvider';
-import { FeatureFlagProvider } from '@/lib/feature-flags';
-import { SnackbarProvider } from '@/components/providers/SnackbarProvider';
-import { PWAProvider } from '@/components/providers/PWAProvider';
+import { Providers } from './providers';
 import '../styles/globals.css';
 
 const roboto = Roboto({ 
@@ -42,17 +38,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <FeatureFlagProvider>
-          <ThemeProvider>
-            <SnackbarProvider>
-              <I18nProvider>
-                <PWAProvider>
-                  {children}
-                </PWAProvider>
-              </I18nProvider>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </FeatureFlagProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

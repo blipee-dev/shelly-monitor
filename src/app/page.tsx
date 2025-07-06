@@ -36,6 +36,7 @@ import {
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/hooks';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { ClientOnly } from '@/components/providers/ClientOnly';
 
 export default function HomePage() {
   const theme = useTheme();
@@ -113,7 +114,7 @@ export default function HomePage() {
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#000000', color: '#ffffff', overflow: 'hidden' }}>
       {/* Dynamic gradient background */}
-      {typeof window !== 'undefined' && (
+      <ClientOnly>
         <Box
           sx={{
             position: 'fixed',
@@ -131,7 +132,7 @@ export default function HomePage() {
             zIndex: 0,
           }}
         />
-      )}
+      </ClientOnly>
 
       {/* Floating orbs */}
       <Box
