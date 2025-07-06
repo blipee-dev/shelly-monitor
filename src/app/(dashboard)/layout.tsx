@@ -1,5 +1,5 @@
 import { PremiumDashboardLayout } from '@/components/layout/PremiumDashboardLayout';
-import { PremiumThemeProvider } from '@/components/premium';
+import { PremiumThemeWrapper } from '@/components/premium/PremiumThemeWrapper';
 
 export default function DashboardLayout({
   children,
@@ -7,8 +7,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PremiumThemeProvider>
+    <PremiumThemeWrapper>
       <PremiumDashboardLayout>{children}</PremiumDashboardLayout>
-    </PremiumThemeProvider>
+    </PremiumThemeWrapper>
   );
 }

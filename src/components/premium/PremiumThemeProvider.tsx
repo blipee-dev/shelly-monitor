@@ -34,24 +34,14 @@ export const PremiumThemeProvider: React.FC<PremiumThemeProviderProps> = ({
   children, 
   defaultMode = 'dark' 
 }) => {
-  // Initialize with default mode
+  // Initialize with the provided default mode
   const [mode, setMode] = useState<ThemeMode>(defaultMode);
   const [theme, setTheme] = useState(createPremiumTheme(defaultMode));
-  const [mounted, setMounted] = useState(false);
 
-  // Sync with main theme through localStorage after mount
+  // Listen for theme changes from other components
   useEffect(() => {
-    setMounted(true);
-    
-    // Only access localStorage on client side
     if (typeof window !== 'undefined') {
-      // Check the main theme's localStorage key
-      const savedMode = localStorage.getItem('theme-mode') as ThemeMode;
-      if (savedMode && (savedMode === 'dark' || savedMode === 'light')) {
-        setMode(savedMode);
-      }
-
-      // Listen for storage changes from other components
+      // Listen for storage changes from other tabs
       const handleStorageChange = (e: StorageEvent) => {
         if (e.key === 'theme-mode' && e.newValue) {
           const newMode = e.newValue as ThemeMode;
@@ -63,7 +53,7 @@ export const PremiumThemeProvider: React.FC<PremiumThemeProviderProps> = ({
 
       window.addEventListener('storage', handleStorageChange);
       
-      // Also listen for custom events from the same window
+      // Listen for custom events from the same window
       const handleThemeChange = (e: CustomEvent) => {
         const newMode = e.detail as ThemeMode;
         if (newMode === 'dark' || newMode === 'light') {
@@ -85,11 +75,11 @@ export const PremiumThemeProvider: React.FC<PremiumThemeProviderProps> = ({
     const newTheme = createPremiumTheme(mode);
     setTheme(newTheme);
     
-    // Only update document on client side
-    if (mounted && typeof window !== 'undefined') {
+    // Update document on client side
+    if (typeof window !== 'undefined') {
       document.documentElement.setAttribute('data-theme', mode);
     }
-  }, [mode, mounted]);
+  }, [mode]);
 
   // Toggle mode and update main theme
   const toggleMode = () => {
@@ -122,16 +112,6 @@ export const PremiumThemeProvider: React.FC<PremiumThemeProviderProps> = ({
     toggleMode,
     setMode: setModeWrapper,
   };
-
-  // Prevent SSR mismatch by ensuring consistent initial render
-  if (!mounted) {
-    // Return children with default theme during SSR
-    return (
-      <PremiumThemeContext.Provider value={value}>
-        {children}
-      </PremiumThemeContext.Provider>
-    );
-  }
 
   return (
     <PremiumThemeContext.Provider value={value}>

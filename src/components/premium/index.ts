@@ -17,6 +17,7 @@ export { PremiumNavigationRail } from './PremiumNavigationRail';
 
 // Theme context and utilities
 export { PremiumThemeProvider, usePremiumTheme, useThemeMode } from './PremiumThemeProvider';
+export { PremiumThemeWrapper } from './PremiumThemeWrapper';
 export { ThemeModeToggle } from './ThemeModeToggle';
 
 // Re-export theme utilities from v1
