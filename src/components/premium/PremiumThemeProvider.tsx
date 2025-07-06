@@ -20,6 +20,11 @@ export const usePremiumTheme = () => {
   return context;
 };
 
+export const useThemeMode = () => {
+  const { mode, setMode } = usePremiumTheme();
+  return { mode, setMode };
+};
+
 interface PremiumThemeProviderProps {
   children: React.ReactNode;
   defaultMode?: ThemeMode;

@@ -13,9 +13,10 @@ export { PremiumLayoutV2 } from './PremiumLayoutV2';
 export { GlassCardV2 } from './GlassCardV2';
 export { GradientButtonV2 } from './GradientButtonV2';
 export { PremiumTextFieldV2 } from './PremiumTextFieldV2';
+export { PremiumNavigationRail } from './PremiumNavigationRail';
 
 // Theme context and utilities
-export { PremiumThemeProvider, usePremiumTheme } from './PremiumThemeProvider';
+export { PremiumThemeProvider, usePremiumTheme, useThemeMode } from './PremiumThemeProvider';
 export { ThemeModeToggle } from './ThemeModeToggle';
 
 // Re-export theme utilities from v1
