@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-01-07
+
+### Changed - Blipee OS Rebranding
+- Renamed project from "Shelly Monitor" to "Blipee OS"
+- Updated all documentation to reflect AI-first approach
+- Enhanced branding as enterprise sustainability intelligence platform
+- Positioned as the operating system layer for Blipee Sustainability Platform
+
+### Fixed
+- React hydration errors with stable date utilities and wrappers
+- Theme color issues - all components now properly support light/dark modes
+- Vercel CSP blocking in preview deployments with VERCEL_ENV detection
+- White text on light backgrounds throughout the application
+- Authentication pages now fully theme-aware
+
+### Added
+- Comprehensive CONTRIBUTING.md guide for contributors
+- Enhanced Getting Started guide with conversational onboarding
+- Updated documentation structure for better navigation
+
+### Improved
+- Documentation now emphasizes AI capabilities and natural language interface
+- README showcases enterprise features and transformation vision
+- Setup guides highlight 5-minute conversational setup vs traditional methods
+
 ## [2.8.0] - 2025-01-07
 
 ### Added - Progressive Web App & Predictive AI

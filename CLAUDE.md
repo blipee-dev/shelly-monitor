@@ -689,6 +689,9 @@ In Supabase Dashboard:
 5. **Fixed Grid component warnings** - Updated to Grid v2 syntax
 6. **Created placeholder PWA icons** - Added basic icons for manifest
 7. **Created proper favicon** - Added Material Icons psychology icon
+8. **Fixed React hydration errors** - Created hydration-safe utilities and wrappers
+9. **Fixed theme color issues** - Made all components properly theme-aware for light/dark modes
+10. **Fixed Vercel CSP for preview deployments** - Added VERCEL_ENV detection
 
 ## AI Transformation Goals
 

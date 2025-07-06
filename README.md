@@ -105,15 +105,23 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_KEY=your-service-key
 
 # AI Providers (at least one required)
-DEEPSEEK_API_KEY=your-deepseek-key
-OPENAI_API_KEY=your-openai-key
-ANTHROPIC_API_KEY=your-anthropic-key
+DEEPSEEK_API_KEY=your-deepseek-key    # Primary (cost-efficient)
+OPENAI_API_KEY=your-openai-key        # Fallback
+ANTHROPIC_API_KEY=your-anthropic-key   # Fallback
 
-# Optional
+# Email Configuration (Optional)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=your-email
-SMTP_PASS=your-password
+SMTP_USER=no-reply@blipee.com
+SMTP_PASS=your-app-password
+
+# Push Notifications (Optional)
+NEXT_PUBLIC_VAPID_PUBLIC_KEY=your-vapid-public-key
+VAPID_PRIVATE_KEY=your-vapid-private-key
+VAPID_EMAIL=mailto:support@blipee.com
+
+# Monitoring (Optional)
+METRICS_AUTH_TOKEN=your-metrics-token
 ```
 
 ## 🧪 Testing
@@ -134,10 +142,27 @@ npm run test:coverage
 
 ## 📚 Documentation
 
+### Getting Started
+- [Quick Start Guide](./docs/setup/GETTING_STARTED.md) - Get up and running in 5 minutes
+- [Supabase Setup](./docs/setup/SUPABASE_SETUP.md) - Database configuration guide
+- [Environment Setup](./docs/setup/SMTP_SETUP.md) - Email and environment configuration
+
+### Feature Guides
+- [AI Features](./docs/guides/AI_FEATURES.md) - Ask Blipee and predictive intelligence
+- [Device Management](./docs/guides/DEVICE_MANAGEMENT.md) - Managing IoT devices
+- [PWA Guide](./docs/guides/PWA_GUIDE.md) - Progressive Web App features
+- [Authentication](./docs/guides/AUTHENTICATION.md) - User authentication and security
+- [Theme Customization](./docs/guides/THEME_CUSTOMIZATION.md) - Material Design 3 theming
+
+### Technical Documentation
+- [API Documentation](/api-docs) - Interactive Swagger UI
+- [Project Structure](./docs/PROJECT_STRUCTURE.md) - Codebase organization
+- [Testing Guide](./docs/guides/TESTING.md) - Running and writing tests
+- [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md) - Production deployment
+
+### Vision & Planning
 - [Transformation Plan](./BLIPEE_OS_TRANSFORMATION_PLAN.md) - Our journey from IoT to AI platform
-- [AI Architecture](./docs/AI_ARCHITECTURE.md) - Deep dive into our AI systems
-- [API Documentation](./docs/API.md) - RESTful and GraphQL APIs
-- [Deployment Guide](./docs/DEPLOYMENT.md) - Production deployment instructions
+- [AI Master Plan](./AI_TRANSFORMATION_MASTER_PLAN.md) - AI strategy and roadmap
 - [Contributing](./CONTRIBUTING.md) - How to contribute to Blipee OS
 
 ## 🎯 Use Cases
@@ -161,18 +186,23 @@ npm run test:coverage
 
 ## 🚀 Roadmap
 
-### Phase 1: Foundation (Current)
+### Phase 1: Foundation (✅ Complete)
 - ✅ Core platform with IoT monitoring
 - ✅ AI chat interface (Ask Blipee)
-- ✅ Predictive notifications
+- ✅ Predictive notifications with 95% confidence
 - ✅ PWA with offline support
-- 🔄 Enterprise rebranding
+- ✅ Natural language automations
+- ✅ Multi-provider AI (DeepSeek, OpenAI, Anthropic)
+- ✅ Real-time device control
+- ✅ Export/Import & Backup system
+- ✅ Material Design 3 theme system
 
 ### Phase 2: Intelligence (Q1 2025)
-- 🔲 GPT-4 Vision integration
+- 🔄 GPT-4 Vision integration
 - 🔲 Advanced report generation
 - 🔲 Scenario planning
 - 🔲 Industry modules
+- 🔲 Enterprise rebranding
 
 ### Phase 3: Scale (Q2 2025)
 - 🔲 Multi-region deployment
