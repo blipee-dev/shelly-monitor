@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { getDynamicBackground } from '@/lib/theme/premium-theme';
 
 interface PremiumLayoutProps {
@@ -13,6 +13,7 @@ export const PremiumLayout: React.FC<PremiumLayoutProps> = ({
   children, 
   showFloatingOrbs = true 
 }) => {
+  const theme = useTheme();
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   
   useEffect(() => {
@@ -51,8 +52,8 @@ export const PremiumLayout: React.FC<PremiumLayoutProps> = ({
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: '#000000',
-        color: '#ffffff',
+        backgroundColor: theme.palette.mode === 'dark' ? '#000000' : theme.palette.background.default,
+        color: theme.palette.text.primary,
         position: 'relative',
         overflow: 'hidden',
       }}

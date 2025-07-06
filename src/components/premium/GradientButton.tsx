@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Button, ButtonProps, CircularProgress } from '@mui/material';
+import { Button, ButtonProps, CircularProgress, useTheme } from '@mui/material';
 import { premiumTheme } from '@/lib/theme/premium-theme';
 
 interface GradientButtonProps extends Omit<ButtonProps, 'variant'> {
@@ -24,6 +24,7 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
   sx,
   ...props 
 }) => {
+  const theme = useTheme();
   const gradients = {
     primary: premiumTheme.colors.gradients.primary,
     blue: premiumTheme.colors.gradients.blue,
@@ -70,7 +71,7 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
       disabled={disabled || loading}
       sx={{
         background: gradient || gradients[variant],
-        color: 'white',
+        color: theme.palette.mode === 'dark' ? 'white' : theme.palette.getContrastText(gradients[variant]),
         fontWeight: 600,
         textTransform: 'none',
         boxShadow: disabled ? 'none' : shadowColors[variant],
@@ -90,8 +91,8 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
         },
         
         '&:disabled': {
-          background: 'rgba(255, 255, 255, 0.1)',
-          color: 'rgba(255, 255, 255, 0.3)',
+          background: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : theme.palette.action.disabledBackground,
+          color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : theme.palette.text.disabled,
           boxShadow: 'none',
         },
         
@@ -104,7 +105,7 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
           width: 0,
           height: 0,
           borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.5)',
+          background: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.1)',
           transform: 'translate(-50%, -50%)',
           transition: 'width 0.6s, height 0.6s',
         },
@@ -119,7 +120,7 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
       {...props}
     >
       {loading ? (
-        <CircularProgress size={20} sx={{ color: 'white' }} />
+        <CircularProgress size={20} sx={{ color: 'inherit' }} />
       ) : (
         children
       )}

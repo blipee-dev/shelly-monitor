@@ -46,8 +46,8 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#000000',
-        color: '#ffffff',
+        backgroundColor: theme.palette.mode === 'dark' ? '#000000' : theme.palette.background.default,
+        color: theme.palette.text.primary,
         overflow: 'hidden',
         position: 'relative',
       }}
@@ -64,7 +64,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
             radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(103, 80, 164, 0.15) 0%, transparent 50%),
             radial-gradient(circle at 80% 20%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
             radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
-            #000000
+            ${theme.palette.mode === 'dark' ? '#000000' : theme.palette.background.default}
           `,
           transition: 'background 0.3s ease',
           zIndex: 0,
@@ -129,9 +129,9 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
           sx={{
             px: { xs: 3, sm: 6 },
             py: { xs: 4, sm: 8 },
-            background: 'rgba(255, 255, 255, 0.03)',
+            background: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : alpha(theme.palette.background.paper, 0.9),
             backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : theme.palette.divider}`,
             borderRadius: '24px',
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
             animation: 'fadeInUp 1s ease-out',
@@ -164,7 +164,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
                 },
               }}
             >
-              <Psychology sx={{ fontSize: 36, color: '#ffffff' }} />
+              <Psychology sx={{ fontSize: 36, color: theme.palette.mode === 'dark' ? '#ffffff' : theme.palette.primary.main }} />
             </Box>
             
             <Typography
@@ -174,7 +174,9 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
               gutterBottom
               sx={{
                 fontWeight: 700,
-                background: 'linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%)',
+                background: theme.palette.mode === 'dark' 
+                  ? 'linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%)'
+                  : 'linear-gradient(135deg, #1a1c1e 0%, rgba(26, 28, 30, 0.8) 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -187,7 +189,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
               <Typography
                 variant="bodyLarge"
                 align="center"
-                sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                sx={{ color: theme.palette.text.secondary }}
               >
                 {subtitle}
               </Typography>
@@ -202,7 +204,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
         <Typography
           variant="bodySmall"
           align="center"
-          sx={{ mt: 4, color: 'rgba(255, 255, 255, 0.5)' }}
+          sx={{ mt: 4, color: theme.palette.text.secondary }}
         >
           © {getCurrentYear()} Blipee OS. All rights reserved.
         </Typography>

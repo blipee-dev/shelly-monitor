@@ -178,7 +178,7 @@ export function PremiumNavigationRail({
                         sx={{
                           '& .MuiBadge-badge': {
                             background: 'linear-gradient(135deg, #F44336 0%, #E91E63 100%)',
-                            color: '#fff',
+                            color: 'white',
                             fontWeight: 600,
                           },
                         }}

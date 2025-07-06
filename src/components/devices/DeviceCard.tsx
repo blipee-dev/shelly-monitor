@@ -13,7 +13,8 @@ import {
   Grid,
   Tooltip,
   CircularProgress,
-  Divider
+  Divider,
+  alpha
 } from '@mui/material';
 import {
   Refresh as RefreshIcon,
@@ -117,7 +118,7 @@ export default function DeviceCard({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backgroundColor: theme => alpha(theme.palette.background.paper, 0.8),
             zIndex: 10
           }}
         >

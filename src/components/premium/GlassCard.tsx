@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, BoxProps } from '@mui/material';
+import { Box, BoxProps, useTheme } from '@mui/material';
 import { premiumTheme } from '@/lib/theme/premium-theme';
 
 interface GlassCardProps extends BoxProps {
@@ -18,6 +18,7 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   sx,
   ...props 
 }) => {
+  const theme = useTheme();
   const variants = {
     default: {
       background: premiumTheme.colors.background.glass,
@@ -27,13 +28,13 @@ export const GlassCard: React.FC<GlassCardProps> = ({
     elevated: {
       background: premiumTheme.colors.background.elevated,
       backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
+      border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : theme.palette.divider}`,
       boxShadow: premiumTheme.effects.shadows.card,
     },
     outlined: {
       background: 'transparent',
       backdropFilter: 'none',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
+      border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : theme.palette.divider}`,
     },
   };
 
@@ -54,7 +55,7 @@ export const GlassCard: React.FC<GlassCardProps> = ({
             background: premiumTheme.effects.hover.glassBackground,
             transform: premiumTheme.effects.hover.transform,
             boxShadow: premiumTheme.effects.shadows.cardHover,
-            borderColor: 'rgba(255, 255, 255, 0.2)',
+            borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : theme.palette.action.selected,
           },
           '&:active': {
             transform: premiumTheme.effects.active.transform,

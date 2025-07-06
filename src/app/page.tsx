@@ -175,9 +175,9 @@ export default function HomePage() {
           position: 'sticky',
           top: 0,
           zIndex: 1200,
-          bgcolor: alpha('#000000', 0.8),
+          bgcolor: theme.palette.mode === 'dark' ? alpha('#000000', 0.8) : alpha(theme.palette.background.paper, 0.8),
           backdropFilter: 'blur(20px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          borderBottom: `1px solid ${theme.palette.divider}`,
         }}
       >
         <Container maxWidth="lg">
@@ -216,13 +216,15 @@ export default function HomePage() {
                   },
                 }}
               >
-                <Psychology sx={{ fontSize: 28, color: '#ffffff' }} />
+                <Psychology sx={{ fontSize: 28, color: theme.palette.mode === 'dark' ? '#ffffff' : theme.palette.primary.main }} />
               </Box>
               <Typography
                 variant="h5"
                 sx={{
                   fontWeight: 700,
-                  background: 'linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%)',
+                  background: theme.palette.mode === 'dark' 
+                    ? 'linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%)'
+                    : 'linear-gradient(135deg, #1a1c1e 0%, rgba(26, 28, 30, 0.8) 100%)',
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -297,6 +299,7 @@ export default function HomePage() {
               lineHeight: 1.1,
               mb: 3,
               letterSpacing: '-0.02em',
+              color: theme.palette.text.primary,
             }}
           >
             The Operating System for
@@ -358,11 +361,11 @@ export default function HomePage() {
                 px: 4,
                 py: 1.5,
                 fontSize: '1.1rem',
-                borderColor: 'rgba(255, 255, 255, 0.2)',
-                color: '#ffffff',
+                borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : theme.palette.divider,
+                color: theme.palette.text.primary,
                 '&:hover': {
-                  borderColor: 'rgba(255, 255, 255, 0.3)',
-                  bgcolor: 'rgba(255, 255, 255, 0.05)',
+                  borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : theme.palette.primary.main,
+                  bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : alpha(theme.palette.primary.main, 0.08),
                 },
               }}
             >
@@ -428,9 +431,9 @@ export default function HomePage() {
                   sx={{
                     p: 4,
                     height: '100%',
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    background: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.03)' : alpha(theme.palette.background.paper, 0.8),
                     backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: '24px',
                     transition: 'all 0.3s ease',
                     animation: `fadeInUp 1s ease-out ${0.3 + index * 0.1}s`,
@@ -508,7 +511,7 @@ export default function HomePage() {
           </Typography>
           <Typography
             variant="h6"
-            sx={{ color: 'rgba(255, 255, 255, 0.8)', mb: 5, position: 'relative' }}
+            sx={{ color: theme.palette.text.secondary, mb: 5, position: 'relative' }}
           >
             Join leading enterprises using AI to achieve net-zero faster
           </Typography>
@@ -539,11 +542,11 @@ export default function HomePage() {
                 px: 5,
                 py: 2,
                 fontSize: '1.2rem',
-                borderColor: 'rgba(255, 255, 255, 0.3)',
-                color: '#ffffff',
+                borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : theme.palette.divider,
+                color: theme.palette.text.primary,
                 '&:hover': {
-                  borderColor: 'rgba(255, 255, 255, 0.5)',
-                  bgcolor: 'rgba(255, 255, 255, 0.1)',
+                  borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : theme.palette.primary.main,
+                  bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : alpha(theme.palette.primary.main, 0.08),
                 },
               }}
             >
@@ -606,10 +609,10 @@ export default function HomePage() {
       <Box
         component="footer"
         sx={{
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          borderTop: `1px solid ${theme.palette.divider}`,
           py: 6,
           mt: 8,
-          bgcolor: 'rgba(0, 0, 0, 0.5)',
+          bgcolor: theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : alpha(theme.palette.background.paper, 0.8),
           backdropFilter: 'blur(20px)',
           position: 'relative',
           zIndex: 1,
@@ -617,12 +620,12 @@ export default function HomePage() {
       >
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+            <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
               © 2025 Blipee. All rights reserved. | 
-              <Link href="/privacy" style={{ color: '#E9D5FF', marginLeft: 8, textDecoration: 'underline' }}>
+              <Link href="/privacy" style={{ color: theme.palette.primary.main, marginLeft: 8, textDecoration: 'underline' }}>
                 Privacy Policy
               </Link> | 
-              <Link href="/terms" style={{ color: '#E9D5FF', marginLeft: 8, textDecoration: 'underline' }}>
+              <Link href="/terms" style={{ color: theme.palette.primary.main, marginLeft: 8, textDecoration: 'underline' }}>
                 Terms of Service
               </Link>
             </Typography>

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { TextField, TextFieldProps, InputAdornment } from '@mui/material';
+import { TextField, TextFieldProps, InputAdornment, useTheme } from '@mui/material';
 import { premiumTheme } from '@/lib/theme/premium-theme';
 
 interface PremiumTextFieldProps extends Omit<TextFieldProps, 'variant'> {
@@ -15,43 +15,44 @@ export const PremiumTextField: React.FC<PremiumTextFieldProps> = ({
   sx,
   ...props 
 }) => {
+  const theme = useTheme();
   return (
     <TextField
       fullWidth
       variant="outlined"
       InputProps={{
         startAdornment: startAdornment && (
-          <InputAdornment position="start" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+          <InputAdornment position="start" sx={{ color: theme.palette.text.secondary }}>
             {startAdornment}
           </InputAdornment>
         ),
         endAdornment: endAdornment && (
-          <InputAdornment position="end" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
+          <InputAdornment position="end" sx={{ color: theme.palette.text.secondary }}>
             {endAdornment}
           </InputAdornment>
         ),
       }}
       sx={{
         '& .MuiOutlinedInput-root': {
-          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : theme.palette.action.hover,
           borderRadius: premiumTheme.borderRadius.sm,
           transition: premiumTheme.effects.transitions.fast,
           
           '& fieldset': {
-            borderColor: 'rgba(255, 255, 255, 0.2)',
+            borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : theme.palette.divider,
             transition: premiumTheme.effects.transitions.fast,
           },
           
           '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.07)',
+            backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.07)' : theme.palette.action.selected,
             
             '& fieldset': {
-              borderColor: 'rgba(255, 255, 255, 0.3)',
+              borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : theme.palette.action.selected,
             },
           },
           
           '&.Mui-focused': {
-            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+            backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : theme.palette.action.selected,
             
             '& fieldset': {
               borderColor: premiumTheme.colors.brand.orange,
@@ -67,23 +68,23 @@ export const PremiumTextField: React.FC<PremiumTextFieldProps> = ({
         },
         
         '& .MuiInputBase-input': {
-          color: '#ffffff',
+          color: theme.palette.text.primary,
           fontSize: '1rem',
           
           '&::placeholder': {
-            color: 'rgba(255, 255, 255, 0.5)',
+            color: theme.palette.text.secondary,
             opacity: 1,
           },
           
           '&:-webkit-autofill': {
-            WebkitBoxShadow: '0 0 0 100px rgba(255, 255, 255, 0.05) inset',
-            WebkitTextFillColor: '#ffffff',
-            caretColor: '#ffffff',
+            WebkitBoxShadow: theme.palette.mode === 'dark' ? '0 0 0 100px rgba(255, 255, 255, 0.05) inset' : '0 0 0 100px rgba(0, 0, 0, 0.03) inset',
+            WebkitTextFillColor: theme.palette.text.primary,
+            caretColor: theme.palette.text.primary,
           },
         },
         
         '& .MuiInputLabel-root': {
-          color: 'rgba(255, 255, 255, 0.7)',
+          color: theme.palette.text.secondary,
           
           '&.Mui-focused': {
             color: premiumTheme.colors.brand.orange,
@@ -95,7 +96,7 @@ export const PremiumTextField: React.FC<PremiumTextFieldProps> = ({
         },
         
         '& .MuiFormHelperText-root': {
-          color: 'rgba(255, 255, 255, 0.6)',
+          color: theme.palette.text.secondary,
           marginTop: '8px',
           
           '&.Mui-error': {
