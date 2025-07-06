@@ -1,6 +1,7 @@
 'use client';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -15,7 +16,7 @@ import {
   IconButton,
   Card,
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/GridLegacy';
 import {
   AutoAwesome,
   Psychology,
@@ -112,23 +113,25 @@ export default function HomePage() {
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#000000', color: '#ffffff', overflow: 'hidden' }}>
       {/* Dynamic gradient background */}
-      <Box
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: `
-            radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(103, 80, 164, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
-            #000000
-          `,
-          transition: 'background 0.3s ease',
-          zIndex: 0,
-        }}
-      />
+      {typeof window !== 'undefined' && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `
+              radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(103, 80, 164, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+              #000000
+            `,
+            transition: 'background 0.3s ease',
+            zIndex: 0,
+          }}
+        />
+      )}
 
       {/* Floating orbs */}
       <Box
@@ -353,7 +356,7 @@ export default function HomePage() {
         <Box sx={{ mb: 12 }}>
           <Grid container spacing={3}>
             {stats.map((stat, index) => (
-              <Grid size={{ xs: 6, md: 3 }} key={index}>
+              <Grid item xs={6} md={3} key={index}>
                 <Box
                   sx={{
                     textAlign: 'center',
@@ -365,7 +368,7 @@ export default function HomePage() {
                     variant="h2"
                     sx={{
                       fontWeight: 700,
-                      background: `linear-gradient(135deg, ${stat.color} 0%, ${stat.color}99 100%)`,
+                      background: `linear-gradient(135deg, ${stat.color} 0%, ${stat.color} 100%)`,
                       backgroundClip: 'text',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
@@ -401,7 +404,7 @@ export default function HomePage() {
           </Typography>
           <Grid container spacing={4}>
             {features.map((feature, index) => (
-              <Grid size={{ xs: 12, md: 4 }} key={index}>
+              <Grid item xs={12} md={4} key={index}>
                 <Card
                   sx={{
                     p: 4,
@@ -617,7 +620,10 @@ export default function HomePage() {
         }
         
         @keyframes float {
-          0%, 100% {
+          0% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          100% {
             transform: translate(0, 0) rotate(0deg);
           }
           33% {

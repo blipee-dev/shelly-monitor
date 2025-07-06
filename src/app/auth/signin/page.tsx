@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -31,7 +31,7 @@ import { signInSchema, type SignInFormData } from '@/lib/auth/validation';
 import { useAuth, useRequireNoAuth } from '@/lib/auth/hooks';
 import { useTranslation } from '@/lib/i18n';
 
-export default function SignInPage() {
+function SignInPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect') || '/dashboard';
@@ -227,5 +227,19 @@ export default function SignInPage() {
         </Typography>
       </Box>
     </AuthLayout>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={
+      <AuthLayout title="Loading..." subtitle="">
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+          <CircularProgress />
+        </Box>
+      </AuthLayout>
+    }>
+      <SignInPageContent />
+    </Suspense>
   );
 }
