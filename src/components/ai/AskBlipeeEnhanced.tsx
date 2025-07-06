@@ -111,8 +111,12 @@ Current user is authenticated and has full access to all features.`,
             
             if (intent.type === 'create' && intent.automation) {
               const automation = await createAutomation({
-                ...intent.automation,
                 name: args.name,
+                description: intent.automation.description || '',
+                enabled: intent.automation.enabled ?? true,
+                triggers: intent.automation.triggers || [],
+                conditions: intent.automation.conditions || [],
+                actions: intent.automation.actions || [],
                 userId: '', // Will be set by the store
               });
               return { 
@@ -170,9 +174,11 @@ Current user is authenticated and has full access to all features.`,
             
             if (intent.scene) {
               const scene = await createScene({
-                ...intent.scene,
                 name: args.name,
-                description: args.description,
+                description: args.description || '',
+                actions: intent.scene.actions || [],
+                icon: intent.scene.icon,
+                isFavorite: false,
                 userId: '', // Will be set by the store
               });
               return { 
@@ -218,7 +224,7 @@ Current user is authenticated and has full access to all features.`,
                   name: device.name,
                   status: device.status,
                   type: device.type,
-                  data: device.data,
+                  ip_address: device.ip_address,
                 },
               };
             }
@@ -227,13 +233,7 @@ Current user is authenticated and has full access to all features.`,
 
           case 'get_energy_consumption': {
             // Mock implementation - would connect to real analytics
-            const totalPower = devices.reduce((sum, device) => {
-              if (device.status === 'online' && device.data) {
-                const power = device.data.switch0?.apower || 0;
-                return sum + power;
-              }
-              return sum;
-            }, 0);
+            const totalPower = 0; // TODO: Implement based on device-specific data
             
             return {
               success: true,
@@ -475,7 +475,7 @@ Current user is authenticated and has full access to all features.`,
 
             // Automation suggestions based on current devices
             if ((category === 'automation' || category === 'all') && devices.length > 0) {
-              const hasMotionSensor = devices.some(d => d.type === 'motion');
+              const hasMotionSensor = devices.some(d => d.type === 'motion2' || d.type === 'blu_motion');
               const hasLights = devices.some(d => d.type === 'plus2pm' || d.type === 'dimmer2');
               
               if (hasMotionSensor && hasLights) {

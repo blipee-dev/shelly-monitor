@@ -61,11 +61,11 @@ export function DimmerControl({ device, data, onUpdate }: DimmerControlProps) {
     }
   };
 
-  const handleBrightnessChange = (_: Event, value: number | number[]) => {
+  const handleBrightnessChange = (_: any, value: number | number[]) => {
     setBrightness(value as number);
   };
 
-  const handleBrightnessCommit = async (_: Event, value: number | number[]) => {
+  const handleBrightnessCommit = async (_: any, value: number | number[]) => {
     setIsDragging(false);
     const newBrightness = value as number;
     

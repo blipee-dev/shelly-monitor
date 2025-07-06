@@ -331,7 +331,7 @@ export class PredictiveNotificationEngine {
     const predictions: PredictiveNotification[] = [];
 
     // Predict based on device types
-    const hasMotionSensor = devices.some(d => d.type === 'motion');
+    const hasMotionSensor = devices.some(d => d.type === 'motion2' || d.type === 'blu_motion');
     const hasLights = devices.some(d => d.type === 'plus2pm' || d.type === 'dimmer2');
     const hasNoAutomations = automations.length === 0;
 

@@ -213,7 +213,6 @@ export default function DeviceDetailPage({ params }: DeviceDetailPageProps) {
         sx={{ mb: 2 }}
       >
         <Link
-          component={NextLink}
           href="/devices"
           color="inherit"
           underline="hover"

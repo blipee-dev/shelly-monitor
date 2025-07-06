@@ -44,8 +44,8 @@ interface AskBlipeePremiumProps {
 }
 
 const suggestedCategories = [
-  { label: 'Analyze Patterns', icon: <Psychology />, gradient: premiumTheme.colors.gradients.purple },
-  { label: 'Energy Insights', icon: <TrendingUp />, gradient: premiumTheme.colors.gradients.green },
+  { label: 'Analyze Patterns', icon: <Psychology />, gradient: premiumTheme.colors.gradients.primaryReverse },
+  { label: 'Energy Insights', icon: <TrendingUp />, gradient: premiumTheme.colors.gradients.success },
   { label: 'Security Check', icon: <Shield />, gradient: premiumTheme.colors.gradients.blue },
   { label: 'Create Automation', icon: <Build />, gradient: premiumTheme.colors.gradients.coral },
 ];
@@ -568,7 +568,7 @@ Current user is authenticated and has full access to all features.`,
                   width: 48,
                   height: 48,
                   padding: 0,
-                  background: premiumTheme.colors.gradients.error,
+                  background: 'linear-gradient(135deg, #F44336 0%, #E91E63 100%)',
                 }}
               >
                 <Stop />

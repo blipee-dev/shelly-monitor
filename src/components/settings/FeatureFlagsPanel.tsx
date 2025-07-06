@@ -151,7 +151,7 @@ export default function FeatureFlagsPanel() {
                       )}
                     </Box>
                     <Box flex={1} minWidth={200}>
-                      {flag.targetGroups?.length > 0 && (
+                      {flag.targetGroups && flag.targetGroups.length > 0 && (
                         <Box>
                           <Typography variant="body2" gutterBottom>
                             Target Groups
@@ -168,7 +168,7 @@ export default function FeatureFlagsPanel() {
                           </Box>
                         </Box>
                       )}
-                      {flag.targetUsers?.length > 0 && (
+                      {flag.targetUsers && flag.targetUsers.length > 0 && (
                         <Box mt={2}>
                           <Typography variant="body2" gutterBottom>
                             Target Users

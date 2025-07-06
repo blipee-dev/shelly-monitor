@@ -43,7 +43,7 @@ import { format } from 'date-fns';
 import { BackupService, BackupRecord } from '@/lib/backup/backup-service';
 import { ExportManager } from '@/lib/backup/export-manager';
 import { ImportManager } from '@/lib/backup/import-manager';
-import { useSnackbar } from '@/components/providers/SnackbarProvider';
+import { useSnackbar } from 'notistack';
 
 export function BackupManager() {
   const [backups, setBackups] = useState<BackupRecord[]>([]);
@@ -55,7 +55,7 @@ export function BackupManager() {
   const [importDialog, setImportDialog] = useState(false);
   const [importFile, setImportFile] = useState<File | null>(null);
   const [importProgress, setImportProgress] = useState(false);
-  const { showSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     loadBackups();
@@ -66,7 +66,7 @@ export function BackupManager() {
       const data = await BackupService.getBackups();
       setBackups(data);
     } catch (error) {
-      showSnackbar('Failed to load backups', 'error');
+      enqueueSnackbar('Failed to load backups', { variant: 'error' });
     } finally {
       setLoading(false);
     }
@@ -77,9 +77,9 @@ export function BackupManager() {
     try {
       const backup = await BackupService.createBackup(true);
       setBackups([backup, ...backups]);
-      showSnackbar('Backup created successfully', 'success');
+      enqueueSnackbar('Backup created successfully', { variant: 'success' });
     } catch (error) {
-      showSnackbar('Failed to create backup', 'error');
+      enqueueSnackbar('Failed to create backup', { variant: 'error' });
     } finally {
       setCreating(false);
     }
@@ -88,9 +88,9 @@ export function BackupManager() {
   const handleExport = async (format: 'json' | 'csv' = 'json') => {
     try {
       await ExportManager.exportToFile({ format });
-      showSnackbar(`Exported as ${format.toUpperCase()}`, 'success');
+      enqueueSnackbar(`Exported as ${format.toUpperCase()}`, { variant: 'success' });
     } catch (error) {
-      showSnackbar('Export failed', 'error');
+      enqueueSnackbar('Export failed', { variant: 'error' });
     }
   };
 
@@ -98,11 +98,11 @@ export function BackupManager() {
     setRestoring(backupId);
     try {
       await BackupService.restoreBackup(backupId);
-      showSnackbar('Backup restored successfully', 'success');
+      enqueueSnackbar('Backup restored successfully', { variant: 'success' });
       // Reload the page to show restored data
       setTimeout(() => window.location.reload(), 1500);
     } catch (error) {
-      showSnackbar('Failed to restore backup', 'error');
+      enqueueSnackbar('Failed to restore backup', { variant: 'error' });
     } finally {
       setRestoring(null);
     }
@@ -112,9 +112,9 @@ export function BackupManager() {
     try {
       await BackupService.deleteBackup(backupId);
       setBackups(backups.filter(b => b.id !== backupId));
-      showSnackbar('Backup deleted', 'success');
+      enqueueSnackbar('Backup deleted', { variant: 'success' });
     } catch (error) {
-      showSnackbar('Failed to delete backup', 'error');
+      enqueueSnackbar('Failed to delete backup', { variant: 'error' });
     }
     handleMenuClose();
   };
@@ -133,19 +133,19 @@ export function BackupManager() {
       });
 
       if (result.success) {
-        showSnackbar(
+        enqueueSnackbar(
           `Import successful: ${result.imported.devices} devices, ${result.imported.automations} automations, ${result.imported.scenes} scenes`,
-          'success'
+          { variant: 'success' }
         );
         setImportDialog(false);
         setImportFile(null);
         // Reload to show imported data
         setTimeout(() => window.location.reload(), 1500);
       } else {
-        showSnackbar(`Import failed: ${result.errors.join(', ')}`, 'error');
+        enqueueSnackbar(`Import failed: ${result.errors.join(', ')}`, { variant: 'error' });
       }
     } catch (error) {
-      showSnackbar('Import failed', 'error');
+      enqueueSnackbar('Import failed', { variant: 'error' });
     } finally {
       setImportProgress(false);
     }

@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -59,7 +61,7 @@ export default function SignInPage() {
     
     try {
       await signIn(data.email, data.password);
-      router.push(redirect);
+      router.push(redirect as any);
     } catch (err: any) {
       if (err.message?.includes('Invalid login credentials')) {
         setError(t('auth.signin.errors.invalidCredentials'));

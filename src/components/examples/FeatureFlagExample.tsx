@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { Box, Typography, Button, Paper, Alert } from '@mui/material';
-import { FeatureFlag, useFeatureFlag, withFeatureFlag } from '@/lib/feature-flags';
+import { useFeatureFlag, withFeatureFlag } from '@/lib/feature-flags';
+import * as FeatureFlags from '@/lib/feature-flags';
 import { useTranslation } from '@/lib/i18n';
 
 // Example 1: Using the useFeatureFlag hook
@@ -31,16 +32,16 @@ function AnalyticsSection() {
         {t('navigation.analytics')}
       </Typography>
       
-      <FeatureFlag flag="ADVANCED_ANALYTICS">
+      <FeatureFlags.FeatureFlagGate flag="ADVANCED_ANALYTICS">
         <Paper sx={{ p: 2, mb: 2 }}>
           <Typography variant="subtitle1">Advanced Analytics</Typography>
           <Typography variant="body2" color="text.secondary">
             Detailed charts and insights about your energy usage
           </Typography>
         </Paper>
-      </FeatureFlag>
+      </FeatureFlags.FeatureFlagGate>
       
-      <FeatureFlag 
+      <FeatureFlags.FeatureFlagGate 
         flag="ENERGY_INSIGHTS"
         fallback={
           <Alert severity="info">
@@ -54,7 +55,7 @@ function AnalyticsSection() {
             AI-powered recommendations to reduce energy consumption
           </Typography>
         </Paper>
-      </FeatureFlag>
+      </FeatureFlags.FeatureFlagGate>
     </Box>
   );
 }

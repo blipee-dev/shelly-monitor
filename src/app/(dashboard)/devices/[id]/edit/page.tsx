@@ -71,7 +71,6 @@ export default function EditDevicePage({ params }: EditDevicePageProps) {
         sx={{ mb: 2 }}
       >
         <Link
-          component={NextLink}
           href="/devices"
           color="inherit"
           underline="hover"
@@ -79,7 +78,6 @@ export default function EditDevicePage({ params }: EditDevicePageProps) {
           Devices
         </Link>
         <Link
-          component={NextLink}
           href={`/devices/${device.id}`}
           color="inherit"
           underline="hover"

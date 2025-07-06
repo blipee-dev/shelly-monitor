@@ -25,10 +25,10 @@ import {
   WifiOff as WifiOffIcon
 } from '@mui/icons-material';
 import { useTranslation, formatRelativeTime } from '@/lib/i18n';
-import { ShellyDevice } from '@/types/shelly';
+import { Device } from '@/types/device';
 
 interface DeviceCardProps {
-  device: ShellyDevice & { device_status?: any };
+  device: Device & { device_status?: any };
   onRefresh: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
@@ -71,10 +71,16 @@ export default function DeviceCard({
 
   const getDeviceTypeName = () => {
     switch (device.type) {
-      case 'plus_2pm':
+      case 'plus2pm':
         return '2PM Switch';
-      case 'motion_2':
+      case 'motion2':
         return t('devices.card.motion.detected').split(' ')[0] + ' Sensor';
+      case 'plus1pm':
+        return '1PM Switch';
+      case 'dimmer2':
+        return 'Dimmer 2';
+      case 'blu_motion':
+        return 'BLU Motion';
       default:
         return device.type;
     }
@@ -155,7 +161,7 @@ export default function DeviceCard({
         <Divider sx={{ my: 2 }} />
 
         {/* Device-specific content */}
-        {device.type === 'plus_2pm' && deviceData?.switch && (
+        {device.type === 'plus2pm' && deviceData?.switch && (
           <Grid container spacing={2}>
             {deviceData.switch.map((channel: any, index: number) => (
               <Grid size={12} key={channel.id}>
@@ -194,7 +200,7 @@ export default function DeviceCard({
           </Grid>
         )}
 
-        {device.type === 'motion_2' && deviceData?.sensor && (
+        {device.type === 'motion2' && deviceData?.sensor && (
           <Box>
             <Typography variant="body2" gutterBottom>
               {t('devices.card.motion.' + (deviceData.sensor.motion ? 'detected' : 'clear'))}

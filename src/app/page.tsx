@@ -1,12 +1,13 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Box,
   Button,
   Container,
-  Grid,
   Typography,
   useTheme,
   alpha,
@@ -14,6 +15,7 @@ import {
   IconButton,
   Card,
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import {
   AutoAwesome,
   Psychology,
@@ -351,7 +353,7 @@ export default function HomePage() {
         <Box sx={{ mb: 12 }}>
           <Grid container spacing={3}>
             {stats.map((stat, index) => (
-              <Grid item xs={6} md={3} key={index}>
+              <Grid size={{ xs: 6, md: 3 }} key={index}>
                 <Box
                   sx={{
                     textAlign: 'center',
@@ -399,7 +401,7 @@ export default function HomePage() {
           </Typography>
           <Grid container spacing={4}>
             {features.map((feature, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid size={{ xs: 12, md: 4 }} key={index}>
                 <Card
                   sx={{
                     p: 4,

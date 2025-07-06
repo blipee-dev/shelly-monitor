@@ -365,7 +365,7 @@ export default function AnalyticsPage() {
         </Grid>
 
         {/* Recent Events */}
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Paper elevation={0} sx={{ p: 3, border: 1, borderColor: 'divider' }}>
             <Typography variant="h6" gutterBottom>
               Recent Activity

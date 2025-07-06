@@ -153,7 +153,7 @@ export class PushNotificationManager {
       throw new Error('Notification permission not granted');
     }
 
-    const options: NotificationOptions = {
+    const options: NotificationOptions & { vibrate?: number[]; actions?: { action: string; title: string; }[] } = {
       body: 'This is a test notification from Blipee OS',
       icon: '/icons/icon-192x192.png',
       badge: '/icons/icon-72x72.png',

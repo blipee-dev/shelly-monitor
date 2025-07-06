@@ -1,6 +1,6 @@
 import { Device } from '@/types/device';
 import { Automation, Scene } from '@/types/automation';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 export interface ExportData {
   version: string;
@@ -57,6 +57,7 @@ export class ExportManager {
 
     try {
       // Get current user
+      const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         exportData.metadata.exportedBy = user.email || user.id;

@@ -1,5 +1,5 @@
 import { ExportManager, ExportData } from './export-manager';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 export interface BackupSchedule {
   id: string;
@@ -33,6 +33,7 @@ export class BackupService {
     manual: boolean = true,
     scheduleId?: string
   ): Promise<BackupRecord> {
+    const supabase = createClient();
     const record: BackupRecord = {
       id: crypto.randomUUID(),
       scheduleId,
@@ -74,7 +75,7 @@ export class BackupService {
       if (uploadError) throw uploadError;
 
       // Get download URL (valid for 1 year)
-      const { data: urlData } = supabase.storage
+      const { data: urlData } = await supabase.storage
         .from('backups')
         .createSignedUrl(fileName, 365 * 24 * 60 * 60);
 
@@ -117,6 +118,7 @@ export class BackupService {
   }
 
   static async getBackups(): Promise<BackupRecord[]> {
+    const supabase = createClient();
     const { data, error } = await supabase
       .from('backup_records')
       .select('*')
@@ -128,6 +130,7 @@ export class BackupService {
   }
 
   static async getSchedules(): Promise<BackupSchedule[]> {
+    const supabase = createClient();
     const { data, error } = await supabase
       .from('backup_schedules')
       .select('*')
@@ -146,6 +149,7 @@ export class BackupService {
       nextRun: this.calculateNextRun(schedule),
     };
 
+    const supabase = createClient();
     const { error } = await supabase
       .from('backup_schedules')
       .insert(newSchedule);
@@ -163,6 +167,7 @@ export class BackupService {
       updates.nextRun = this.calculateNextRun({ ...updates } as BackupSchedule);
     }
 
+    const supabase = createClient();
     const { error } = await supabase
       .from('backup_schedules')
       .update(updates)
@@ -172,6 +177,7 @@ export class BackupService {
   }
 
   static async deleteSchedule(id: string): Promise<void> {
+    const supabase = createClient();
     const { error } = await supabase
       .from('backup_schedules')
       .delete()
@@ -182,6 +188,7 @@ export class BackupService {
 
   static async deleteBackup(id: string): Promise<void> {
     // Get backup record
+    const supabase = createClient();
     const { data: backup, error: fetchError } = await supabase
       .from('backup_records')
       .select('*')
@@ -208,6 +215,7 @@ export class BackupService {
   }
 
   static async restoreBackup(backupId: string): Promise<void> {
+    const supabase = createClient();
     const { data: backup, error } = await supabase
       .from('backup_records')
       .select('*')
@@ -239,7 +247,7 @@ export class BackupService {
     }
   }
 
-  private static calculateNextRun(schedule: BackupSchedule): string {
+  private static calculateNextRun(schedule: Pick<BackupSchedule, 'time' | 'frequency' | 'dayOfWeek' | 'dayOfMonth'>): string {
     const now = new Date();
     const [hours, minutes] = schedule.time.split(':').map(Number);
     
@@ -282,6 +290,7 @@ export class BackupService {
   private static async cleanupOldBackups(): Promise<void> {
     try {
       // Get all backups
+      const supabase = createClient();
       const { data: backups } = await supabase
         .from('backup_records')
         .select('*')

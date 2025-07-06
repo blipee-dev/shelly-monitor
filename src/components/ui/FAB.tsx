@@ -4,7 +4,7 @@ import React from 'react';
 import { Fab as MuiFab, FabProps as MuiFabProps } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-export interface FABProps extends MuiFabProps {
+export interface FABProps extends Omit<MuiFabProps, 'variant'> {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'surface';
   extended?: boolean;
 }

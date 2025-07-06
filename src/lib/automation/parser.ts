@@ -274,7 +274,7 @@ export class AutomationParser {
   ): string {
     const triggerPart = triggers[0]?.type === 'time' ? 
       `${triggers[0].config.time} Daily` :
-      triggers[0]?.type === 'motion' ?
+      triggers[0]?.type === 'sensor_value' && triggers[0].config.sensorType === 'motion' ?
       'Motion Activated' :
       'Custom';
       

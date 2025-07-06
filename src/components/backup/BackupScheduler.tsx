@@ -39,7 +39,7 @@ import {
 } from '@mui/icons-material';
 import { format } from 'date-fns';
 import { BackupService, BackupSchedule } from '@/lib/backup/backup-service';
-import { useSnackbar } from '@/components/providers/SnackbarProvider';
+import { useSnackbar } from 'notistack';
 
 const DAYS_OF_WEEK = [
   'Sunday',
@@ -56,7 +56,7 @@ export function BackupScheduler() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingSchedule, setEditingSchedule] = useState<BackupSchedule | null>(null);
-  const { showSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   // Form state
   const [formData, setFormData] = useState({
@@ -78,7 +78,7 @@ export function BackupScheduler() {
       const data = await BackupService.getSchedules();
       setSchedules(data);
     } catch (error) {
-      showSnackbar('Failed to load schedules', 'error');
+      enqueueSnackbar('Failed to load schedules', { variant: 'error' });
     } finally {
       setLoading(false);
     }
@@ -126,16 +126,16 @@ export function BackupScheduler() {
             s.id === editingSchedule.id ? { ...s, ...formData } : s
           )
         );
-        showSnackbar('Schedule updated', 'success');
+        enqueueSnackbar('Schedule updated', { variant: 'success' });
       } else {
         // Create new
         const newSchedule = await BackupService.createSchedule(formData);
         setSchedules([...schedules, newSchedule]);
-        showSnackbar('Schedule created', 'success');
+        enqueueSnackbar('Schedule created', { variant: 'success' });
       }
       handleCloseDialog();
     } catch (error) {
-      showSnackbar('Failed to save schedule', 'error');
+      enqueueSnackbar('Failed to save schedule', { variant: 'error' });
     }
   };
 
@@ -145,12 +145,12 @@ export function BackupScheduler() {
       setSchedules(
         schedules.map(s => (s.id === id ? { ...s, enabled } : s))
       );
-      showSnackbar(
+      enqueueSnackbar(
         enabled ? 'Schedule enabled' : 'Schedule disabled',
-        'success'
+        { variant: 'success' }
       );
     } catch (error) {
-      showSnackbar('Failed to update schedule', 'error');
+      enqueueSnackbar('Failed to update schedule', { variant: 'error' });
     }
   };
 
@@ -158,9 +158,9 @@ export function BackupScheduler() {
     try {
       await BackupService.deleteSchedule(id);
       setSchedules(schedules.filter(s => s.id !== id));
-      showSnackbar('Schedule deleted', 'success');
+      enqueueSnackbar('Schedule deleted', { variant: 'success' });
     } catch (error) {
-      showSnackbar('Failed to delete schedule', 'error');
+      enqueueSnackbar('Failed to delete schedule', { variant: 'error' });
     }
   };
 

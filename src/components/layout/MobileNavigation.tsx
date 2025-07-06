@@ -50,7 +50,7 @@ export function MobileNavigation() {
   const router = useRouter();
   const { devices } = useDeviceStore();
   
-  const offlineDevices = devices.filter(d => !d.is_online).length;
+  const offlineDevices = devices.filter(d => d.status !== 'online').length;
 
   const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
     router.push(newValue);

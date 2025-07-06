@@ -14,7 +14,6 @@ export default function NewDevicePage() {
         sx={{ mb: 2 }}
       >
         <Link
-          component={NextLink}
           href="/devices"
           color="inherit"
           underline="hover"

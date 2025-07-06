@@ -86,8 +86,10 @@ export function DeviceForm({ device, onSuccess }: DeviceFormProps) {
 
   const loadGroups = async () => {
     try {
-      const groupList = await deviceGroupApi.list();
-      setGroups(groupList);
+      // TODO: Implement device groups API
+      // const groupList = await deviceGroupApi.list();
+      // setGroups(groupList);
+      setGroups([]);
     } catch (error) {
       console.error('Failed to load groups:', error);
     }

@@ -270,7 +270,7 @@ const getComponentOverrides = (mode: 'light' | 'dark') => {
     },
     MuiTextField: {
       defaultProps: {
-        variant: 'outlined',
+        variant: 'outlined' as const,
       },
       styleOverrides: {
         root: {

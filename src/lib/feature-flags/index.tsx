@@ -233,7 +233,7 @@ export function withFeatureFlag<P extends object>(
 }
 
 // Component for conditionally rendering children based on feature flags
-export function FeatureFlag({
+export function FeatureFlagGate({
   flag,
   children,
   fallback
@@ -290,5 +290,3 @@ export async function initializeFeatureFlags(userId?: string, userGroups?: strin
   });
 }
 
-// Export types
-export type { FeatureFlag, FeatureFlagsState };

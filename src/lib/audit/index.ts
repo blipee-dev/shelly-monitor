@@ -285,7 +285,7 @@ export const auditLog = {
   },
 
   // Security events
-  suspiciousActivity: (userId?: string, activity: string, details?: any) => {
+  suspiciousActivity: (activity: string, userId?: string, details?: any) => {
     return auditLogger.log({
       event_type: AuditEventType.SUSPICIOUS_ACTIVITY,
       severity: AuditEventSeverity.WARNING,
@@ -295,7 +295,7 @@ export const auditLog = {
     });
   },
 
-  rateLimitExceeded: (userId?: string, endpoint: string, ipAddress?: string) => {
+  rateLimitExceeded: (endpoint: string, userId?: string, ipAddress?: string) => {
     return auditLogger.log({
       event_type: AuditEventType.RATE_LIMIT_EXCEEDED,
       severity: AuditEventSeverity.WARNING,

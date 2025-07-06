@@ -120,20 +120,8 @@ Top consumers: ${metrics
       }
     });
 
-    // Check for devices that have been on too long
-    devices.forEach(device => {
-      if (device.status === 'online' && device.data?.uptime && device.data.uptime > 24 * 60 * 60) {
-        insights.push({
-          id: crypto.randomUUID(),
-          type: 'pattern',
-          title: 'Device Running Continuously',
-          description: `${device.name} has been running for over 24 hours continuously. Consider setting up an automation to turn it off when not needed.`,
-          actionable: true,
-          priority: 'medium',
-          createdAt: new Date().toISOString(),
-        });
-      }
-    });
+    // TODO: Check for devices that have been on too long
+    // This requires device-specific data which is not available in the base Device type
 
     return insights;
   }
@@ -193,20 +181,9 @@ Top consumers: ${metrics
   private async predictMaintenance(devices: Device[]): Promise<AIInsight[]> {
     const insights: AIInsight[] = [];
 
+    // TODO: Device temperature monitoring
+    // This requires device-specific data which is not available in the base Device type
     devices.forEach(device => {
-      // Check device temperature if available
-      if (device.data?.temperature && device.data.temperature > 70) {
-        insights.push({
-          id: crypto.randomUUID(),
-          type: 'maintenance',
-          title: 'High Temperature Warning',
-          description: `${device.name} is running at ${device.data.temperature}°C. High temperatures can reduce device lifespan. Ensure proper ventilation.`,
-          impact: 'Device longevity',
-          actionable: true,
-          priority: 'high',
-          createdAt: new Date().toISOString(),
-        });
-      }
 
       // Check for devices needing firmware updates (mock)
       if (Math.random() > 0.8) {

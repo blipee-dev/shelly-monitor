@@ -187,6 +187,8 @@ export class MigrationTools {
       created_at: device.created_at || new Date().toISOString(),
       updated_at: device.updated_at || new Date().toISOString(),
       last_seen: device.last_seen,
+      status: device.status || 'offline',
+      group_id: device.group_id || null,
     }));
   }
 
@@ -199,11 +201,11 @@ export class MigrationTools {
       triggers: Array.isArray(automation.triggers) ? automation.triggers : [],
       conditions: Array.isArray(automation.conditions) ? automation.conditions : [],
       actions: Array.isArray(automation.actions) ? automation.actions : [],
-      user_id: automation.user_id,
-      created_at: automation.created_at || new Date().toISOString(),
-      updated_at: automation.updated_at || new Date().toISOString(),
-      last_triggered: automation.last_triggered,
-      next_trigger: automation.next_trigger,
+      userId: automation.user_id || automation.userId,
+      createdAt: automation.created_at || automation.createdAt || new Date().toISOString(),
+      updatedAt: automation.updated_at || automation.updatedAt || new Date().toISOString(),
+      lastTriggered: automation.last_triggered || automation.lastTriggered,
+      nextTrigger: automation.next_trigger || automation.nextTrigger,
     }));
   }
 
@@ -216,10 +218,10 @@ export class MigrationTools {
       color: scene.color || '#2196f3',
       actions: Array.isArray(scene.actions) ? scene.actions : [],
       isFavorite: scene.isFavorite || false,
-      user_id: scene.user_id,
-      created_at: scene.created_at || new Date().toISOString(),
-      updated_at: scene.updated_at || new Date().toISOString(),
-      last_activated: scene.last_activated,
+      userId: scene.user_id || scene.userId,
+      createdAt: scene.created_at || scene.createdAt || new Date().toISOString(),
+      updatedAt: scene.updated_at || scene.updatedAt || new Date().toISOString(),
+      lastActivated: scene.last_activated || scene.lastActivated,
     }));
   }
 

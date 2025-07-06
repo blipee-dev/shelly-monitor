@@ -32,7 +32,7 @@ class RateLimiter {
     }, 60000);
   }
 
-  async limit(config: RateLimitConfig) {
+  limit(config: RateLimitConfig): (req: NextRequest) => Promise<NextResponse | null> {
     return async (req: NextRequest) => {
       // Skip rate limiting if configured
       if (config.skip && config.skip(req)) {

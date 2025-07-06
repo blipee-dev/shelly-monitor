@@ -1,5 +1,5 @@
 import { ExportData, ExportManager } from './export-manager';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 import { Device } from '@/types/device';
 import { Automation, Scene } from '@/types/automation';
 
@@ -79,6 +79,7 @@ export class ImportManager {
       }
 
       // Get current user
+      const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         result.errors.push('User not authenticated');
@@ -152,6 +153,7 @@ export class ImportManager {
 
     try {
       // Get existing data
+      const supabase = createClient();
       const [
         { data: existingDevices },
         { data: existingAutomations },
@@ -221,6 +223,7 @@ export class ImportManager {
     let imported = 0;
     const errors: string[] = [];
     const warnings: string[] = [];
+    const supabase = createClient();
 
     for (const device of devices) {
       try {
@@ -286,6 +289,7 @@ export class ImportManager {
   ): Promise<{ imported: number; errors: string[] }> {
     let imported = 0;
     const errors: string[] = [];
+    const supabase = createClient();
 
     for (const automation of automations) {
       try {
@@ -353,6 +357,7 @@ export class ImportManager {
   ): Promise<{ imported: number; errors: string[] }> {
     let imported = 0;
     const errors: string[] = [];
+    const supabase = createClient();
 
     for (const scene of scenes) {
       try {
@@ -417,6 +422,7 @@ export class ImportManager {
     userId: string
   ): Promise<{ success: boolean }> {
     try {
+      const supabase = createClient();
       const { error } = await supabase
         .from('user_preferences')
         .upsert({

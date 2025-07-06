@@ -87,28 +87,13 @@ export default function DashboardPage() {
 
   // Calculate statistics from devices
   const calculateStats = () => {
-    const activeDevices = devices.filter(d => d.is_online).length;
-    const totalPower = devices.reduce((sum, device) => {
-      if (device.status?.power) {
-        return sum + (device.status.power || 0);
-      }
-      return sum;
-    }, 0);
-    const totalEnergy = devices.reduce((sum, device) => {
-      if (device.status?.energy) {
-        return sum + (device.status.energy || 0);
-      }
-      return sum;
-    }, 0);
+    const activeDevices = devices.filter(d => d.status === 'online').length;
+    const totalPower = 0; // TODO: Implement based on device-specific data
+    const totalEnergy = 0; // TODO: Implement based on device-specific data
     const motionDetected = devices.some(d => 
-      d.device_type === 'motion' && d.status?.motion
+      d.type === 'motion2' || d.type === 'blu_motion'
     );
-    const avgTemperature = devices.reduce((sum, device, _, arr) => {
-      if (device.status?.temperature !== undefined) {
-        return sum + (device.status.temperature / arr.length);
-      }
-      return sum;
-    }, 0);
+    const avgTemperature = 25; // TODO: Implement based on device-specific data
 
     return {
       activeDevices,
@@ -157,16 +142,16 @@ export default function DashboardPage() {
 
   // Group devices by room/location
   const devicesByRoom = devices.reduce((acc, device) => {
-    const room = device.room || 'Unassigned';
+    const room = device.location || 'Unassigned';
     if (!acc[room]) acc[room] = [];
     acc[room].push(device);
     return acc;
   }, {} as Record<string, typeof devices>);
 
   const renderDeviceCard = (device: typeof devices[0]) => {
-    const isOnline = device.is_online;
-    const isPowerDevice = ['plus_2pm', 'plus_1pm', 'dimmer_2'].includes(device.device_type);
-    const isMotionDevice = ['motion_2', 'blu_motion'].includes(device.device_type);
+    const isOnline = device.status === 'online';
+    const isPowerDevice = ['plus2pm', 'plus1pm', 'dimmer2'].includes(device.type);
+    const isMotionDevice = ['motion2', 'blu_motion'].includes(device.type);
     
     return (
       <Card
@@ -203,42 +188,17 @@ export default function DashboardPage() {
           </Box>
 
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            {device.room || 'No room assigned'}
+            {device.location || 'No location assigned'}
           </Typography>
 
-          {isOnline && device.status && (
+          {isOnline && (
             <Box sx={{ mt: 2 }}>
-              {isPowerDevice && device.status.switches && (
-                <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
-                  {device.status.switches.map((sw, idx) => (
-                    <Chip
-                      key={idx}
-                      label={`CH${idx + 1}: ${sw.output ? 'ON' : 'OFF'}`}
-                      size="small"
-                      color={sw.output ? 'primary' : 'default'}
-                      variant="outlined"
-                    />
-                  ))}
-                </Box>
-              )}
-              
-              {device.status.power !== undefined && (
-                <Typography variant="body2">
-                  Power: {device.status.power.toFixed(1)} W
-                </Typography>
-              )}
-              
-              {device.status.temperature !== undefined && (
-                <Typography variant="body2">
-                  Temp: {device.status.temperature.toFixed(1)}°C
-                </Typography>
-              )}
-              
-              {isMotionDevice && (
-                <Typography variant="body2">
-                  Motion: {device.status.motion ? 'Detected' : 'Clear'}
-                </Typography>
-              )}
+              <Typography variant="body2" color="text.secondary">
+                Type: {device.type}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                IP: {device.ip_address}
+              </Typography>
             </Box>
           )}
         </CardContent>

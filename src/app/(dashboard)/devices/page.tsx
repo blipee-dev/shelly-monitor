@@ -357,10 +357,13 @@ export default function DevicesPage() {
             <DataGrid
               rows={devices}
               columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[10, 25, 50]}
+              initialState={{
+                pagination: {
+                  paginationModel: { pageSize: 10 },
+                },
+              }}
+              pageSizeOptions={[10, 25, 50]}
               autoHeight
-              disableSelectionOnClick
               onRowClick={(params) => router.push(`/devices/${params.row.id}`)}
               sx={{
                 '& .MuiDataGrid-row': {

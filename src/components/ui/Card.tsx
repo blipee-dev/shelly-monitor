@@ -4,7 +4,7 @@ import React from 'react';
 import { Card as MuiCard, CardProps as MuiCardProps } from '@mui/material';
 import { alpha, useTheme } from '@mui/material/styles';
 
-export interface CardProps extends MuiCardProps {
+export interface CardProps extends Omit<MuiCardProps, 'variant'> {
   variant?: 'elevated' | 'filled' | 'outlined';
   interactive?: boolean;
 }

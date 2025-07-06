@@ -3,7 +3,9 @@
  * Following MD3 type scale guidelines
  */
 
-import type { TypographyOptions } from '@mui/material/styles';
+import type { ThemeOptions } from '@mui/material/styles';
+
+type TypographyOptions = NonNullable<ThemeOptions['typography']>;
 
 // MD3 Type Scale
 export const md3Typography: TypographyOptions = {

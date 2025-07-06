@@ -164,7 +164,7 @@ export const deviceApi = {
     // Get device info
     const { data: device, error } = await supabase
       .from('devices')
-      .select('ip_address')
+      .select('*')
       .eq('id', device_id)
       .single();
     
@@ -195,7 +195,7 @@ export const deviceApi = {
     // Get device info
     const { data: device, error } = await supabase
       .from('devices')
-      .select('ip_address')
+      .select('*')
       .eq('id', device_id)
       .single();
     
@@ -230,7 +230,7 @@ export const deviceApi = {
   async fetchStatus(deviceId: string): Promise<any> {
     const { data: device, error } = await supabase
       .from('devices')
-      .select('ip_address')
+      .select('*')
       .eq('id', deviceId)
       .single();
     

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
+export const dynamic = 'force-dynamic';
+
 // In a production environment, you would fetch these from a feature flag service
 // like LaunchDarkly, Split.io, or your own database
 const defaultFlags = [
