@@ -41,9 +41,9 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: process.env.NODE_ENV === 'development' 
-              ? "default-src 'self' https://hdkibjbrfrhqedzbgvek.supabase.co https://vercel.live; connect-src 'self' https://hdkibjbrfrhqedzbgvek.supabase.co wss://hdkibjbrfrhqedzbgvek.supabase.co https://api.deepseek.com https://api.openai.com https://api.anthropic.com ws://localhost:* wss://localhost:* https://vercel.live; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
-              : "default-src 'self' https://hdkibjbrfrhqedzbgvek.supabase.co; connect-src 'self' https://hdkibjbrfrhqedzbgvek.supabase.co wss://hdkibjbrfrhqedzbgvek.supabase.co https://api.deepseek.com https://api.openai.com https://api.anthropic.com; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+            value: process.env.NODE_ENV === 'development' || process.env.VERCEL_ENV === 'preview'
+              ? "default-src 'self' https://hdkibjbrfrhqedzbgvek.supabase.co https://vercel.live; connect-src 'self' https://hdkibjbrfrhqedzbgvek.supabase.co wss://hdkibjbrfrhqedzbgvek.supabase.co https://api.deepseek.com https://api.openai.com https://api.anthropic.com ws://localhost:* wss://localhost:* https://vercel.live wss://ws-us3.pusher.com https://sockjs-us3.pusher.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;"
+              : "default-src 'self' https://hdkibjbrfrhqedzbgvek.supabase.co; connect-src 'self' https://hdkibjbrfrhqedzbgvek.supabase.co wss://hdkibjbrfrhqedzbgvek.supabase.co https://api.deepseek.com https://api.openai.com https://api.anthropic.com; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;"
           }
         ]
       }

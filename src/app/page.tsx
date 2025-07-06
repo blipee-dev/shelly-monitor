@@ -112,7 +112,13 @@ export default function HomePage() {
   ];
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#000000', color: '#ffffff', overflow: 'hidden' }}>
+    <Box sx={{ 
+      minHeight: '100vh', 
+      bgcolor: theme.palette.mode === 'dark' ? '#000000' : theme.palette.background.default, 
+      color: theme.palette.text.primary, 
+      overflow: 'hidden',
+      transition: 'background-color 0.3s ease'
+    }}>
       {/* Dynamic gradient background */}
       <ClientOnly>
         <Box
@@ -126,7 +132,7 @@ export default function HomePage() {
               radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(103, 80, 164, 0.15) 0%, transparent 50%),
               radial-gradient(circle at 80% 20%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
               radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
-              #000000
+              ${theme.palette.mode === 'dark' ? '#000000' : theme.palette.background.default}
             `,
             transition: 'background 0.3s ease',
             zIndex: 0,

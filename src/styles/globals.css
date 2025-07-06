@@ -19,33 +19,39 @@
   }
 }
 
+/* Let Material UI theme handle body styling */
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /* Remove hardcoded background to allow theme colors */
+  margin: 0;
+  padding: 0;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - theme aware */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--scrollbar-track, #f1f1f1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--scrollbar-thumb, #888);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--scrollbar-thumb-hover, #555);
+}
+
+/* Dark mode scrollbar colors */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --scrollbar-track: #2a2a2a;
+    --scrollbar-thumb: #666;
+    --scrollbar-thumb-hover: #888;
+  }
 }
 
 /* Material Design 3 elevation shadows */
