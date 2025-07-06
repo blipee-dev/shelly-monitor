@@ -433,7 +433,7 @@ export default function HomePage() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       mb: 3,
-                      boxShadow: `0 8px 32px ${alpha(feature.gradient.split(' ')[2], 0.3)}`,
+                      boxShadow: `0 8px 32px ${alpha(feature.gradient.match(/#[0-9A-Fa-f]{6}/)?.[0] || '#6750A4', 0.3)}`,
                     }}
                   >
                     {feature.icon}
