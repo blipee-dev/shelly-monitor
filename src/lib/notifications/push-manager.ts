@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client';
+import { logger } from '@/lib/utils/logger';
 
 export interface NotificationPermissionState {
   permission: NotificationPermission;
@@ -25,7 +26,7 @@ export class PushNotificationManager {
    */
   async initialize(): Promise<void> {
     if (!this.isSupported()) {
-      console.log('Push notifications are not supported');
+      logger.info('Push notifications are not supported');
       return;
     }
 
@@ -37,11 +38,11 @@ export class PushNotificationManager {
       this.subscription = await this.registration.pushManager.getSubscription();
       
       if (this.subscription) {
-        console.log('Existing push subscription found');
+        logger.debug('Existing push subscription found');
         await this.syncSubscriptionWithServer(this.subscription);
       }
     } catch (error) {
-      console.error('Failed to initialize push notifications:', error);
+      logger.error('Failed to initialize push notifications:', error);
     }
   }
 
@@ -118,7 +119,7 @@ export class PushNotificationManager {
 
       return this.subscription;
     } catch (error) {
-      console.error('Failed to subscribe to push notifications:', error);
+      logger.error('Failed to subscribe to push notifications:', error);
       throw error;
     }
   }
@@ -136,7 +137,7 @@ export class PushNotificationManager {
       await this.removeSubscriptionFromServer();
       this.subscription = null;
     } catch (error) {
-      console.error('Failed to unsubscribe from push notifications:', error);
+      logger.error('Failed to unsubscribe from push notifications:', error);
       throw error;
     }
   }
@@ -199,10 +200,10 @@ export class PushNotificationManager {
         });
 
       if (error) {
-        console.error('Failed to sync subscription:', error);
+        logger.error('Failed to sync subscription:', error);
       }
     } catch (error) {
-      console.error('Failed to sync subscription with server:', error);
+      logger.error('Failed to sync subscription with server:', error);
     }
   }
 
@@ -222,7 +223,7 @@ export class PushNotificationManager {
         .eq('user_id', user.id)
         .eq('endpoint', this.subscription.endpoint);
     } catch (error) {
-      console.error('Failed to remove subscription from server:', error);
+      logger.error('Failed to remove subscription from server:', error);
     }
   }
 

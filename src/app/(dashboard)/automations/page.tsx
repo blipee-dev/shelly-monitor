@@ -51,6 +51,7 @@ import { useAutomationStore } from '@/lib/stores/automationStore';
 import { useDeviceStore } from '@/lib/stores/deviceStore';
 import AskBlipeeEnhanced from '@/components/ai/AskBlipeeEnhanced';
 import { format } from 'date-fns';
+import { logger } from '@/lib/utils/logger';
 
 function TabPanel(props: { children?: React.ReactNode; index: number; value: number }) {
   const { children, value, index, ...other } = props;
@@ -124,7 +125,7 @@ export default function AutomationsPage() {
 
   const handleDeviceControl = async (deviceId: string, action: string, value?: any) => {
     // Implement device control
-    console.log('Device control:', { deviceId, action, value });
+    logger.debug('Device control:', { deviceId, action, value });
   };
 
   const enabledAutomations = automations.filter(a => a.enabled);

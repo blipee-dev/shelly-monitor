@@ -40,6 +40,7 @@ import {
   ChartOptions,
 } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
+import { logger } from '@/lib/utils/logger';
 
 // Register Chart.js components
 ChartJS.register(
@@ -225,7 +226,7 @@ export default function AnalyticsPage() {
 
   const handleDeviceControl = async (deviceId: string, action: string, value?: any) => {
     // Implement actual device control logic here
-    console.log('Device control:', { deviceId, action, value });
+    logger.debug('Device control:', { deviceId, action, value });
     // You would call your device control API here
   };
 

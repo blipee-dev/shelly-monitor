@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { Scene, AutomationAction } from '@/types/automation';
+import { logger } from '@/lib/utils/logger';
 
 export async function POST(request: NextRequest) {
   try {
@@ -67,7 +68,7 @@ export async function POST(request: NextRequest) {
       status,
     });
   } catch (error) {
-    console.error('Scene execution error:', error);
+    logger.error('Scene execution error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Scene execution failed' },
       { status: 500 }
@@ -79,7 +80,7 @@ async function executeSceneAction(action: AutomationAction, userId: string): Pro
   switch (action.type) {
     case 'device_control':
       // In a real implementation, this would call the Shelly device API
-      console.log('Executing device control:', action.config);
+      logger.debug('Executing device control:', action.config);
       
       // Simulate device control
       // In production, you would:
@@ -114,7 +115,7 @@ async function executeSceneAction(action: AutomationAction, userId: string): Pro
       return { waited: action.config.duration };
 
     default:
-      console.warn(`Unsupported action type in scene: ${action.type}`);
+      logger.warn(`Unsupported action type in scene: ${action.type}`);
       return { skipped: true };
   }
 }

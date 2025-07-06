@@ -88,7 +88,7 @@ export interface ChatMessage {
   metadata?: {
     deviceId?: string;
     action?: string;
-    result?: any;
+    result?: unknown;
   };
 }
 

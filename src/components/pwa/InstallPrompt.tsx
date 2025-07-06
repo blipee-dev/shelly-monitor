@@ -20,6 +20,7 @@ import {
   Laptop,
   Add,
 } from '@mui/icons-material';
+import { logger } from '@/lib/utils/logger';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -92,16 +93,16 @@ export function InstallPrompt() {
       const { outcome } = await deferredPrompt.userChoice;
       
       if (outcome === 'accepted') {
-        console.log('User accepted the install prompt');
+        logger.info('User accepted the install prompt');
       } else {
-        console.log('User dismissed the install prompt');
+        logger.info('User dismissed the install prompt');
       }
       
       setDeferredPrompt(null);
       setShowPrompt(false);
       localStorage.setItem('pwa-prompt-seen', 'true');
     } catch (error) {
-      console.error('Error showing install prompt:', error);
+      logger.error('Error showing install prompt:', error);
     }
   };
 

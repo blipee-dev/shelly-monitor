@@ -25,10 +25,17 @@ import {
   WifiOff as WifiOffIcon
 } from '@mui/icons-material';
 import { useTranslation, formatRelativeTime } from '@/lib/i18n';
-import { Device } from '@/types/device';
+import { 
+  Device, 
+  Plus2PMData, 
+  Plus1PMData, 
+  Motion2Data, 
+  BluMotionData 
+} from '@/types/device';
+import { DeviceWithStatus } from '@/types/device-extended';
 
 interface DeviceCardProps {
-  device: Device & { device_status?: any };
+  device: DeviceWithStatus;
   onRefresh: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
@@ -161,10 +168,10 @@ export default function DeviceCard({
         <Divider sx={{ my: 2 }} />
 
         {/* Device-specific content */}
-        {device.type === 'plus2pm' && deviceData?.switch && (
+        {device.type === 'plus2pm' && deviceData && 'relays' in deviceData && (
           <Grid container spacing={2}>
-            {deviceData.switch.map((channel: any, index: number) => (
-              <Grid size={12} key={channel.id}>
+            {deviceData.relays.map((relay, index) => (
+              <Grid size={12} key={relay.id}>
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Box>
                     <Typography variant="body2" fontWeight="medium">
@@ -173,14 +180,14 @@ export default function DeviceCard({
                     <Box display="flex" gap={1} mt={0.5}>
                       <Chip
                         icon={<BoltIcon />}
-                        label={t('devices.card.power', { value: channel.apower?.toFixed(1) || 0 })}
+                        label={t('devices.card.power', { value: relay.power?.toFixed(1) || 0 })}
                         size="small"
                         variant="outlined"
                       />
-                      {channel.temperature && (
+                      {relay.temperature && (
                         <Chip
                           icon={<ThermostatIcon />}
-                          label={t('devices.card.temperature', { value: channel.temperature.toFixed(1) })}
+                          label={t('devices.card.temperature', { value: relay.temperature.toFixed(1) })}
                           size="small"
                           variant="outlined"
                         />
@@ -189,9 +196,9 @@ export default function DeviceCard({
                   </Box>
                   <Switch
                     data-testid="switch-toggle"
-                    checked={channel.output}
-                    onChange={(e) => handleControl(channel.id, e.target.checked)}
-                    disabled={!isOnline || controllingChannel === channel.id}
+                    checked={relay.state === 'on'}
+                    onChange={(e) => handleControl(relay.id, e.target.checked)}
+                    disabled={!isOnline || controllingChannel === relay.id}
                     color="primary"
                   />
                 </Box>
@@ -200,26 +207,90 @@ export default function DeviceCard({
           </Grid>
         )}
 
-        {device.type === 'motion2' && deviceData?.sensor && (
+        {device.type === 'plus1pm' && deviceData && 'relay' in deviceData && (
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="body2" fontWeight="medium">
+                {t('devices.card.channel', { number: 1 })}
+              </Typography>
+              <Box display="flex" gap={1} mt={0.5}>
+                <Chip
+                  icon={<BoltIcon />}
+                  label={t('devices.card.power', { value: deviceData.relay.power?.toFixed(1) || 0 })}
+                  size="small"
+                  variant="outlined"
+                />
+                {deviceData.relay.temperature && (
+                  <Chip
+                    icon={<ThermostatIcon />}
+                    label={t('devices.card.temperature', { value: deviceData.relay.temperature.toFixed(1) })}
+                    size="small"
+                    variant="outlined"
+                  />
+                )}
+              </Box>
+            </Box>
+            <Switch
+              data-testid="switch-toggle"
+              checked={deviceData.relay.state === 'on'}
+              onChange={(e) => handleControl(deviceData.relay.id, e.target.checked)}
+              disabled={!isOnline || controllingChannel === deviceData.relay.id}
+              color="primary"
+            />
+          </Box>
+        )}
+
+        {device.type === 'motion2' && deviceData && 'motion' in deviceData && (
           <Box>
             <Typography variant="body2" gutterBottom>
-              {t('devices.card.motion.' + (deviceData.sensor.motion ? 'detected' : 'clear'))}
+              {t('devices.card.motion.' + (deviceData.motion ? 'detected' : 'clear'))}
             </Typography>
             <Box display="flex" flexDirection="column" gap={1} mt={2}>
               <Typography variant="caption" color="text.secondary">
-                {t('devices.card.motion.light', { value: deviceData.sensor.lux })}
+                {t('devices.card.motion.light', { value: deviceData.lux })}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                {t('devices.card.temperature', { value: deviceData.sensor.temperature?.toFixed(1) })}
+                {t('devices.card.temperature', { value: deviceData.temperature?.toFixed(1) })}
               </Typography>
-              {deviceData.sensor.battery && (
+              {deviceData.battery !== undefined && (
                 <Typography variant="caption" color="text.secondary">
-                  {t('devices.card.motion.battery', { value: deviceData.sensor.battery.percent })}
+                  {t('devices.card.motion.battery', { value: deviceData.battery })}
                 </Typography>
               )}
-              {deviceData.sensor.vibration && (
+              {'vibration' in deviceData && deviceData.vibration && (
                 <Typography variant="caption" color="error">
                   {t('devices.card.motion.vibration')}
+                </Typography>
+              )}
+            </Box>
+          </Box>
+        )}
+
+        {device.type === 'blu_motion' && deviceData && 'motion' in deviceData && (
+          <Box>
+            <Typography variant="body2" gutterBottom>
+              {t('devices.card.motion.' + (deviceData.motion ? 'detected' : 'clear'))}
+            </Typography>
+            <Box display="flex" flexDirection="column" gap={1} mt={2}>
+              <Typography variant="caption" color="text.secondary">
+                {t('devices.card.motion.light', { value: deviceData.lux })}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                {t('devices.card.temperature', { value: deviceData.temperature?.toFixed(1) })}
+              </Typography>
+              {deviceData.battery !== undefined && (
+                <Typography variant="caption" color="text.secondary">
+                  {t('devices.card.motion.battery', { value: deviceData.battery })}
+                </Typography>
+              )}
+              {'humidity' in deviceData && deviceData.humidity !== undefined && (
+                <Typography variant="caption" color="text.secondary">
+                  {t('devices.card.humidity', { value: deviceData.humidity.toFixed(1) })}
+                </Typography>
+              )}
+              {'rssi' in deviceData && deviceData.rssi !== undefined && (
+                <Typography variant="caption" color="text.secondary">
+                  {t('devices.card.signal', { value: deviceData.rssi })}
                 </Typography>
               )}
             </Box>

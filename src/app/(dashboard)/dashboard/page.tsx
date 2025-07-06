@@ -40,6 +40,8 @@ import { useRequireAuth } from '@/lib/auth/hooks';
 import { useDeviceStore } from '@/lib/stores/deviceStore';
 import { useDeviceRealtime } from '@/lib/hooks/useDeviceRealtime';
 import { format } from 'date-fns';
+import { DeviceWithStatus } from '@/types/device-extended';
+import { Plus2PMData, Plus1PMData, Dimmer2Data, Motion2Data, BluMotionData } from '@/types/device';
 
 interface StatCard {
   title: string;
@@ -91,12 +93,78 @@ export default function DashboardPage() {
   // Calculate statistics from devices
   const calculateStats = () => {
     const activeDevices = devices.filter(d => d.status === 'online').length;
-    const totalPower = 0; // TODO: Implement based on device-specific data
-    const totalEnergy = 0; // TODO: Implement based on device-specific data
-    const motionDetected = devices.some(d => 
-      d.type === 'motion2' || d.type === 'blu_motion'
-    );
-    const avgTemperature = 25; // TODO: Implement based on device-specific data
+    
+    // Calculate total power consumption
+    let totalPower = 0;
+    let totalEnergy = 0;
+    let tempSum = 0;
+    let tempCount = 0;
+    let motionDetected = false;
+    
+    devices.forEach((device: DeviceWithStatus) => {
+      if (device.status === 'online' && device.device_status?.data) {
+        const data = device.device_status.data;
+        
+        switch (device.type) {
+          case 'plus2pm': {
+            const plus2pmData = data as Plus2PMData;
+            totalPower += plus2pmData.total_power || 0;
+            plus2pmData.relays.forEach(relay => {
+              totalEnergy += relay.energy || 0;
+            });
+            if (plus2pmData.temperature) {
+              tempSum += plus2pmData.temperature;
+              tempCount++;
+            }
+            break;
+          }
+          case 'plus1pm': {
+            const plus1pmData = data as Plus1PMData;
+            totalPower += plus1pmData.relay.power || 0;
+            totalEnergy += plus1pmData.relay.energy || 0;
+            if (plus1pmData.temperature) {
+              tempSum += plus1pmData.temperature;
+              tempCount++;
+            }
+            break;
+          }
+          case 'dimmer2': {
+            const dimmerData = data as Dimmer2Data;
+            totalPower += dimmerData.power || 0;
+            totalEnergy += dimmerData.energy || 0;
+            if (dimmerData.temperature) {
+              tempSum += dimmerData.temperature;
+              tempCount++;
+            }
+            break;
+          }
+          case 'motion2': {
+            const motionData = data as Motion2Data;
+            if (motionData.motion) {
+              motionDetected = true;
+            }
+            if (motionData.temperature) {
+              tempSum += motionData.temperature;
+              tempCount++;
+            }
+            break;
+          }
+          case 'blu_motion': {
+            const bluData = data as BluMotionData;
+            if (bluData.motion) {
+              motionDetected = true;
+            }
+            if (bluData.temperature) {
+              tempSum += bluData.temperature;
+              tempCount++;
+            }
+            break;
+          }
+        }
+      }
+    });
+    
+    const avgTemperature = tempCount > 0 ? tempSum / tempCount : 0;
 
     return {
       activeDevices,

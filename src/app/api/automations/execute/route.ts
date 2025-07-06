@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { Automation, AutomationAction } from '@/types/automation';
+import { logger } from '@/lib/utils/logger';
 
 export async function POST(request: NextRequest) {
   try {
@@ -75,7 +76,7 @@ export async function POST(request: NextRequest) {
       status,
     });
   } catch (error) {
-    console.error('Automation execution error:', error);
+    logger.error('Automation execution error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Execution failed' },
       { status: 500 }
@@ -88,7 +89,7 @@ async function executeAction(action: AutomationAction, userId: string): Promise<
     case 'device_control':
       // In a real implementation, this would call the Shelly device API
       // For now, we'll simulate the action
-      console.log('Executing device control:', action.config);
+      logger.debug('Executing device control:', action.config);
       
       // You would implement actual device control here
       // Example: await controlDevice(action.config.deviceId, action.config.action, action.config.value);
@@ -121,7 +122,7 @@ async function executeAction(action: AutomationAction, userId: string): Promise<
 
     case 'notification':
       // In a real implementation, this would send notifications
-      console.log('Sending notification:', action.config.message);
+      logger.info('Sending notification:', action.config.message);
       return { message: action.config.message, sent: true };
 
     default:
