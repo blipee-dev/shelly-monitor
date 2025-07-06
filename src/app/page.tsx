@@ -170,6 +170,7 @@ export default function HomePage() {
 
       {/* Header */}
       <Box
+        component="header"
         sx={{
           position: 'sticky',
           top: 0,
@@ -190,6 +191,9 @@ export default function HomePage() {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <Box
+                component="button"
+                onClick={() => router.push('/')}
+                aria-label="Blipee OS Home"
                 sx={{
                   width: 48,
                   height: 48,
@@ -201,8 +205,14 @@ export default function HomePage() {
                   boxShadow: '0 8px 32px rgba(103, 80, 164, 0.3)',
                   cursor: 'pointer',
                   transition: 'transform 0.2s ease',
+                  border: 'none',
+                  padding: 0,
                   '&:hover': {
                     transform: 'scale(1.05)',
+                  },
+                  '&:focus': {
+                    outline: '2px solid #6750A4',
+                    outlineOffset: 2,
                   },
                 }}
               >
@@ -260,19 +270,21 @@ export default function HomePage() {
         </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        {/* Hero Section */}
-        <Box sx={{ textAlign: 'center', mt: 12, mb: 12 }}>
+      {/* Main Content */}
+      <Box component="main">
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+          {/* Hero Section */}
+          <Box sx={{ textAlign: 'center', mt: 12, mb: 12 }}>
           <Chip
             icon={<AutoAwesome />}
             label="AI-Powered Sustainability Platform"
             sx={{
               mb: 4,
-              background: 'rgba(103, 80, 164, 0.2)',
-              color: '#B794F4',
-              border: '1px solid rgba(103, 80, 164, 0.3)',
+              background: theme.palette.mode === 'dark' ? 'rgba(103, 80, 164, 0.2)' : 'rgba(103, 80, 164, 0.1)',
+              color: theme.palette.mode === 'dark' ? '#E9D5FF' : '#5B21B6',
+              border: theme.palette.mode === 'dark' ? '1px solid rgba(103, 80, 164, 0.3)' : '1px solid rgba(103, 80, 164, 0.2)',
               '& .MuiChip-icon': {
-                color: '#B794F4',
+                color: theme.palette.mode === 'dark' ? '#E9D5FF' : '#5B21B6',
               },
             }}
           />
@@ -386,7 +398,7 @@ export default function HomePage() {
                   </Typography>
                   <Typography
                     variant="body1"
-                    sx={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                    sx={{ color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.9)' : theme.palette.text.secondary }}
                   >
                     {stat.label}
                   </Typography>
@@ -450,7 +462,10 @@ export default function HomePage() {
                   </Typography>
                   <Typography
                     variant="body1"
-                    sx={{ color: 'rgba(255, 255, 255, 0.7)', lineHeight: 1.7 }}
+                    sx={{ 
+                      color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.9)' : theme.palette.text.secondary,
+                      lineHeight: 1.7 
+                    }}
                   >
                     {feature.description}
                   </Typography>
@@ -584,10 +599,12 @@ export default function HomePage() {
             />
           </Box>
         </Box>
-      </Container>
+        </Container>
+      </Box>
 
       {/* Footer */}
       <Box
+        component="footer"
         sx={{
           borderTop: '1px solid rgba(255, 255, 255, 0.1)',
           py: 6,
@@ -600,12 +617,12 @@ export default function HomePage() {
       >
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+            <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
               © 2025 Blipee. All rights reserved. | 
-              <Link href="/privacy" style={{ color: '#B794F4', marginLeft: 8 }}>
+              <Link href="/privacy" style={{ color: '#E9D5FF', marginLeft: 8, textDecoration: 'underline' }}>
                 Privacy Policy
               </Link> | 
-              <Link href="/terms" style={{ color: '#B794F4', marginLeft: 8 }}>
+              <Link href="/terms" style={{ color: '#E9D5FF', marginLeft: 8, textDecoration: 'underline' }}>
                 Terms of Service
               </Link>
             </Typography>
