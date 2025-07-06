@@ -37,41 +37,47 @@ export const PremiumThemeProvider: React.FC<PremiumThemeProviderProps> = ({
   // Initialize with default mode
   const [mode, setMode] = useState<ThemeMode>(defaultMode);
   const [theme, setTheme] = useState(createPremiumTheme(defaultMode));
+  const [mounted, setMounted] = useState(false);
 
-  // Sync with main theme through localStorage
+  // Sync with main theme through localStorage after mount
   useEffect(() => {
-    // Check the main theme's localStorage key
-    const savedMode = localStorage.getItem('theme-mode') as ThemeMode;
-    if (savedMode && (savedMode === 'dark' || savedMode === 'light')) {
-      setMode(savedMode);
-    }
+    setMounted(true);
+    
+    // Only access localStorage on client side
+    if (typeof window !== 'undefined') {
+      // Check the main theme's localStorage key
+      const savedMode = localStorage.getItem('theme-mode') as ThemeMode;
+      if (savedMode && (savedMode === 'dark' || savedMode === 'light')) {
+        setMode(savedMode);
+      }
 
-    // Listen for storage changes from other components
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'theme-mode' && e.newValue) {
-        const newMode = e.newValue as ThemeMode;
+      // Listen for storage changes from other components
+      const handleStorageChange = (e: StorageEvent) => {
+        if (e.key === 'theme-mode' && e.newValue) {
+          const newMode = e.newValue as ThemeMode;
+          if (newMode === 'dark' || newMode === 'light') {
+            setMode(newMode);
+          }
+        }
+      };
+
+      window.addEventListener('storage', handleStorageChange);
+      
+      // Also listen for custom events from the same window
+      const handleThemeChange = (e: CustomEvent) => {
+        const newMode = e.detail as ThemeMode;
         if (newMode === 'dark' || newMode === 'light') {
           setMode(newMode);
         }
-      }
-    };
+      };
+      
+      window.addEventListener('theme-change', handleThemeChange as EventListener);
 
-    window.addEventListener('storage', handleStorageChange);
-    
-    // Also listen for custom events from the same window
-    const handleThemeChange = (e: CustomEvent) => {
-      const newMode = e.detail as ThemeMode;
-      if (newMode === 'dark' || newMode === 'light') {
-        setMode(newMode);
-      }
-    };
-    
-    window.addEventListener('theme-change', handleThemeChange as EventListener);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('theme-change', handleThemeChange as EventListener);
-    };
+      return () => {
+        window.removeEventListener('storage', handleStorageChange);
+        window.removeEventListener('theme-change', handleThemeChange as EventListener);
+      };
+    }
   }, []);
 
   // Update theme when mode changes
@@ -79,29 +85,35 @@ export const PremiumThemeProvider: React.FC<PremiumThemeProviderProps> = ({
     const newTheme = createPremiumTheme(mode);
     setTheme(newTheme);
     
-    // Update document styles
-    document.documentElement.setAttribute('data-theme', mode);
-    
-    // Don't update body styles here as the main theme provider handles that
-  }, [mode]);
+    // Only update document on client side
+    if (mounted && typeof window !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', mode);
+    }
+  }, [mode, mounted]);
 
   // Toggle mode and update main theme
   const toggleMode = () => {
     const newMode = mode === 'dark' ? 'light' : 'dark';
     setMode(newMode);
-    localStorage.setItem('theme-mode', newMode);
     
-    // Dispatch custom event for same-window updates
-    window.dispatchEvent(new CustomEvent('theme-change', { detail: newMode }));
+    // Only update localStorage on client side
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme-mode', newMode);
+      // Dispatch custom event for same-window updates
+      window.dispatchEvent(new CustomEvent('theme-change', { detail: newMode }));
+    }
   };
 
   // Set mode and update main theme
   const setModeWrapper = (newMode: ThemeMode) => {
     setMode(newMode);
-    localStorage.setItem('theme-mode', newMode);
     
-    // Dispatch custom event for same-window updates
-    window.dispatchEvent(new CustomEvent('theme-change', { detail: newMode }));
+    // Only update localStorage on client side
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme-mode', newMode);
+      // Dispatch custom event for same-window updates
+      window.dispatchEvent(new CustomEvent('theme-change', { detail: newMode }));
+    }
   };
 
   const value = {
@@ -110,6 +122,16 @@ export const PremiumThemeProvider: React.FC<PremiumThemeProviderProps> = ({
     toggleMode,
     setMode: setModeWrapper,
   };
+
+  // Prevent SSR mismatch by ensuring consistent initial render
+  if (!mounted) {
+    // Return children with default theme during SSR
+    return (
+      <PremiumThemeContext.Provider value={value}>
+        {children}
+      </PremiumThemeContext.Provider>
+    );
+  }
 
   return (
     <PremiumThemeContext.Provider value={value}>
