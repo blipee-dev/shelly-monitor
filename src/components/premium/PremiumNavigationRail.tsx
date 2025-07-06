@@ -183,20 +183,30 @@ export function PremiumNavigationRail({
                           },
                         }}
                       >
-                        {React.cloneElement(item.icon, {
-                          sx: {
+                        <Box
+                          sx={{
                             fontSize: 24,
                             filter: isActive ? 'drop-shadow(0 2px 4px rgba(103, 80, 164, 0.3))' : 'none',
-                          }
-                        })}
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          {item.icon}
+                        </Box>
                       </Badge>
                     ) : (
-                      React.cloneElement(item.icon, {
-                        sx: {
+                      <Box
+                        sx={{
                           fontSize: 24,
                           filter: isActive ? 'drop-shadow(0 2px 4px rgba(103, 80, 164, 0.3))' : 'none',
-                        }
-                      })
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {item.icon}
+                      </Box>
                     )}
                   </ListItemIcon>
                   {expanded && (

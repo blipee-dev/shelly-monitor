@@ -34,40 +34,81 @@ export const PremiumThemeProvider: React.FC<PremiumThemeProviderProps> = ({
   children, 
   defaultMode = 'dark' 
 }) => {
+  // Initialize with default mode
   const [mode, setMode] = useState<ThemeMode>(defaultMode);
-  const [theme, setTheme] = useState(createPremiumTheme(mode));
+  const [theme, setTheme] = useState(createPremiumTheme(defaultMode));
 
-  // Load saved theme preference
+  // Sync with main theme through localStorage
   useEffect(() => {
-    const savedMode = localStorage.getItem('premiumThemeMode') as ThemeMode;
+    // Check the main theme's localStorage key
+    const savedMode = localStorage.getItem('theme-mode') as ThemeMode;
     if (savedMode && (savedMode === 'dark' || savedMode === 'light')) {
       setMode(savedMode);
     }
+
+    // Listen for storage changes from other components
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'theme-mode' && e.newValue) {
+        const newMode = e.newValue as ThemeMode;
+        if (newMode === 'dark' || newMode === 'light') {
+          setMode(newMode);
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also listen for custom events from the same window
+    const handleThemeChange = (e: CustomEvent) => {
+      const newMode = e.detail as ThemeMode;
+      if (newMode === 'dark' || newMode === 'light') {
+        setMode(newMode);
+      }
+    };
+    
+    window.addEventListener('theme-change', handleThemeChange as EventListener);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('theme-change', handleThemeChange as EventListener);
+    };
   }, []);
 
   // Update theme when mode changes
   useEffect(() => {
     const newTheme = createPremiumTheme(mode);
     setTheme(newTheme);
-    localStorage.setItem('premiumThemeMode', mode);
     
     // Update document styles
     document.documentElement.setAttribute('data-theme', mode);
     
-    // Update body background
-    document.body.style.backgroundColor = newTheme.colors.background.primary;
-    document.body.style.color = newTheme.colors.text.primary;
+    // Don't update body styles here as the main theme provider handles that
   }, [mode]);
 
+  // Toggle mode and update main theme
   const toggleMode = () => {
-    setMode((prevMode) => prevMode === 'dark' ? 'light' : 'dark');
+    const newMode = mode === 'dark' ? 'light' : 'dark';
+    setMode(newMode);
+    localStorage.setItem('theme-mode', newMode);
+    
+    // Dispatch custom event for same-window updates
+    window.dispatchEvent(new CustomEvent('theme-change', { detail: newMode }));
+  };
+
+  // Set mode and update main theme
+  const setModeWrapper = (newMode: ThemeMode) => {
+    setMode(newMode);
+    localStorage.setItem('theme-mode', newMode);
+    
+    // Dispatch custom event for same-window updates
+    window.dispatchEvent(new CustomEvent('theme-change', { detail: newMode }));
   };
 
   const value = {
     mode,
     theme,
     toggleMode,
-    setMode,
+    setMode: setModeWrapper,
   };
 
   return (
